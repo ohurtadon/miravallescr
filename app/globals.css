@@ -1,0 +1,36 @@
+@import "mapbox-gl/dist/mapbox-gl.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f4f7f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: #123427;
+  background: #f4f7f1;
+}
+
+img {
+  max-width: 100%;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.mapboxgl-control-container {
+  display: none;
+}
