@@ -15,7 +15,7 @@ export default function ExperiencesPage() {
       description="Actividades iniciales pensadas para visitantes que buscan naturaleza, bienestar y aventura responsable."
     >
       <div className="-mx-5 -my-16 md:-mx-8 md:-my-20">
-        <ExperiencesSection />
+        <ExperiencesSection showFilters />
       </div>
     </SimplePage>
   );

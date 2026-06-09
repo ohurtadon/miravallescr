@@ -1,0 +1,147 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { BadgeCheck, Home, MapPin, Ruler, Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import { properties, propertyOperations, propertyTypes } from "@/data/site";
+import { SectionHeading } from "./SectionHeading";
+
+export function PropertiesSection() {
+  const [selectedOperation, setSelectedOperation] = useState("Todos");
+  const [selectedType, setSelectedType] = useState("Todos");
+
+  const filteredProperties = useMemo(() => {
+    return properties
+      .filter((property) => selectedOperation === "Todos" || property.operation === selectedOperation)
+      .filter((property) => selectedType === "Todos" || property.type === selectedType)
+      .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
+  }, [selectedOperation, selectedType]);
+
+  return (
+    <section className="bg-mist px-5 py-20 md:px-8 md:py-28">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="Propiedades"
+          title="Te gustó la zona, quieres vivir acá"
+          copy="Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en Miravalles."
+        />
+
+        <div className="mt-12 rounded-lg bg-white p-6 ring-1 ring-canopy/10">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar propiedades</p>
+              <p className="mt-2 text-sm text-volcanic">Combina operación y tipo de propiedad.</p>
+            </div>
+            <p className="text-sm font-bold text-canopy">
+              {filteredProperties.length} {filteredProperties.length === 1 ? "resultado" : "resultados"}
+            </p>
+          </div>
+
+          <div className="mt-6 grid gap-5 lg:grid-cols-2">
+            <FilterGroup
+              label="Operación"
+              options={["Todos", ...propertyOperations]}
+              selected={selectedOperation}
+              onSelect={setSelectedOperation}
+            />
+            <FilterGroup
+              label="Tipo"
+              options={["Todos", ...propertyTypes]}
+              selected={selectedType}
+              onSelect={setSelectedType}
+            />
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {filteredProperties.map((property) => (
+            <article key={property.id} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <Image
+                  src={property.image}
+                  alt={property.title}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                />
+                {property.isFeatured ? (
+                  <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy shadow">
+                    <BadgeCheck className="size-4" aria-hidden="true" />
+                    Destacada
+                  </span>
+                ) : null}
+                <span className="absolute right-4 top-4 rounded-md bg-canopy/85 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white">
+                  {property.operation}
+                </span>
+              </div>
+              <div className="p-6">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{property.type}</p>
+                <h3 className="mt-3 font-display text-3xl font-bold text-canopy">{property.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-volcanic">{property.description}</p>
+                <div className="mt-5 grid gap-3 text-sm text-volcanic">
+                  <p className="flex items-center gap-2">
+                    <MapPin className="size-4 text-river" aria-hidden="true" />
+                    {property.location}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <Home className="size-4 text-river" aria-hidden="true" />
+                    {property.area}
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <Ruler className="size-4 text-river" aria-hidden="true" />
+                    {property.landSize}
+                  </p>
+                </div>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="font-display text-2xl font-bold text-forest">{property.price}</p>
+                  <Link
+                    href={property.contactUrl}
+                    className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
+                  >
+                    Consultar
+                    <Search className="size-4" aria-hidden="true" />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FilterGroup({
+  label,
+  options,
+  selected,
+  onSelect
+}: {
+  label: string;
+  options: string[];
+  selected: string;
+  onSelect: (value: string) => void;
+}) {
+  return (
+    <div>
+      <p className="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-canopy">{label}</p>
+      <div className="flex flex-wrap gap-2">
+        {options.map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => onSelect(option)}
+            className={`rounded-md px-4 py-3 text-sm font-bold transition ${
+              selected === option
+                ? "bg-forest text-white"
+                : "bg-mist text-volcanic ring-1 ring-canopy/10 hover:bg-sand hover:text-canopy"
+            }`}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}

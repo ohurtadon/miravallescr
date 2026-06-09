@@ -7,7 +7,9 @@ const groups = [
     links: [
       { label: "Atractivos", href: "/atractivos" },
       { label: "Flora y fauna", href: "/flora-fauna" },
-      { label: "Experiencias", href: "/experiencias" }
+      { label: "Experiencias", href: "/experiencias" },
+      { label: "Negocios locales", href: "/negocios" },
+      { label: "Propiedades", href: "/propiedades" }
     ]
   },
   {
@@ -15,7 +17,17 @@ const groups = [
     links: [
       { label: "Cómo llegar", href: "/mapa" },
       { label: "Contacto", href: "/contacto" },
-      { label: "Clima", href: "/contacto#clima" }
+      { label: "Clima", href: "/contacto#clima" },
+      { label: "Alianzas", href: "/alianzas" }
+    ]
+  },
+  {
+    title: "Comercial",
+    links: [
+      { label: "Patrocinadores", href: "/patrocinadores" },
+      { label: "Registrar mi negocio", href: "/alianzas" },
+      { label: "Promocionar experiencia", href: "/alianzas" },
+      { label: "Publicar propiedad", href: "/alianzas" }
     ]
   }
 ];
@@ -23,7 +35,7 @@ const groups = [
 export function Footer() {
   return (
     <footer className="bg-canopy px-5 py-14 text-white md:px-8">
-      <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
         <div>
           <Link href="/" className="flex items-center gap-3 font-semibold">
             <span className="flex size-10 items-center justify-center rounded-full bg-white/10">

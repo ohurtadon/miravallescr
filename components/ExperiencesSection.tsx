@@ -1,51 +1,76 @@
-import { Clock, Gauge, SunMedium } from "lucide-react";
-import { experiences } from "@/data/site";
+"use client";
+
+import { useMemo, useState } from "react";
+import { experiences, experienceCategories } from "@/data/site";
+import { ExperienceCard } from "./ExperienceCard";
 import { SectionHeading } from "./SectionHeading";
 
-export function ExperiencesSection() {
+type ExperiencesSectionProps = {
+  featuredOnly?: boolean;
+  limit?: number;
+  showHeading?: boolean;
+  showFilters?: boolean;
+};
+
+export function ExperiencesSection({
+  featuredOnly = false,
+  limit,
+  showHeading = true,
+  showFilters = false
+}: ExperiencesSectionProps) {
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
+
+  const items = useMemo(() => {
+    return experiences
+      .filter((experience) => (featuredOnly ? experience.isFeatured : true))
+      .filter((experience) => selectedCategory === "Todos" || experience.category === selectedCategory)
+      .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured))
+      .slice(0, limit || experiences.length);
+  }, [featuredOnly, limit, selectedCategory]);
+
   return (
     <section className="bg-white px-5 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Experiencias"
-          title="Actividades para viajar con intención"
-          copy="Opciones de medio día o día completo para disfrutar la zona sin perder su ritmo natural."
-        />
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Experiencias"
+            title="Actividades para viajar con intención"
+            copy="Opciones promocionables de medio día o día completo, listas para conectar visitantes con guías, operadores y emprendimientos locales."
+          />
+        ) : null}
+        {showFilters ? (
+          <div className="mb-10 rounded-lg bg-mist p-6 ring-1 ring-canopy/10">
+            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar experiencias</p>
+                <p className="mt-2 text-sm text-volcanic">Selecciona una categoría para ver actividades relacionadas.</p>
+              </div>
+              <p className="text-sm font-bold text-canopy">
+                {items.length} {items.length === 1 ? "resultado" : "resultados"}
+              </p>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {["Todos", ...experienceCategories].map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-md px-4 py-3 text-sm font-bold transition ${
+                    selectedCategory === category
+                      ? "bg-forest text-white"
+                      : "bg-white text-volcanic ring-1 ring-canopy/10 hover:bg-sand hover:text-canopy"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {experiences.map((item) => {
-            const Icon = item.icon;
-            return (
-              <article key={item.title} className="rounded-lg bg-mist p-7 ring-1 ring-canopy/10">
-                <div className="mb-8 flex size-14 items-center justify-center rounded-full bg-forest text-white">
-                  <Icon className="size-7" aria-hidden="true" />
-                </div>
-                <h3 className="font-display text-3xl font-bold text-canopy">{item.title}</h3>
-                <dl className="mt-7 grid gap-4 text-sm">
-                  <div className="flex items-center gap-3">
-                    <Clock className="size-5 text-river" aria-hidden="true" />
-                    <div>
-                      <dt className="font-bold text-canopy">Duración</dt>
-                      <dd className="text-volcanic">{item.duration}</dd>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Gauge className="size-5 text-river" aria-hidden="true" />
-                    <div>
-                      <dt className="font-bold text-canopy">Dificultad</dt>
-                      <dd className="text-volcanic">{item.difficulty}</dd>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <SunMedium className="size-5 text-river" aria-hidden="true" />
-                    <div>
-                      <dt className="font-bold text-canopy">Mejor época</dt>
-                      <dd className="text-volcanic">{item.season}</dd>
-                    </div>
-                  </div>
-                </dl>
-              </article>
-            );
-          })}
+          {items.map((experience) => (
+            <ExperienceCard key={experience.id} experience={experience} />
+          ))}
         </div>
       </div>
     </section>

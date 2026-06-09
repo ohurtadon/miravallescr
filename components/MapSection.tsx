@@ -6,7 +6,7 @@ import { MapPin } from "lucide-react";
 import { mapPoints } from "@/data/site";
 import { SectionHeading } from "./SectionHeading";
 
-const categories = ["Todos", "Naturaleza", "Aventura", "Relajación", "Gastronomía"];
+const categories = ["Todos", "Naturaleza", "Aventura", "Relajación", "Gastronomía", "Negocios locales", "Experiencias"];
 
 export function MapSection() {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -46,8 +46,8 @@ export function MapSection() {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Mapa interactivo"
-          title="Ubica ríos, termales, cataratas y miradores"
-          copy="Filtra puntos de interés para armar una ruta según el tipo de experiencia que buscas."
+          title="Ubica atractivos, experiencias y negocios locales"
+          copy="Filtra puntos de interés para armar una ruta según el tipo de experiencia, servicio o aliado que buscas."
           light
         />
         <div className="mt-10 flex flex-wrap justify-center gap-2">
