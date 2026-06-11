@@ -9,11 +9,6 @@ type AttractionPageProps = {
   }>;
 };
 
-export async function generateStaticParams() {
-  const { attractions } = await getSiteData();
-  return attractions.map((item) => ({ slug: item.slug }));
-}
-
 export async function generateMetadata({ params }: AttractionPageProps): Promise<Metadata> {
   const { slug } = await params;
   const { attractions } = await getSiteData();

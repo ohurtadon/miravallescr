@@ -13,11 +13,6 @@ type BusinessPageProps = {
   }>;
 };
 
-export async function generateStaticParams() {
-  const { businesses } = await getSiteData();
-  return businesses.map((business) => ({ slug: business.slug }));
-}
-
 export async function generateMetadata({ params }: BusinessPageProps): Promise<Metadata> {
   const { slug } = await params;
   const { businesses } = await getSiteData();

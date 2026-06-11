@@ -181,7 +181,7 @@ export async function getSiteData(): Promise<SiteData> {
 
   return {
     attractions: normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction),
-    businesses: normalizedBusinesses.length ? normalizedBusinesses : (fallbackBusinesses as SiteBusiness[]),
+    businesses: normalizedBusinesses.length ? normalizedBusinesses : fallbackBusinesses.map(normalizeFallbackBusiness),
     businessCategories: unique(normalizedBusinesses.map((item) => item.category), [
       "Hospedaje",
       "Restaurante",
@@ -192,7 +192,7 @@ export async function getSiteData(): Promise<SiteData> {
       "Artesanía",
       "Producto local"
     ]),
-    experiences: normalizedExperiences.length ? normalizedExperiences : (fallbackExperiences as SiteExperience[]),
+    experiences: normalizedExperiences.length ? normalizedExperiences : fallbackExperiences.map(normalizeFallbackExperience),
     experienceCategories: unique(normalizedExperiences.map((item) => item.category), [
       "Naturaleza",
       "Aventura",
@@ -205,7 +205,7 @@ export async function getSiteData(): Promise<SiteData> {
     gallery: normalizedGallery.length ? normalizedGallery : fallbackGallery,
     mapPoints: normalizedMapPoints.length ? normalizedMapPoints : fallbackMapPoints,
     promoSlots: normalizedPromoSlots.length ? normalizedPromoSlots : fallbackPromoSlots,
-    properties: normalizedProperties.length ? normalizedProperties : (fallbackProperties as SiteProperty[]),
+    properties: normalizedProperties.length ? normalizedProperties : fallbackProperties.map(normalizeFallbackProperty),
     propertyOperations: unique(normalizedProperties.map((item) => item.operation), ["Venta", "Alquiler"]),
     propertyTypes: unique(normalizedProperties.map((item) => item.type), ["Casa", "Finca", "Lote", "Comercio"]),
     species: speciesSource,
@@ -218,7 +218,7 @@ export async function getSiteData(): Promise<SiteData> {
 async function fetchCollection(collection: string) {
   try {
     const response = await fetch(`${apiBaseUrl}/api/${collection}?limit=100&sort=displayOrder,-updatedAt`, {
-      next: { revalidate: 300 }
+      cache: "no-store"
     });
 
     if (!response.ok) return [];
@@ -396,6 +396,71 @@ function normalizeFallbackSpecies(): SiteSpecies[] {
 
 function normalizeImages(images: ImageAsset[] | undefined) {
   return images?.map((image) => image.url).filter(Boolean) as string[] || [];
+}
+
+function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): SiteBusiness {
+  return {
+    id: item.id,
+    name: item.name,
+    slug: item.slug,
+    category: item.category,
+    description: item.description,
+    longDescription: item.longDescription,
+    images: item.images,
+    location: item.location,
+    phone: item.phone,
+    whatsapp: item.whatsapp,
+    website: item.website,
+    socialLinks: sanitizeSocialLinks(item.socialLinks),
+    isFeatured: item.isFeatured,
+    isSponsor: item.isSponsor,
+    sponsorLevel: item.sponsorLevel,
+    services: item.services,
+    openingHours: item.openingHours
+  };
+}
+
+function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number]): SiteExperience {
+  return {
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+    category: item.category,
+    description: item.description,
+    image: item.image,
+    duration: item.duration,
+    difficulty: item.difficulty,
+    price: item.price,
+    provider: item.provider,
+    location: item.location,
+    contactUrl: item.contactUrl,
+    whatsapp: item.whatsapp,
+    isFeatured: item.isFeatured,
+    season: item.season
+  };
+}
+
+function sanitizeSocialLinks(socialLinks: Record<string, string | undefined> | undefined) {
+  if (!socialLinks) return {};
+  return Object.fromEntries(Object.entries(socialLinks).filter((entry): entry is [string, string] => Boolean(entry[1])));
+}
+
+function normalizeFallbackProperty(item: (typeof fallbackProperties)[number]): SiteProperty {
+  return {
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+    operation: item.operation,
+    type: item.type,
+    price: item.price,
+    image: item.image,
+    description: item.description,
+    location: item.location,
+    area: item.area,
+    landSize: item.landSize,
+    contactUrl: item.contactUrl,
+    isFeatured: item.isFeatured
+  };
 }
 
 function normalizeFallbackAttraction(item: (typeof fallbackAttractions)[number]): SiteAttraction {
