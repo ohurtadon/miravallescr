@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
-import { businesses, businessCategories } from "@/data/site";
+import type { SiteBusiness } from "@/lib/site-api";
 import { BusinessCard } from "./BusinessCard";
 import { SectionHeading } from "./SectionHeading";
 
 type BusinessDirectoryProps = {
+  businesses: SiteBusiness[];
+  businessCategories: string[];
   featuredOnly?: boolean;
   limit?: number;
   showHeading?: boolean;
@@ -15,6 +17,8 @@ type BusinessDirectoryProps = {
 };
 
 export function BusinessDirectory({
+  businesses,
+  businessCategories,
   featuredOnly = false,
   limit,
   showHeading = true,

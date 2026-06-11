@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck, MapPin, MessageCircle } from "lucide-react";
-import type { businesses } from "@/data/site";
-
-type Business = (typeof businesses)[number];
+import type { SiteBusiness } from "@/lib/site-api";
 
 type BusinessCardProps = {
-  business: Business;
+  business: SiteBusiness;
 };
 
 export function BusinessCard({ business }: BusinessCardProps) {

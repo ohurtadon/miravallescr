@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { promoSlots } from "@/data/site";
+import type { SitePromoSlot } from "@/lib/site-api";
 
 type PromoSlotProps = {
+  promoSlots: SitePromoSlot[];
   index?: number;
 };
 
-export function PromoSlot({ index = 0 }: PromoSlotProps) {
+export function PromoSlot({ promoSlots, index = 0 }: PromoSlotProps) {
+  if (!promoSlots.length) return null;
   const promo = promoSlots[index % promoSlots.length];
 
   return (

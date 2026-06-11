@@ -1,6 +1,6 @@
-import { stats } from "@/data/site";
+import type { SiteData } from "@/lib/site-api";
 
-export function Stats() {
+export function Stats({ stats }: { stats: SiteData["stats"] }) {
   return (
     <section className="bg-mist px-5 py-14 md:px-8">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden rounded-lg bg-canopy/10 md:grid-cols-4">

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { BadgeCheck, Clock, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
-import { businesses } from "@/data/site";
+import { getSiteData } from "@/lib/site-api";
 
 type BusinessPageProps = {
   params: Promise<{
@@ -13,12 +13,14 @@ type BusinessPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { businesses } = await getSiteData();
   return businesses.map((business) => ({ slug: business.slug }));
 }
 
 export async function generateMetadata({ params }: BusinessPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { businesses } = await getSiteData();
   const business = businesses.find((item) => item.slug === slug);
   if (!business) return {};
 
@@ -30,6 +32,8 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
 
 export default async function BusinessDetailPage({ params }: BusinessPageProps) {
   const { slug } = await params;
+  const siteData = await getSiteData();
+  const { businesses } = siteData;
   const business = businesses.find((item) => item.slug === slug);
   if (!business) notFound();
 
@@ -122,7 +126,7 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
         </aside>
       </div>
       <div className="-mx-5 mt-12 md:-mx-8">
-        <PromoSlot index={0} />
+        <PromoSlot promoSlots={siteData.promoSlots} index={0} />
       </div>
     </SimplePage>
   );

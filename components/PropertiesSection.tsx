@@ -4,10 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck, Home, MapPin, Ruler, Search } from "lucide-react";
 import { useMemo, useState } from "react";
-import { properties, propertyOperations, propertyTypes } from "@/data/site";
+import type { SiteProperty } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function PropertiesSection() {
+type PropertiesSectionProps = {
+  properties: SiteProperty[];
+  propertyOperations: string[];
+  propertyTypes: string[];
+};
+
+export function PropertiesSection({ properties, propertyOperations, propertyTypes }: PropertiesSectionProps) {
   const [selectedOperation, setSelectedOperation] = useState("Todos");
   const [selectedType, setSelectedType] = useState("Todos");
 

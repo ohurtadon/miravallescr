@@ -1,10 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { attractions } from "@/data/site";
+import { ArrowUpRight, Binoculars, Flame, Leaf, MapPin, Mountain, Sparkles, Waves } from "lucide-react";
+import type { SiteAttraction } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function AttractionsGrid() {
+const icons = {
+  Binoculars,
+  Flame,
+  Leaf,
+  MapPin,
+  Mountain,
+  Sparkles,
+  Waves
+};
+
+export function AttractionsGrid({ attractions }: { attractions: SiteAttraction[] }) {
   return (
     <section id="atractivos" className="bg-white px-5 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-7xl">
@@ -15,7 +25,7 @@ export function AttractionsGrid() {
         />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {attractions.map((item) => {
-            const Icon = item.icon;
+            const Icon = icons[item.icon as keyof typeof icons] ?? Leaf;
             return (
               <Link
                 key={item.slug}

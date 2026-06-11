@@ -1,11 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { experiences, experienceCategories } from "@/data/site";
+import type { SiteExperience } from "@/lib/site-api";
 import { ExperienceCard } from "./ExperienceCard";
 import { SectionHeading } from "./SectionHeading";
 
 type ExperiencesSectionProps = {
+  experiences: SiteExperience[];
+  experienceCategories: string[];
   featuredOnly?: boolean;
   limit?: number;
   showHeading?: boolean;
@@ -13,6 +15,8 @@ type ExperiencesSectionProps = {
 };
 
 export function ExperiencesSection({
+  experiences,
+  experienceCategories,
   featuredOnly = false,
   limit,
   showHeading = true,

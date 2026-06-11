@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SimplePage } from "@/components/SimplePage";
-import { attractions } from "@/data/site";
+import { getSiteData } from "@/lib/site-api";
 
 type AttractionPageProps = {
   params: Promise<{
@@ -9,12 +9,14 @@ type AttractionPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { attractions } = await getSiteData();
   return attractions.map((item) => ({ slug: item.slug }));
 }
 
 export async function generateMetadata({ params }: AttractionPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { attractions } = await getSiteData();
   const attraction = attractions.find((item) => item.slug === slug);
   if (!attraction) return {};
 
@@ -26,6 +28,7 @@ export async function generateMetadata({ params }: AttractionPageProps): Promise
 
 export default async function AttractionDetailPage({ params }: AttractionPageProps) {
   const { slug } = await params;
+  const { attractions } = await getSiteData();
   const attraction = attractions.find((item) => item.slug === slug);
   if (!attraction) notFound();
 
