@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { gallery } from "@/data/site";
+import type { SiteGalleryItem } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function GallerySection() {
-  const [active, setActive] = useState<(typeof gallery)[number] | null>(null);
+export function GallerySection({ gallery }: { gallery: SiteGalleryItem[] }) {
+  const [active, setActive] = useState<SiteGalleryItem | null>(null);
 
   return (
     <section className="bg-mist px-5 py-20 md:px-8 md:py-28">

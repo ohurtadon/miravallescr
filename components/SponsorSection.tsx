@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { sponsors } from "@/data/site";
+import type { SiteSponsor } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
 type SponsorSectionProps = {
+  sponsors: SiteSponsor[];
   compact?: boolean;
 };
 
-export function SponsorSection({ compact = false }: SponsorSectionProps) {
+export function SponsorSection({ sponsors, compact = false }: SponsorSectionProps) {
   const activeSponsors = sponsors.filter((sponsor) => sponsor.active);
 
   return (

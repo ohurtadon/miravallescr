@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Clock, Gauge, MapPin, MessageCircle, SunMedium, UserRound } from "lucide-react";
 import { ExperienceCard } from "@/components/ExperienceCard";
 import { SimplePage } from "@/components/SimplePage";
-import { experiences } from "@/data/site";
+import { getSiteData } from "@/lib/site-api";
 
 type ExperiencePageProps = {
   params: Promise<{
@@ -13,12 +13,14 @@ type ExperiencePageProps = {
   }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const { experiences } = await getSiteData();
   return experiences.map((experience) => ({ slug: experience.slug }));
 }
 
 export async function generateMetadata({ params }: ExperiencePageProps): Promise<Metadata> {
   const { slug } = await params;
+  const { experiences } = await getSiteData();
   const experience = experiences.find((item) => item.slug === slug);
   if (!experience) return {};
 
@@ -30,6 +32,7 @@ export async function generateMetadata({ params }: ExperiencePageProps): Promise
 
 export default async function ExperienceDetailPage({ params }: ExperiencePageProps) {
   const { slug } = await params;
+  const { experiences } = await getSiteData();
   const experience = experiences.find((item) => item.slug === slug);
   if (!experience) notFound();
 

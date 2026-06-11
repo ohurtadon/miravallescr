@@ -1,12 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck, Clock, Gauge, MessageCircle } from "lucide-react";
-import type { experiences } from "@/data/site";
-
-type Experience = (typeof experiences)[number];
+import type { SiteExperience } from "@/lib/site-api";
 
 type ExperienceCardProps = {
-  experience: Experience;
+  experience: SiteExperience;
 };
 
 export function ExperienceCard({ experience }: ExperienceCardProps) {

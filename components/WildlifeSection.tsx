@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bird, Flower2 } from "lucide-react";
-import { wildlife } from "@/data/site";
+import type { SiteData } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function WildlifeSection() {
+export function WildlifeSection({ wildlife }: { wildlife: SiteData["wildlife"] }) {
   return (
     <section className="bg-mist px-5 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-7xl">

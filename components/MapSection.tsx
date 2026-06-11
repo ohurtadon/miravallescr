@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { MapPin } from "lucide-react";
-import { mapPoints } from "@/data/site";
+import type { SiteMapPoint } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
 const categories = ["Todos", "Naturaleza", "Aventura", "Relajación", "Gastronomía", "Negocios locales", "Experiencias"];
 
-export function MapSection() {
+export function MapSection({ mapPoints }: { mapPoints: SiteMapPoint[] }) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState("Todos");
   const [mapReady, setMapReady] = useState(false);

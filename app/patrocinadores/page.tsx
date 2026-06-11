@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SponsorSection } from "@/components/SponsorSection";
 import { SimplePage } from "@/components/SimplePage";
+import { getSiteData } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Patrocinadores",
   description: "Aliados y patrocinadores que apoyan la promoción turística sostenible de Miravalles."
 };
 
-export default function SponsorsPage() {
+export default async function SponsorsPage() {
+  const { sponsors } = await getSiteData();
+
   return (
     <SimplePage
       eyebrow="Patrocinadores"
@@ -16,7 +19,7 @@ export default function SponsorsPage() {
       description="Espacio preparado para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable."
     >
       <div className="-mx-5 -my-16 md:-mx-8 md:-my-20">
-        <SponsorSection />
+        <SponsorSection sponsors={sponsors} />
       </div>
       <div className="mt-12 rounded-lg bg-white p-7 text-center ring-1 ring-canopy/10">
         <h2 className="font-display text-4xl font-bold text-canopy">¿Quiere apoyar la plataforma?</h2>
