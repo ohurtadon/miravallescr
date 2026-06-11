@@ -13,11 +13,6 @@ type ExperiencePageProps = {
   }>;
 };
 
-export async function generateStaticParams() {
-  const { experiences } = await getSiteData();
-  return experiences.map((experience) => ({ slug: experience.slug }));
-}
-
 export async function generateMetadata({ params }: ExperiencePageProps): Promise<Metadata> {
   const { slug } = await params;
   const { experiences } = await getSiteData();
