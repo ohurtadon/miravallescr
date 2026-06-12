@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=65",
-        width: 1600,
-        height: 900,
-        alt: "Paisaje natural de montaña y bosque tropical"
+        url: "/images/volcan-miravalles-arcoiris-guanacaste.webp",
+        width: 2752,
+        height: 1536,
+        alt: "Volcan Miravalles con paisaje eolico en Guanacaste"
       }
     ]
   },

@@ -73,6 +73,7 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
                   fill
                   className="object-cover"
                   sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
                 />
                 {property.isFeatured ? (
                   <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy shadow">

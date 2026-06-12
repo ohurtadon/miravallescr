@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BadgeCheck, Clock, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ImageCarousel } from "@/components/ImageCarousel";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
@@ -36,13 +36,13 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
     <SimplePage eyebrow={business.category} title={business.name} description={business.description}>
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            {business.images.map((image, index) => (
-              <div key={image} className={`relative overflow-hidden rounded-lg ${index === 0 ? "aspect-[16/10] md:col-span-2" : "aspect-[4/3]"}`}>
-                <Image src={image} alt={`${business.name} ${index + 1}`} fill className="object-cover" sizes="(min-width: 1024px) 60vw, 100vw" />
-              </div>
-            ))}
-          </div>
+          <ImageCarousel
+            images={business.images}
+            alt={business.name}
+            aspectClass="aspect-[16/10]"
+            sizes="(min-width: 1024px) 62vw, 100vw"
+            priority
+          />
           <article className="rounded-lg bg-white p-7 ring-1 ring-canopy/10">
             <div className="flex flex-wrap gap-2">
               {business.isFeatured ? (
