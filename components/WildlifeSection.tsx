@@ -4,27 +4,34 @@ import { Bird, Flower2 } from "lucide-react";
 import type { SiteData } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function WildlifeSection({ wildlife }: { wildlife: SiteData["wildlife"] }) {
+type WildlifeSectionProps = {
+  wildlife: SiteData["wildlife"];
+  showHeading?: boolean;
+};
+
+export function WildlifeSection({ wildlife, showHeading = true }: WildlifeSectionProps) {
   return (
-    <section className="bg-mist px-5 py-20 md:px-8 md:py-28">
+    <section className={`${showHeading ? "bg-mist" : "bg-white"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Flora y fauna"
-          title="Biodiversidad que marca el carácter de Miravalles"
-          copy="Bosques, aves, mamíferos y plantas tropicales hacen de la zona un aula viva para visitantes y comunidades."
-        />
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Flora y fauna"
+            title="Biodiversidad que marca el carácter de Miravalles"
+            copy="Bosques, aves, mamíferos y plantas tropicales hacen de la zona un aula viva para visitantes y comunidades."
+          />
+        ) : null}
+        <div className={`${showHeading ? "mt-12" : ""} grid gap-6 lg:grid-cols-2`}>
           <WildlifeCard
             title="Fauna"
             icon={<Bird className="size-6" aria-hidden="true" />}
-            image="https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=1100&q=80"
+            image="https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=1100&q=65"
             items={wildlife.fauna}
             href="/flora-fauna/fauna"
           />
           <WildlifeCard
             title="Flora"
             icon={<Flower2 className="size-6" aria-hidden="true" />}
-            image="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1100&q=80"
+            image="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1100&q=65"
             items={wildlife.flora}
             href="/flora-fauna/flora"
           />

@@ -8,7 +8,12 @@ import { SectionHeading } from "./SectionHeading";
 
 const categories = ["Todos", "Naturaleza", "Aventura", "Relajación", "Gastronomía", "Negocios locales", "Experiencias"];
 
-export function MapSection({ mapPoints }: { mapPoints: SiteMapPoint[] }) {
+type MapSectionProps = {
+  mapPoints: SiteMapPoint[];
+  showHeading?: boolean;
+};
+
+export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState("Todos");
   const [mapReady, setMapReady] = useState(false);
@@ -42,22 +47,26 @@ export function MapSection({ mapPoints }: { mapPoints: SiteMapPoint[] }) {
   }, []);
 
   return (
-    <section className="bg-canopy px-5 py-20 text-white md:px-8 md:py-28">
+    <section className={`${showHeading ? "bg-canopy text-white" : "bg-white text-canopy"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Mapa interactivo"
-          title="Ubica atractivos, experiencias y negocios locales"
-          copy="Filtra puntos de interés para armar una ruta según el tipo de experiencia, servicio o aliado que buscas."
-          light
-        />
-        <div className="mt-10 flex flex-wrap justify-center gap-2">
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Mapa interactivo"
+            title="Ubica atractivos, experiencias y negocios locales"
+            copy="Filtra puntos de interés para armar una ruta según el tipo de experiencia, servicio o aliado que buscas."
+            light
+          />
+        ) : null}
+        <div className={`${showHeading ? "mt-10" : ""} flex flex-wrap justify-center gap-3`}>
           {categories.map((category) => (
             <button
               key={category}
               type="button"
               onClick={() => setSelected(category)}
-              className={`rounded-md px-4 py-2 text-sm font-bold transition ${
-                selected === category ? "bg-sand text-canopy" : "bg-white/10 text-white ring-1 ring-white/15 hover:bg-white/16"
+              className={`min-h-11 rounded-md px-4 py-2 text-sm font-bold transition ${
+                selected === category
+                  ? showHeading ? "bg-sand text-canopy" : "bg-canopy text-white"
+                  : showHeading ? "bg-white/10 text-white ring-1 ring-white/15 hover:bg-white/16" : "bg-white text-canopy ring-1 ring-canopy/20 hover:bg-mist"
               }`}
             >
               {category}

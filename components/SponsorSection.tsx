@@ -6,22 +6,29 @@ import { SectionHeading } from "./SectionHeading";
 type SponsorSectionProps = {
   sponsors: SiteSponsor[];
   compact?: boolean;
+  showHeading?: boolean;
 };
 
-export function SponsorSection({ sponsors, compact = false }: SponsorSectionProps) {
+export function SponsorSection({ sponsors, compact = false, showHeading = true }: SponsorSectionProps) {
   const activeSponsors = sponsors.filter((sponsor) => sponsor.active);
 
   return (
-    <section className={`${compact ? "bg-white py-14" : "bg-white px-5 py-20 md:px-8 md:py-28"}`}>
+    <section
+      className={`${
+        compact
+          ? "bg-white py-14"
+          : `bg-white px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`
+      }`}
+    >
       <div className="mx-auto max-w-7xl">
-        {!compact ? (
+        {!compact && showHeading ? (
           <SectionHeading
             eyebrow="Patrocinadores"
             title="Aliados que apoyan el desarrollo turístico de Miravalles"
             copy="Espacios preparados para reconocer a negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable."
           />
         ) : null}
-        <div className={`${compact ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
+        <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
           {activeSponsors.map((sponsor) => (
             <Link
               key={sponsor.id}

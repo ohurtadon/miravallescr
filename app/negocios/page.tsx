@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BusinessDirectory } from "@/components/BusinessDirectory";
+import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SponsorSection } from "@/components/SponsorSection";
@@ -18,9 +19,17 @@ export default async function BusinessesPage() {
     <SimplePage
       eyebrow="Negocios locales"
       title="Directorio turístico de Miravalles"
-      description="Una estructura inicial para conectar visitantes con servicios locales y preparar futuras alianzas comerciales de forma elegante."
+      description="Te ayudamos a encontrar lo que necesitas, ya sea donde comer o hospedarte, incluso quien te lleve a tu destino."
     >
-      <div className="-mx-5 -my-16 md:-mx-8 md:-my-20">
+      <NarrativeBlock title="La experiencia también vive en los negocios locales">
+        <p>
+          Un destino se recuerda por sus paisajes, pero también por la comida después del camino, el hospedaje donde se descansa, la persona que recomienda una ruta y el emprendimiento que abre sus puertas con identidad propia.
+        </p>
+        <p>
+          Este directorio busca ordenar esa red local para que el visitante encuentre servicios útiles y para que los emprendimientos de Miravalles ganen visibilidad dentro de una plataforma turística regional.
+        </p>
+      </NarrativeBlock>
+      <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <BusinessDirectory businesses={siteData.businesses} businessCategories={siteData.businessCategories} showHeading={false} showFilters />
         <PromoSlot promoSlots={siteData.promoSlots} index={2} />
         <SponsorSection sponsors={siteData.sponsors} compact />

@@ -11,9 +11,10 @@ type PropertiesSectionProps = {
   properties: SiteProperty[];
   propertyOperations: string[];
   propertyTypes: string[];
+  showHeading?: boolean;
 };
 
-export function PropertiesSection({ properties, propertyOperations, propertyTypes }: PropertiesSectionProps) {
+export function PropertiesSection({ properties, propertyOperations, propertyTypes, showHeading = true }: PropertiesSectionProps) {
   const [selectedOperation, setSelectedOperation] = useState("Todos");
   const [selectedType, setSelectedType] = useState("Todos");
 
@@ -25,15 +26,17 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
   }, [selectedOperation, selectedType]);
 
   return (
-    <section className="bg-mist px-5 py-20 md:px-8 md:py-28">
+    <section className={`${showHeading ? "bg-mist" : "bg-white"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Propiedades"
-          title="Te gustó la zona, quieres vivir acá"
-          copy="Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en Miravalles."
-        />
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Propiedades"
+            title="Te gustó la zona, quieres vivir acá"
+            copy="Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en Miravalles."
+          />
+        ) : null}
 
-        <div className="mt-12 rounded-lg bg-white p-6 ring-1 ring-canopy/10">
+        <div className={`${showHeading ? "mt-12" : ""} rounded-lg bg-white p-6 ring-1 ring-canopy/10`}>
           <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar propiedades</p>

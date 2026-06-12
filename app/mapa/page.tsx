@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MapSection } from "@/components/MapSection";
+import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 
@@ -17,8 +18,16 @@ export default async function MapPage() {
       title="Puntos de interés para planificar la ruta"
       description="Ubica atractivos por categoría y construye una visita equilibrada entre aventura, relajación y gastronomía."
     >
-      <div className="-mx-5 -my-16 md:-mx-8 md:-my-20">
-        <MapSection mapPoints={mapPoints} />
+      <NarrativeBlock title="La ruta empieza antes de salir">
+        <p>
+          En Miravalles, las distancias no se miden solo en kilómetros. También importan el clima, el estado del camino, la hora de salida, el tiempo para detenerse y la cercanía entre una poza, un mirador, una comida local o una experiencia guiada.
+        </p>
+        <p>
+          Este mapa ayuda a imaginar el territorio como una ruta posible: una manera sencilla de ordenar el viaje y descubrir cómo cada punto se conecta con el volcán, las comunidades y el paisaje.
+        </p>
+      </NarrativeBlock>
+      <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
+        <MapSection mapPoints={mapPoints} showHeading={false} />
       </div>
     </SimplePage>
   );
