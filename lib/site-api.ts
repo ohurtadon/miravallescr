@@ -217,7 +217,7 @@ export async function getSiteData(): Promise<SiteData> {
 
 async function fetchCollection(collection: string) {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/${collection}?limit=100&sort=displayOrder,-updatedAt`, {
+    const response = await fetch(`${apiBaseUrl}/api/public/${collection}?limit=100&sort=displayOrder,-updatedAt`, {
       cache: "no-store"
     });
 
