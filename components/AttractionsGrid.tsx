@@ -14,16 +14,23 @@ const icons = {
   Waves
 };
 
-export function AttractionsGrid({ attractions }: { attractions: SiteAttraction[] }) {
+type AttractionsGridProps = {
+  attractions: SiteAttraction[];
+  showHeading?: boolean;
+};
+
+export function AttractionsGrid({ attractions, showHeading = true }: AttractionsGridProps) {
   return (
-    <section id="atractivos" className="bg-white px-5 py-20 md:px-8 md:py-28">
+    <section id="atractivos" className={`bg-white px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Principales atractivos"
-          title="Rutas naturales para cada ritmo de viaje"
-          copy="Agua, bosque, miradores y experiencias termales se combinan en un destino compacto y lleno de contrastes."
-        />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Principales atractivos"
+            title="Rutas naturales para cada ritmo de viaje"
+            copy="Agua, bosque, miradores y experiencias termales se combinan en un destino compacto y lleno de contrastes."
+          />
+        ) : null}
+        <div className={`${showHeading ? "mt-12" : ""} grid gap-5 sm:grid-cols-2 lg:grid-cols-3`}>
           {attractions.map((item) => {
             const Icon = icons[item.icon as keyof typeof icons] ?? Leaf;
             return (
@@ -39,6 +46,7 @@ export function AttractionsGrid({ attractions }: { attractions: SiteAttraction[]
                     fill
                     className="object-cover transition duration-700 group-hover:scale-105"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    loading="lazy"
                   />
                 </div>
                 <div className="p-6">
@@ -46,7 +54,7 @@ export function AttractionsGrid({ attractions }: { attractions: SiteAttraction[]
                     <span className="flex size-10 items-center justify-center rounded-full bg-forest text-white">
                       <Icon className="size-5" aria-hidden="true" />
                     </span>
-                    <ArrowUpRight className="size-5 text-moss transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                    <ArrowUpRight className="size-5 text-canopy transition group-hover:translate-x-1 group-hover:-translate-y-1" />
                   </div>
                   <h3 className="font-display text-2xl font-bold text-canopy">{item.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-volcanic">{item.summary}</p>

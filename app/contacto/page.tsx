@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
 
 export const metadata: Metadata = {
@@ -14,7 +15,15 @@ export default function ContactPage() {
       title="Planifica tu visita"
       description="Pronto se integrará información oficial de contacto, operadores locales y recomendaciones actualizadas."
     >
-      <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+      <NarrativeBlock title="La mejor ruta empieza con una buena pregunta">
+        <p>
+          Cada visita a Miravalles puede ser distinta: algunas personas buscan termales y descanso, otras quieren caminar, observar aves, encontrar un guía o ubicar un negocio local antes de salir.
+        </p>
+        <p>
+          Use este espacio para contar qué necesita. La idea es orientar mejor al visitante y conectar cada consulta con información útil, contactos locales o próximos contenidos de la guía regional.
+        </p>
+      </NarrativeBlock>
+      <div className="mt-10 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <div id="clima" className="rounded-lg bg-white p-7 shadow-sm ring-1 ring-canopy/10">
           <h2 className="font-display text-4xl font-bold text-canopy">Información</h2>
           <div className="mt-7 grid gap-4 text-volcanic">

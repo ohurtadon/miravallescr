@@ -39,7 +39,7 @@ export const attractions = [
     slug: "rio-blanco",
     summary: "Pozas cristalinas, bosque ribereño y rutas suaves para conectar con el agua.",
     image:
-      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=900&q=65",
     icon: Waves
   },
   {
@@ -47,7 +47,7 @@ export const attractions = [
     slug: "termales",
     summary: "Relajación natural entre vapor mineral, barro volcánico y paisaje tropical.",
     image:
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=65",
     icon: Sparkles
   },
   {
@@ -55,7 +55,7 @@ export const attractions = [
     slug: "volcan-miravalles",
     summary: "El origen geológico de la zona y un telón escénico para cada aventura.",
     image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=65",
     icon: Mountain
   },
   {
@@ -63,7 +63,7 @@ export const attractions = [
     slug: "senderos",
     summary: "Caminatas entre helechos, sombra fresca y sonidos vivos del bosque.",
     image:
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=65",
     icon: Leaf
   },
   {
@@ -71,7 +71,7 @@ export const attractions = [
     slug: "aves",
     summary: "Tucanes, colibríes y aves migratorias en corredores biológicos activos.",
     image:
-      "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=900&q=65",
     icon: Binoculars
   },
   {
@@ -79,7 +79,7 @@ export const attractions = [
     slug: "miradores",
     summary: "Vistas amplias hacia las montañas, pueblos y mosaicos verdes de Guanacaste.",
     image:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=65",
     icon: MapPin
   }
 ];
@@ -98,7 +98,7 @@ export const experiences = [
     description:
       "Recorrido interpretativo por bosque, nacientes y miradores para conocer el paisaje volcánico con bajo impacto.",
     image:
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1000&q=65",
     duration: "2-4 horas",
     difficulty: "Baja a media",
     price: "Desde $35",
@@ -118,7 +118,7 @@ export const experiences = [
     description:
       "Experiencia de bienestar con aguas termales, barro volcánico y tiempo libre para descansar entre naturaleza.",
     image:
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1000&q=65",
     duration: "Medio día",
     difficulty: "Baja",
     price: "Consultar",
@@ -138,7 +138,7 @@ export const experiences = [
     description:
       "Salida temprana para avistar tucanes, colibríes y especies migratorias en corredores biológicos cercanos.",
     image:
-      "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=1000&q=65",
     duration: "3 horas",
     difficulty: "Baja",
     price: "Desde $45",
@@ -158,7 +158,7 @@ export const experiences = [
     description:
       "Ruta pausada para capturar ríos, vapor termal, miradores y detalles de flora tropical con acompañamiento local.",
     image:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1000&q=65",
     duration: "4 horas",
     difficulty: "Media",
     price: "Consultar",
@@ -178,7 +178,7 @@ export const experiences = [
     description:
       "Visita a emprendimientos, productores y paisajes de comunidad para conocer el Miravalles cotidiano.",
     image:
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1000&q=65",
     duration: "Medio día",
     difficulty: "Baja",
     price: "Desde $30",
@@ -226,7 +226,7 @@ export const properties = [
     type: "Casa",
     price: "$185,000",
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=65",
     description:
       "Casa rodeada de vegetación, ideal para vivir cerca de rutas naturales y servicios locales.",
     location: "Camino a Miravalles",
@@ -243,7 +243,7 @@ export const properties = [
     type: "Finca",
     price: "Consultar",
     image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=65",
     description:
       "Terreno amplio con potencial para proyecto familiar, agroecológico o turismo rural de baja escala.",
     location: "Zona rural de Miravalles",
@@ -260,7 +260,7 @@ export const properties = [
     type: "Lote",
     price: "$48,000",
     image:
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65",
     description:
       "Lote de ejemplo para residencia o cabaña, con vista abierta y acceso por camino local.",
     location: "Mirador de Miravalles",
@@ -277,7 +277,7 @@ export const properties = [
     type: "Casa",
     price: "$650 / mes",
     image:
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200&q=65",
     description:
       "Opción temporal para quienes desean probar la zona antes de comprar o invertir.",
     location: "Cerca del centro",
@@ -294,7 +294,7 @@ export const properties = [
     type: "Comercio",
     price: "$900 / mes",
     image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=65",
     description:
       "Espacio comercial de ejemplo para emprendimiento ligado a visitantes, productos locales o servicios turísticos.",
     location: "Ruta de acceso principal",
@@ -315,8 +315,8 @@ export const businesses = [
     longDescription:
       "Un hospedaje de ejemplo pensado para visitantes que buscan descanso, naturaleza y acceso sencillo a rutas de Miravalles. Esta ficha está lista para reemplazarse por datos reales del negocio.",
     images: [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=65",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Camino a Miravalles",
     coordinates: { lat: 10.72, lng: -85.15 },
@@ -339,8 +339,8 @@ export const businesses = [
     longDescription:
       "Restaurante de ejemplo para mostrar cómo el directorio puede destacar gastronomía local, horarios, servicios y botones de contacto directo.",
     images: [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=65",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Centro de la comunidad",
     coordinates: { lat: 10.69, lng: -85.17 },
@@ -362,8 +362,8 @@ export const businesses = [
     longDescription:
       "Servicio de guía de ejemplo para estructurar futuras alianzas con guías certificados y operadores locales.",
     images: [
-      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=65",
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Miravalles y alrededores",
     coordinates: { lat: 10.74, lng: -85.13 },
@@ -386,8 +386,8 @@ export const businesses = [
     longDescription:
       "Ficha de ejemplo para termales, preparada para integrar precios, horarios, galería y contacto directo.",
     images: [
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=65",
+      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Zona termal",
     coordinates: { lat: 10.71, lng: -85.18 },
@@ -409,8 +409,8 @@ export const businesses = [
     longDescription:
       "Ejemplo de negocio para productores locales y artesanos que quieran visibilidad dentro del portal turístico.",
     images: [
-      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=65",
+      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Ruta rural de Miravalles",
     coordinates: { lat: 10.68, lng: -85.16 },
@@ -432,7 +432,7 @@ export const businesses = [
     longDescription:
       "Ficha de ejemplo para transporte turístico local, útil para futuras alianzas y consultas de disponibilidad.",
     images: [
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65"
     ],
     location: "Miravalles y conexiones cercanas",
     coordinates: { lat: 10.7, lng: -85.14 },
@@ -479,11 +479,11 @@ export const sponsors = [
 
 export const promoSlots = [
   {
-    eyebrow: "Hospedaje recomendado",
-    title: "Quédate cerca de senderos, termales y miradores",
-    description: "Espacio preparado para destacar hospedajes aliados con una presencia sobria y útil para el visitante.",
-    href: "/negocios/lodge-bosque-miravalles",
-    cta: "Ver hospedaje"
+    eyebrow: "Guia regional",
+    title: "Planifique su visita a Miravalles con orientacion local",
+    description: "Solicite informacion sobre atractivos, rutas, termales, negocios y recomendaciones mientras preparamos la guia descargable oficial.",
+    href: "/contacto",
+    cta: "Solicitar guia"
   },
   {
     eyebrow: "Tour destacado",
@@ -503,27 +503,27 @@ export const promoSlots = [
 
 export const gallery = [
   {
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=65",
     alt: "Bosque tropical con luz de amanecer",
     span: "md:row-span-2"
   },
   {
-    src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=65",
     alt: "Paisaje verde de montaña",
     span: ""
   },
   {
-    src: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=65",
     alt: "Agua natural en movimiento",
     span: ""
   },
   {
-    src: "https://images.unsplash.com/photo-1542202229-7d93c33f5d07?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1542202229-7d93c33f5d07?auto=format&fit=crop&w=900&q=65",
     alt: "Sendero dentro de bosque",
     span: "md:row-span-2"
   },
   {
-    src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80",
+    src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=65",
     alt: "Valle y río en paisaje natural",
     span: ""
   }

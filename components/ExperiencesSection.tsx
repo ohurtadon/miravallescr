@@ -33,7 +33,7 @@ export function ExperiencesSection({
   }, [featuredOnly, limit, selectedCategory]);
 
   return (
-    <section className="bg-white px-5 py-20 md:px-8 md:py-28">
+    <section className={`bg-white px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
@@ -53,16 +53,16 @@ export function ExperiencesSection({
                 {items.length} {items.length === 1 ? "resultado" : "resultados"}
               </p>
             </div>
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-3">
               {["Todos", ...experienceCategories].map((category) => (
                 <button
                   key={category}
                   type="button"
                   onClick={() => setSelectedCategory(category)}
-                  className={`rounded-md px-4 py-3 text-sm font-bold transition ${
+                  className={`min-h-12 rounded-md px-4 py-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-river focus:ring-offset-2 ${
                     selectedCategory === category
-                      ? "bg-forest text-white"
-                      : "bg-white text-volcanic ring-1 ring-canopy/10 hover:bg-sand hover:text-canopy"
+                      ? "bg-canopy text-white"
+                      : "bg-white text-canopy ring-1 ring-canopy/25 hover:bg-sand"
                   }`}
                 >
                   {category}
@@ -71,7 +71,7 @@ export function ExperiencesSection({
             </div>
           </div>
         ) : null}
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
+        <div className={`${showHeading || showFilters ? "mt-12" : ""} grid gap-5 md:grid-cols-3`}>
           {items.map((experience) => (
             <ExperienceCard key={experience.id} experience={experience} />
           ))}

@@ -6,24 +6,31 @@ import { useState } from "react";
 import type { SiteGalleryItem } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
-export function GallerySection({ gallery }: { gallery: SiteGalleryItem[] }) {
+type GallerySectionProps = {
+  gallery: SiteGalleryItem[];
+  showHeading?: boolean;
+};
+
+export function GallerySection({ gallery, showHeading = true }: GallerySectionProps) {
   const [active, setActive] = useState<SiteGalleryItem | null>(null);
 
   return (
-    <section className="bg-mist px-5 py-20 md:px-8 md:py-28">
+    <section className={`${showHeading ? "bg-mist" : "bg-white"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          eyebrow="Galería"
-          title="Primeras postales de la experiencia Miravalles"
-          copy="Estas imágenes son referenciales y serán reemplazadas por material real de la zona en próximas iteraciones."
-        />
-        <div className="mt-12 grid auto-rows-[260px] gap-4 md:grid-cols-3">
+        {showHeading ? (
+          <SectionHeading
+            eyebrow="Galería"
+            title="Primeras postales de la experiencia Miravalles"
+            copy="Estas imágenes son referenciales y serán reemplazadas por material real de la zona en próximas iteraciones."
+          />
+        ) : null}
+        <div className={`${showHeading ? "mt-12" : ""} grid auto-rows-[260px] gap-4 md:grid-cols-3`}>
           {gallery.map((item) => (
             <button
               key={item.src}
               type="button"
               onClick={() => setActive(item)}
-              className={`group relative overflow-hidden rounded-lg text-left shadow-sm ${item.span}`}
+              className={`group relative min-h-12 overflow-hidden rounded-lg text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-river focus:ring-offset-2 ${item.span}`}
             >
               <Image
                 src={item.src}
@@ -31,6 +38,7 @@ export function GallerySection({ gallery }: { gallery: SiteGalleryItem[] }) {
                 fill
                 className="object-cover transition duration-700 group-hover:scale-105"
                 sizes="(min-width: 768px) 33vw, 100vw"
+                loading="lazy"
               />
               <span className="absolute inset-0 bg-canopy/0 transition group-hover:bg-canopy/20" />
             </button>
