@@ -11,7 +11,7 @@ import {
   wildlife as fallbackWildlife
 } from "@/data/site";
 
-const apiBaseUrl = (process.env.MIRAVALLESGTE_API_URL ?? "https://miravallesgte-api.onrender.com").replace(/\/$/, "");
+const apiBaseUrl = process.env.MIRAVALLESGTE_API_URL?.replace(/\/$/, "");
 
 type ApiList<T> = {
   items: T[];
@@ -216,6 +216,8 @@ export async function getSiteData(): Promise<SiteData> {
 }
 
 async function fetchCollection(collection: string) {
+  if (!apiBaseUrl) return [];
+
   try {
     const response = await fetch(`${apiBaseUrl}/api/public/${collection}?limit=100&sort=displayOrder,-updatedAt`, {
       cache: "no-store"
