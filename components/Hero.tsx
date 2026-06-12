@@ -6,8 +6,8 @@ export function Hero() {
   return (
     <section className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
       <Image
-        src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=65"
-        alt="Bosque tropical en la region del Volcan Miravalles, Guanacaste"
+        src="/images/volcan-miravalles-arcoiris-guanacaste.webp"
+        alt="Volcan Miravalles con paisaje eolico en Guanacaste"
         fill
         priority
         className="object-cover"
@@ -33,13 +33,6 @@ export function Hero() {
             >
               Explorar Miravalles
               <ArrowDown className="size-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/alianzas"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white/14 px-6 py-4 text-sm font-bold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/24 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-canopy"
-            >
-              Registrar mi negocio
-              <Store className="size-4" aria-hidden="true" />
             </Link>
           </div>
         </div>

@@ -11,7 +11,7 @@ import {
   wildlife as fallbackWildlife
 } from "@/data/site";
 
-const apiBaseUrl = process.env.MIRAVALLESGTE_API_URL?.replace(/\/$/, "");
+const apiBaseUrl = (process.env.MIRAVALLESGTE_API_URL || "https://miravallesgte-api.onrender.com").replace(/\/$/, "");
 
 type ApiList<T> = {
   items: T[];
@@ -52,6 +52,7 @@ export type SiteExperience = {
   category: string;
   description: string;
   image: string;
+  images: string[];
   duration: string;
   difficulty: string;
   price: string;
@@ -71,6 +72,7 @@ export type SiteProperty = {
   type: string;
   price: string;
   image: string;
+  images: string[];
   description: string;
   location: string;
   area: string;
@@ -85,6 +87,7 @@ export type SiteAttraction = {
   summary: string;
   description?: string;
   image: string;
+  images: string[];
   icon: string;
 };
 
@@ -256,6 +259,7 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
 
 function normalizeExperience(item: ApiRecord): SiteExperience {
   const provider = typeof item.providerBusinessId === "object" ? item.providerBusinessId?.name : item.providerSnapshot?.name;
+  const images = normalizeImages(item.images);
 
   return {
     id: item._id,
@@ -263,7 +267,8 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
     slug: item.slug,
     category: item.category,
     description: item.summary || item.description || "",
-    image: normalizeImages(item.images)[0] || fallbackExperiences[0].image,
+    image: images[0] || fallbackExperiences[0].image,
+    images: images.length ? images : [fallbackExperiences[0].image],
     duration: item.duration || "Consultar",
     difficulty: item.difficulty || "Consultar",
     price: item.price || "Consultar",
@@ -277,6 +282,8 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
 }
 
 function normalizeProperty(item: ApiRecord): SiteProperty {
+  const images = normalizeImages(item.images);
+
   return {
     id: item._id,
     title: item.title,
@@ -284,7 +291,8 @@ function normalizeProperty(item: ApiRecord): SiteProperty {
     operation: item.operation === "rent" ? "Alquiler" : "Venta",
     type: item.type,
     price: item.price?.label || (item.price?.amount ? `${item.price.currency || "USD"} ${item.price.amount}` : "Consultar"),
-    image: normalizeImages(item.images)[0] || fallbackProperties[0].image,
+    image: images[0] || fallbackProperties[0].image,
+    images: images.length ? images : [fallbackProperties[0].image],
     description: item.summary || item.description || "",
     location: item.location?.text || "Miravalles",
     area: item.area || "Consultar",
@@ -295,12 +303,15 @@ function normalizeProperty(item: ApiRecord): SiteProperty {
 }
 
 function normalizeAttraction(item: ApiRecord): SiteAttraction {
+  const images = normalizeImages(item.images);
+
   return {
     title: item.title,
     slug: item.slug,
     summary: item.summary || item.description || "",
     description: item.description,
-    image: normalizeImages(item.images)[0] || fallbackAttractions[0].image,
+    image: images[0] || fallbackAttractions[0].image,
+    images: images.length ? images : [fallbackAttractions[0].image],
     icon: item.icon || "Leaf"
   };
 }
@@ -422,7 +433,11 @@ function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): S
   };
 }
 
-function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number]): SiteExperience {
+function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number], index: number): SiteExperience {
+  const images = "images" in item && Array.isArray(item.images)
+    ? item.images
+    : [item.image, fallbackGallery[index % fallbackGallery.length].src];
+
   return {
     id: item.id,
     title: item.title,
@@ -430,6 +445,7 @@ function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number])
     category: item.category,
     description: item.description,
     image: item.image,
+    images,
     duration: item.duration,
     difficulty: item.difficulty,
     price: item.price,
@@ -447,7 +463,11 @@ function sanitizeSocialLinks(socialLinks: Record<string, string | undefined> | u
   return Object.fromEntries(Object.entries(socialLinks).filter((entry): entry is [string, string] => Boolean(entry[1])));
 }
 
-function normalizeFallbackProperty(item: (typeof fallbackProperties)[number]): SiteProperty {
+function normalizeFallbackProperty(item: (typeof fallbackProperties)[number], index: number): SiteProperty {
+  const images = "images" in item && Array.isArray(item.images)
+    ? item.images
+    : [item.image, fallbackGallery[index % fallbackGallery.length].src];
+
   return {
     id: item.id,
     title: item.title,
@@ -456,6 +476,7 @@ function normalizeFallbackProperty(item: (typeof fallbackProperties)[number]): S
     type: item.type,
     price: item.price,
     image: item.image,
+    images,
     description: item.description,
     location: item.location,
     area: item.area,
@@ -465,12 +486,17 @@ function normalizeFallbackProperty(item: (typeof fallbackProperties)[number]): S
   };
 }
 
-function normalizeFallbackAttraction(item: (typeof fallbackAttractions)[number]): SiteAttraction {
+function normalizeFallbackAttraction(item: (typeof fallbackAttractions)[number], index: number): SiteAttraction {
+  const images = "images" in item && Array.isArray(item.images)
+    ? item.images
+    : [item.image, fallbackGallery[index % fallbackGallery.length].src];
+
   return {
     title: item.title,
     slug: item.slug,
     summary: item.summary,
     image: item.image,
+    images,
     icon: item.icon.displayName || item.icon.name || "Leaf"
   };
 }

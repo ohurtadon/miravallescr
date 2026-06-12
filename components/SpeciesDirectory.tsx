@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Leaf, Search, X } from "lucide-react";
+import { Leaf, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { SiteSpecies } from "@/lib/site-api";
 
@@ -13,7 +13,6 @@ type SpeciesDirectoryProps = {
 export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [search, setSearch] = useState("");
-  const [active, setActive] = useState<SiteSpecies | null>(null);
 
   const items = useMemo(() => species.filter((item) => item.type === type), [species, type]);
   const categories = useMemo(() => ["Todos", ...new Set(items.map((item) => item.category).filter(Boolean))], [items]);
@@ -72,11 +71,9 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((item) => (
-          <button
+          <article
             key={item.id}
-            type="button"
-            onClick={() => setActive(item)}
-            className="group overflow-hidden rounded-lg bg-white text-left shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft"
+            className="group overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-mist">
               {item.image ? (
@@ -97,58 +94,27 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{item.category}</p>
               <h2 className="mt-3 font-display text-3xl font-bold text-canopy">{item.commonName}</h2>
               {item.scientificName ? <p className="mt-1 text-sm italic text-volcanic">{item.scientificName}</p> : null}
-              <p className="mt-3 line-clamp-3 text-sm leading-7 text-volcanic">{item.summary}</p>
+              <p className="mt-3 text-sm leading-7 text-volcanic">{item.description || item.summary}</p>
+              {item.habitat || item.conservationStatus ? (
+                <dl className="mt-5 grid gap-3 text-sm">
+                  {item.habitat ? (
+                    <div className="rounded-md bg-mist p-4">
+                      <dt className="font-bold text-canopy">Hábitat</dt>
+                      <dd className="mt-1 text-volcanic">{item.habitat}</dd>
+                    </div>
+                  ) : null}
+                  {item.conservationStatus ? (
+                    <div className="rounded-md bg-mist p-4">
+                      <dt className="font-bold text-canopy">Estado de conservación</dt>
+                      <dd className="mt-1 text-volcanic">{item.conservationStatus}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              ) : null}
             </div>
-          </button>
+          </article>
         ))}
       </div>
-
-      {active ? <SpeciesModal species={active} onClose={() => setActive(null)} /> : null}
     </>
-  );
-}
-
-function SpeciesModal({ species, onClose }: { species: SiteSpecies; onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-canopy/85 p-5" role="dialog" aria-modal="true" onClick={onClose}>
-      <article className="max-h-[90vh] w-full max-w-5xl overflow-auto rounded-lg bg-white shadow-soft" onClick={(event) => event.stopPropagation()}>
-        <div className="flex items-center justify-between border-b border-canopy/10 p-4">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{species.category}</p>
-          <button type="button" onClick={onClose} className="grid size-10 place-items-center rounded-md bg-mist text-canopy" aria-label="Cerrar">
-            <X className="size-4" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="grid gap-0 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative min-h-80 bg-mist">
-            {species.image ? (
-              <Image src={species.image} alt={species.commonName} fill className="object-cover" sizes="(min-width: 1024px) 45vw, 100vw" />
-            ) : (
-              <div className="grid h-full place-items-center text-forest">
-                <Leaf className="size-16" aria-hidden="true" />
-              </div>
-            )}
-          </div>
-          <div className="p-7">
-            <h2 className="font-display text-5xl font-bold text-canopy">{species.commonName}</h2>
-            {species.scientificName ? <p className="mt-2 text-lg italic text-volcanic">{species.scientificName}</p> : null}
-            <p className="mt-5 text-lg leading-8 text-volcanic">{species.description}</p>
-            <dl className="mt-7 grid gap-4 text-sm">
-              {species.habitat ? (
-                <div className="rounded-md bg-mist p-4">
-                  <dt className="font-bold text-canopy">Hábitat</dt>
-                  <dd className="mt-1 text-volcanic">{species.habitat}</dd>
-                </div>
-              ) : null}
-              {species.conservationStatus ? (
-                <div className="rounded-md bg-mist p-4">
-                  <dt className="font-bold text-canopy">Estado de conservación</dt>
-                  <dd className="mt-1 text-volcanic">{species.conservationStatus}</dd>
-                </div>
-              ) : null}
-            </dl>
-          </div>
-        </div>
-      </article>
-    </div>
   );
 }

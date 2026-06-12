@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock, Gauge, MapPin, MessageCircle, SunMedium, UserRound } from "lucide-react";
 import { ExperienceCard } from "@/components/ExperienceCard";
+import { ImageCarousel } from "@/components/ImageCarousel";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 
@@ -37,9 +37,13 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
     <SimplePage eyebrow={experience.category} title={experience.title} description={experience.description}>
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="rounded-lg bg-white p-6 ring-1 ring-canopy/10">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-lg">
-            <Image src={experience.image} alt={experience.title} fill className="object-cover" sizes="(min-width: 1024px) 65vw, 100vw" />
-          </div>
+          <ImageCarousel
+            images={experience.images}
+            alt={experience.title}
+            aspectClass="aspect-[16/10]"
+            sizes="(min-width: 1024px) 65vw, 100vw"
+            priority
+          />
           <h2 className="mt-8 font-display text-4xl font-bold text-canopy">Descripción</h2>
           <p className="mt-4 text-lg leading-8 text-volcanic">{experience.description}</p>
           <p className="mt-4 text-lg leading-8 text-volcanic">
