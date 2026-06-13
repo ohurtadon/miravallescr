@@ -8,8 +8,8 @@ export function DiscoverSection() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-soft">
           <Image
-            src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1300&q=65"
-            alt="Panorama verde de montaña"
+            src="/images/sitio-atardecer.webp"
+            alt="Atardecer en Miravalles - Eolicas"
             fill
             className="object-cover"
             sizes="(min-width: 1024px) 52vw, 100vw"
