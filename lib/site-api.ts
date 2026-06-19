@@ -3,7 +3,6 @@ import {
   businesses as fallbackBusinesses,
   experiences as fallbackExperiences,
   gallery as fallbackGallery,
-  mapPoints as fallbackMapPoints,
   promoSlots as fallbackPromoSlots,
   properties as fallbackProperties,
   sponsors as fallbackSponsors,
@@ -82,13 +81,17 @@ export type SiteProperty = {
 };
 
 export type SiteAttraction = {
+  id: string;
   title: string;
   slug: string;
+  category: string;
   summary: string;
   description?: string;
   image: string;
   images: string[];
   icon: string;
+  location: string;
+  coordinates?: { lat: number; lng: number };
 };
 
 export type SiteSponsor = {
@@ -116,8 +119,15 @@ export type SiteGalleryItem = {
 };
 
 export type SiteMapPoint = {
+  id: string;
   name: string;
   category: string;
+  kind: "business" | "attraction";
+  summary: string;
+  image?: string;
+  href: string;
+  location: string;
+  approximate: boolean;
   lng: number;
   lat: number;
 };
@@ -156,7 +166,7 @@ export type SiteData = {
 };
 
 export async function getSiteData(): Promise<SiteData> {
-  const [businesses, experiences, properties, attractions, species, sponsors, promoSlots, gallery, mapPoints, settings] =
+  const [businesses, experiences, properties, attractions, species, sponsors, promoSlots, gallery, settings] =
     await Promise.all([
       fetchCollection("businesses"),
       fetchCollection("experiences"),
@@ -166,7 +176,6 @@ export async function getSiteData(): Promise<SiteData> {
       fetchCollection("sponsors"),
       fetchCollection("promo-slots"),
       fetchCollection("gallery-assets"),
-      fetchCollection("map-points"),
       fetchCollection("site-settings")
     ]);
 
@@ -177,7 +186,6 @@ export async function getSiteData(): Promise<SiteData> {
   const normalizedSponsors = published(sponsors).map(normalizeSponsor);
   const normalizedPromoSlots = promoSlots.filter((item) => item.active !== false).map(normalizePromoSlot);
   const normalizedGallery = published(gallery).map(normalizeGalleryAsset);
-  const normalizedMapPoints = mapPoints.filter((item) => item.visible !== false).map(normalizeMapPoint);
   const normalizedSpecies = published(species).map(normalizeSpecies);
   const speciesSource = normalizedSpecies.length ? normalizedSpecies : normalizeFallbackSpecies();
   const mainSettings = settings.find((item) => item.key === "main")?.value;
@@ -206,7 +214,10 @@ export async function getSiteData(): Promise<SiteData> {
       "Turismo rural"
     ]),
     gallery: normalizedGallery.length ? normalizedGallery : fallbackGallery,
-    mapPoints: normalizedMapPoints.length ? normalizedMapPoints : fallbackMapPoints,
+    mapPoints: buildMapPoints(
+      normalizedBusinesses.length ? normalizedBusinesses : fallbackBusinesses.map(normalizeFallbackBusiness),
+      normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction)
+    ),
     promoSlots: normalizedPromoSlots.length ? normalizedPromoSlots : fallbackPromoSlots,
     properties: normalizedProperties.length ? normalizedProperties : fallbackProperties.map(normalizeFallbackProperty),
     propertyOperations: unique(normalizedProperties.map((item) => item.operation), ["Venta", "Alquiler"]),
@@ -306,13 +317,17 @@ function normalizeAttraction(item: ApiRecord): SiteAttraction {
   const images = normalizeImages(item.images);
 
   return {
+    id: item._id,
     title: item.title,
     slug: item.slug,
+    category: item.category || "Atractivo",
     summary: item.summary || item.description || "",
     description: item.description,
     image: images[0] || fallbackAttractions[0].image,
     images: images.length ? images : [fallbackAttractions[0].image],
-    icon: item.icon || "Leaf"
+    icon: item.icon || "Leaf",
+    location: item.location?.text || "Miravalles",
+    coordinates: item.location?.coordinates
   };
 }
 
@@ -343,15 +358,6 @@ function normalizeGalleryAsset(item: ApiRecord): SiteGalleryItem {
     src: item.url,
     alt: item.alt || item.title || "Imagen de Miravalles",
     span: ""
-  };
-}
-
-function normalizeMapPoint(item: ApiRecord): SiteMapPoint {
-  return {
-    name: item.name,
-    category: item.category,
-    lat: item.coordinates?.lat ?? 10.72,
-    lng: item.coordinates?.lng ?? -85.15
   };
 }
 
@@ -421,6 +427,7 @@ function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): S
     longDescription: item.longDescription,
     images: item.images,
     location: item.location,
+    coordinates: item.coordinates,
     phone: item.phone,
     whatsapp: item.whatsapp,
     website: item.website,
@@ -492,13 +499,63 @@ function normalizeFallbackAttraction(item: (typeof fallbackAttractions)[number],
     : [item.image, fallbackGallery[index % fallbackGallery.length].src];
 
   return {
+    id: `attraction-${item.slug}`,
     title: item.title,
     slug: item.slug,
+    category: "Atractivo",
     summary: item.summary,
     image: item.image,
     images,
-    icon: item.icon.displayName || item.icon.name || "Leaf"
+    icon: item.icon.displayName || item.icon.name || "Leaf",
+    location: "Miravalles",
+    coordinates: undefined
   };
+}
+
+function buildMapPoints(businesses: SiteBusiness[], attractions: SiteAttraction[]): SiteMapPoint[] {
+  const businessPoints = businesses
+    .filter((item) => validCoordinates(item.coordinates))
+    .map((item) => ({
+      id: item.id,
+      name: item.name,
+      category: item.category,
+      kind: "business" as const,
+      summary: item.description,
+      image: item.images[0],
+      href: `/negocios/${item.slug}`,
+      location: item.location,
+      approximate: true,
+      lat: item.coordinates!.lat,
+      lng: item.coordinates!.lng
+    }));
+
+  const attractionPoints = attractions
+    .filter((item) => validCoordinates(item.coordinates))
+    .map((item) => ({
+      id: item.id,
+      name: item.title,
+      category: item.category,
+      kind: "attraction" as const,
+      summary: item.summary,
+      image: item.image,
+      href: `/atractivos/${item.slug}`,
+      location: item.location,
+      approximate: true,
+      lat: item.coordinates!.lat,
+      lng: item.coordinates!.lng
+    }));
+
+  return [...attractionPoints, ...businessPoints];
+}
+
+function validCoordinates(coordinates?: { lat: number; lng: number }) {
+  return Boolean(
+    coordinates &&
+    Number.isFinite(coordinates.lat) &&
+    Number.isFinite(coordinates.lng) &&
+    coordinates.lat >= -90 && coordinates.lat <= 90 &&
+    coordinates.lng >= -180 && coordinates.lng <= 180
+  );
 }
 
 function unique(values: string[], fallback: string[]) {
