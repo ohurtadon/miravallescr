@@ -31,6 +31,49 @@ img {
   text-wrap: balance;
 }
 
-.mapboxgl-control-container {
-  display: none;
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-attrib {
+  opacity: 0.82;
+}
+
+.map-marker {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 3px solid white;
+  border-radius: 9999px 9999px 9999px 4px;
+  color: white;
+  box-shadow: 0 8px 20px rgb(18 52 39 / 30%);
+  cursor: pointer;
+  transform: rotate(-45deg);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.map-marker svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  transform: rotate(45deg);
+}
+
+.map-marker--business {
+  background: #2f5d3a;
+}
+
+.map-marker--attraction {
+  background: #3e7ea8;
+}
+
+.map-marker:hover,
+.map-marker:focus-visible,
+.map-marker.is-selected {
+  z-index: 2;
+  outline: none;
+  box-shadow: 0 0 0 4px rgb(234 197 104 / 70%), 0 10px 24px rgb(18 52 39 / 38%);
+  transform: rotate(-45deg) scale(1.12);
 }
