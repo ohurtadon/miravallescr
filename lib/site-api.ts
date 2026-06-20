@@ -3,7 +3,6 @@ import {
   businesses as fallbackBusinesses,
   experiences as fallbackExperiences,
   gallery as fallbackGallery,
-  promoSlots as fallbackPromoSlots,
   properties as fallbackProperties,
   sponsors as fallbackSponsors,
   stats as fallbackStats,
@@ -112,6 +111,15 @@ export type SitePromoSlot = {
   cta: string;
 };
 
+export type SitePromotion = SitePromoSlot & {
+  serveId: string;
+  promotionId?: string;
+  targetType: "business";
+  targetId: string;
+  category: string;
+  clickHref: string;
+};
+
 export type SiteGalleryItem = {
   src: string;
   alt: string;
@@ -155,7 +163,6 @@ export type SiteData = {
   experienceCategories: string[];
   gallery: SiteGalleryItem[];
   mapPoints: SiteMapPoint[];
-  promoSlots: SitePromoSlot[];
   properties: SiteProperty[];
   propertyOperations: string[];
   propertyTypes: string[];
@@ -166,7 +173,7 @@ export type SiteData = {
 };
 
 export async function getSiteData(): Promise<SiteData> {
-  const [businesses, experiences, properties, attractions, species, sponsors, promoSlots, gallery, settings] =
+  const [businesses, experiences, properties, attractions, species, sponsors, gallery, settings] =
     await Promise.all([
       fetchCollection("businesses"),
       fetchCollection("experiences"),
@@ -174,7 +181,6 @@ export async function getSiteData(): Promise<SiteData> {
       fetchCollection("attractions"),
       fetchCollection("species"),
       fetchCollection("sponsors"),
-      fetchCollection("promo-slots"),
       fetchCollection("gallery-assets"),
       fetchCollection("site-settings")
     ]);
@@ -184,7 +190,6 @@ export async function getSiteData(): Promise<SiteData> {
   const normalizedProperties = published(properties).map(normalizeProperty);
   const normalizedAttractions = published(attractions).map(normalizeAttraction);
   const normalizedSponsors = published(sponsors).map(normalizeSponsor);
-  const normalizedPromoSlots = promoSlots.filter((item) => item.active !== false).map(normalizePromoSlot);
   const normalizedGallery = published(gallery).map(normalizeGalleryAsset);
   const normalizedSpecies = published(species).map(normalizeSpecies);
   const speciesSource = normalizedSpecies.length ? normalizedSpecies : normalizeFallbackSpecies();
@@ -218,7 +223,6 @@ export async function getSiteData(): Promise<SiteData> {
       normalizedBusinesses.length ? normalizedBusinesses : fallbackBusinesses.map(normalizeFallbackBusiness),
       normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction)
     ),
-    promoSlots: normalizedPromoSlots.length ? normalizedPromoSlots : fallbackPromoSlots,
     properties: normalizedProperties.length ? normalizedProperties : fallbackProperties.map(normalizeFallbackProperty),
     propertyOperations: unique(normalizedProperties.map((item) => item.operation), ["Venta", "Alquiler"]),
     propertyTypes: unique(normalizedProperties.map((item) => item.type), ["Casa", "Finca", "Lote", "Comercio"]),
@@ -227,6 +231,24 @@ export async function getSiteData(): Promise<SiteData> {
     stats: Array.isArray(mainSettings?.stats) ? mainSettings.stats : fallbackStats,
     wildlife: normalizeWildlife(speciesSource)
   };
+}
+
+export async function getPromotion(placement: string): Promise<SitePromotion | null> {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions/serve?placement=${encodeURIComponent(placement)}`, {
+      cache: "no-store"
+    });
+    if (!response.ok) return null;
+    const data = (await response.json()) as { item?: SitePromotion };
+    if (!data.item) return null;
+    return {
+      ...data.item,
+      clickHref: data.item.clickHref.startsWith("http") ? data.item.clickHref : `${apiBaseUrl}${data.item.clickHref}`,
+      href: data.item.href
+    };
+  } catch {
+    return null;
+  }
 }
 
 async function fetchCollection(collection: string) {

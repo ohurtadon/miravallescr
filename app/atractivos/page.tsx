@@ -3,6 +3,7 @@ import { AttractionsGrid } from "@/components/AttractionsGrid";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Atractivos turísticos",
@@ -13,6 +14,8 @@ export default async function AttractionsPage() {
   const siteData = await getSiteData();
 
   return (
+    <>
+    <PageViewTracker targetType="category" targetId="atractivos" targetCategory="Atractivos" />
     <SimplePage
       eyebrow="Atractivos"
       title="Naturaleza, agua y paisaje volcánico"
@@ -53,5 +56,6 @@ export default async function AttractionsPage() {
         <AttractionsGrid attractions={siteData.attractions} showHeading={false} />
       </div>
     </SimplePage>
+    </>
   );
 }

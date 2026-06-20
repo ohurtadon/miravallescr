@@ -6,6 +6,7 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 type BusinessPageProps = {
   params: Promise<{
@@ -33,6 +34,8 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
   if (!business) notFound();
 
   return (
+    <>
+    <PageViewTracker targetType="business" targetId={business.id} targetCategory={business.category} />
     <SimplePage eyebrow={business.category} title={business.name} description={business.description}>
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="space-y-6">
@@ -121,8 +124,9 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
         </aside>
       </div>
       <div className="-mx-5 mt-12 md:-mx-8">
-        <PromoSlot promoSlots={siteData.promoSlots} index={0} />
+        <PromoSlot placement="business-detail" businesses={siteData.businesses.filter((item) => item.id !== business.id)} />
       </div>
     </SimplePage>
+    </>
   );
 }

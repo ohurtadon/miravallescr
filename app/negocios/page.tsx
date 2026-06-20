@@ -5,6 +5,7 @@ import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SponsorSection } from "@/components/SponsorSection";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Negocios locales",
@@ -16,6 +17,8 @@ export default async function BusinessesPage() {
   const siteData = await getSiteData();
 
   return (
+    <>
+    <PageViewTracker targetType="category" targetId="negocios" targetCategory="Negocios locales" />
     <SimplePage
       eyebrow="Negocios locales"
       title="Directorio turístico de Miravalles"
@@ -31,9 +34,10 @@ export default async function BusinessesPage() {
       </NarrativeBlock>
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <BusinessDirectory businesses={siteData.businesses} businessCategories={siteData.businessCategories} showHeading={false} showFilters />
-        <PromoSlot promoSlots={siteData.promoSlots} index={2} />
+        <PromoSlot placement="business-directory" businesses={siteData.businesses} />
         <SponsorSection sponsors={siteData.sponsors} compact />
       </div>
     </SimplePage>
+    </>
   );
 }

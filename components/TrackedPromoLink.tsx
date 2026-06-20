@@ -1,0 +1,53 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import { sendAnalyticsEvent } from "@/lib/analytics-client";
+
+type TrackedPromoLinkProps = {
+  serveId?: string;
+  href: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: string;
+};
+
+export function TrackedPromoLink(props: TrackedPromoLinkProps) {
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!props.serveId || !linkRef.current) return;
+    const element = linkRef.current;
+    let sent = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (sent || !entries.some((entry) => entry.isIntersecting)) return;
+        sent = true;
+        void sendAnalyticsEvent({ eventType: "promo_impression", serveId: props.serveId });
+        observer.disconnect();
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [props.serveId]);
+
+  return (
+    <a
+      ref={linkRef}
+      href={props.href}
+      className="grid gap-5 rounded-lg bg-white p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft md:grid-cols-[0.7fr_1.3fr_auto] md:items-center md:p-8"
+    >
+      <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">{props.eyebrow}</p>
+      <div>
+        <h3 className="font-display text-3xl font-bold text-canopy">{props.title}</h3>
+        <p className="mt-2 text-sm leading-7 text-volcanic">{props.description}</p>
+      </div>
+      <span className="inline-flex items-center gap-2 text-sm font-bold text-forest">
+        {props.cta}
+        <ArrowRight className="size-4" aria-hidden="true" />
+      </span>
+    </a>
+  );
+}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 type AttractionPageProps = {
   params: Promise<{
@@ -29,6 +30,8 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
   if (!attraction) notFound();
 
   return (
+    <>
+    <PageViewTracker targetType="attraction" targetId={attraction.id} targetCategory={attraction.category} />
     <SimplePage eyebrow="Atractivo" title={attraction.title} description={attraction.summary}>
       <div className="mb-8">
         <ImageCarousel
@@ -56,5 +59,6 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
         </div>
       </div>
     </SimplePage>
+    </>
   );
 }
