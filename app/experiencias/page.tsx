@@ -3,6 +3,7 @@ import { ExperiencesSection } from "@/components/ExperiencesSection";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Experiencias",
@@ -13,6 +14,8 @@ export default async function ExperiencesPage() {
   const siteData = await getSiteData();
 
   return (
+    <>
+    <PageViewTracker targetType="category" targetId="experiencias" targetCategory="Experiencias" />
     <SimplePage
       eyebrow="Experiencias"
       title="Actividades para viajar con intención"
@@ -35,5 +38,6 @@ export default async function ExperiencesPage() {
         />
       </div>
     </SimplePage>
+    </>
   );
 }

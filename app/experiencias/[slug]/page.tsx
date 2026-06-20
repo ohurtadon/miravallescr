@@ -6,6 +6,7 @@ import { ExperienceCard } from "@/components/ExperienceCard";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 type ExperiencePageProps = {
   params: Promise<{
@@ -34,6 +35,8 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
   const related = experiences.filter((item) => item.slug !== experience.slug).slice(0, 3);
 
   return (
+    <>
+    <PageViewTracker targetType="experience" targetId={experience.id} targetCategory={experience.category} />
     <SimplePage eyebrow={experience.category} title={experience.title} description={experience.description}>
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
         <div className="rounded-lg bg-white p-6 ring-1 ring-canopy/10">
@@ -86,6 +89,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
         </div>
       </section>
     </SimplePage>
+    </>
   );
 }
 
