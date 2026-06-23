@@ -27,7 +27,7 @@ export default async function Home() {
         <AttractionsGrid attractions={siteData.attractions} />
         <ExperiencesSection experiences={siteData.experiences} experienceCategories={siteData.experienceCategories} featuredOnly limit={3} />
         <BusinessDirectory businesses={siteData.businesses} businessCategories={siteData.businessCategories} featuredOnly limit={3} />
-        <PromoSlot placement="home" businesses={siteData.businesses} />
+        <PromoSlot placement="home" businesses={siteData.businesses} experiences={siteData.experiences} properties={siteData.properties} />
         <MapSection mapPoints={siteData.mapPoints} />
         <WildlifeSection wildlife={siteData.wildlife} />
         <SponsorSection sponsors={siteData.sponsors} />

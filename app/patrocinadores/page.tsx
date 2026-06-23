@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SponsorSection } from "@/components/SponsorSection";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
@@ -23,9 +24,6 @@ export default async function SponsorsPage() {
         <p>
           Una plataforma regional crece mejor cuando se sostiene con participación local: comercios, guías, hospedajes, productores, organizaciones y personas que entienden el valor de mostrar Miravalles con cuidado.
         </p>
-        <p>
-          Este espacio reconocerá a quienes apoyen la promoción turística responsable y ayuden a convertir la visibilidad digital en oportunidades reales para la comunidad.
-        </p>
       </NarrativeBlock>
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <SponsorSection sponsors={sponsors} showHeading={false} />
@@ -38,6 +36,9 @@ export default async function SponsorsPage() {
         <Link href="/alianzas" className="mt-6 inline-flex rounded-md bg-forest px-6 py-4 text-sm font-bold text-white hover:bg-canopy">
           Ver opciones de alianza
         </Link>
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="sponsors" />
       </div>
     </SimplePage>
   );

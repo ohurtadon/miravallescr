@@ -29,12 +29,10 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
           />
         ) : null}
         <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
-          {activeSponsors.map((sponsor) => (
-            <Link
-              key={sponsor.id}
-              href={sponsor.website || "/alianzas"}
-              className="group rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft"
-            >
+          {activeSponsors.map((sponsor) => {
+            const href = sponsor.website || "/alianzas";
+            const external = /^https?:\/\//i.test(href);
+            const content = (
               <div className="flex items-start gap-4">
                 <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-forest font-bold text-white">
                   {sponsor.logo}
@@ -49,8 +47,18 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
                   </span>
                 </div>
               </div>
-            </Link>
-          ))}
+            );
+
+            return external ? (
+              <a key={sponsor.id} href={href} target="_blank" rel="noopener noreferrer" className="group rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+                {content}
+              </a>
+            ) : (
+              <Link key={sponsor.id} href={href} className="group rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+                {content}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

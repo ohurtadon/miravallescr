@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { PropertiesSection } from "@/components/PropertiesSection";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Propiedades",
@@ -14,6 +16,8 @@ export default async function PropertiesPage() {
   const siteData = await getSiteData();
 
   return (
+    <>
+    <PageViewTracker targetType="category" targetId="propiedades" targetCategory="Propiedades" />
     <SimplePage
       eyebrow="Propiedades"
       title="Vivir o invertir en Miravalles"
@@ -35,6 +39,10 @@ export default async function PropertiesPage() {
           showHeading={false}
         />
       </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="properties" />
+      </div>
     </SimplePage>
+    </>
   );
 }

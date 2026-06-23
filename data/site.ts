@@ -21,6 +21,7 @@ export const navItems = [
   { label: "Experiencias", href: "/experiencias" },
   { label: "Negocios", href: "/negocios" },
   { label: "Propiedades", href: "/propiedades" },
+  { label: "Promociones", href: "/promociones" },
   { label: "Galería", href: "/galeria" },
   { label: "Mapa", href: "/mapa" },
   { label: "Alianzas", href: "/alianzas" }

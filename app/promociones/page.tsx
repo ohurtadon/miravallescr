@@ -1,0 +1,77 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, BadgePercent } from "lucide-react";
+import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
+import { SimplePage } from "@/components/SimplePage";
+import { getPublicPromotions } from "@/lib/site-api";
+
+export const metadata: Metadata = {
+  title: "Promociones",
+  description: "Anuncios y campañas promocionales activas de negocios, experiencias y aliados de Miravalles."
+};
+
+export default async function PromotionsPage() {
+  const promotions = await getPublicPromotions();
+
+  return (
+    <SimplePage
+      eyebrow="Promociones"
+      title="Ofertas y campañas activas"
+      description="Un espacio separado para anuncios promocionales independientes de los recomendados editoriales del sitio."
+    >
+      <NarrativeBlock title="Promociones claras, sin mezclarlas con los recomendados">
+        <p>
+          Aquí aparecen campañas específicas: paquetes, descuentos, temporadas especiales o anuncios de aliados. Los recomendados del resto del sitio funcionan aparte como items potenciados.
+        </p>
+      </NarrativeBlock>
+
+      {promotions.length ? (
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {promotions.map((promotion) => (
+            <article key={promotion.id || promotion.title} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+              <div className="relative aspect-[4/3] bg-mist">
+                {promotion.image ? (
+                  <Image
+                    src={promotion.image}
+                    alt={promotion.imageAlt || promotion.title}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                ) : (
+                  <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_30%,rgba(62,126,168,0.25),transparent_30%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-forest">
+                    <BadgePercent className="size-12" aria-hidden="true" />
+                  </div>
+                )}
+                <span className="absolute left-4 top-4 rounded-md bg-sand px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-canopy shadow">
+                  {promotion.eyebrow}
+                </span>
+              </div>
+              <div className="p-6">
+                <h2 className="font-display text-3xl font-bold text-canopy">{promotion.title}</h2>
+                <p className="mt-3 text-sm leading-7 text-volcanic">{promotion.description}</p>
+                <Link href={`/promociones/${promotion.key}`} className="mt-6 inline-flex items-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy">
+                  Ver promoción
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-10 rounded-lg bg-white p-8 text-center ring-1 ring-canopy/10">
+          <BadgePercent className="mx-auto size-10 text-moss" aria-hidden="true" />
+          <h2 className="mt-4 font-display text-3xl font-bold text-canopy">Aún no hay promociones activas</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-volcanic">
+            Cuando se publiquen campañas promocionales, aparecerán aquí de forma independiente a los items potenciados del sitio.
+          </p>
+        </div>
+      )}
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="promotions" />
+      </div>
+    </SimplePage>
+  );
+}

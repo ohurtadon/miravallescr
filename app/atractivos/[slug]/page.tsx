@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ImageCarousel } from "@/components/ImageCarousel";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 import { PageViewTracker } from "@/components/PageViewTracker";
@@ -57,6 +58,9 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
             incorporarse conforme se valide con guías, comercios y comunidad.
           </p>
         </div>
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="attraction-detail" />
       </div>
     </SimplePage>
     </>

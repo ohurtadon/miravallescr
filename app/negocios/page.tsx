@@ -34,7 +34,7 @@ export default async function BusinessesPage() {
       </NarrativeBlock>
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <BusinessDirectory businesses={siteData.businesses} businessCategories={siteData.businessCategories} showHeading={false} showFilters />
-        <PromoSlot placement="business-directory" businesses={siteData.businesses} />
+        <PromoSlot placement="business-directory" businesses={siteData.businesses} experiences={siteData.experiences} properties={siteData.properties} />
         <SponsorSection sponsors={siteData.sponsors} compact />
       </div>
     </SimplePage>
