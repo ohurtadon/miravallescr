@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { BadgeCheck, Home, MapPin, Ruler, Search } from "lucide-react";
+import { BadgeCheck, Home, MapPin, Ruler } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { SiteProperty } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
@@ -65,7 +65,7 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {filteredProperties.map((property) => (
-            <article key={property.id} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+            <article key={property.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={property.image}
@@ -85,32 +85,31 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
                   {property.operation}
                 </span>
               </div>
-              <div className="p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{property.type}</p>
-                <h3 className="mt-3 font-display text-3xl font-bold text-canopy">{property.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-volcanic">{property.description}</p>
-                <div className="mt-5 grid gap-3 text-sm text-volcanic">
-                  <p className="flex items-center gap-2">
-                    <MapPin className="size-4 text-river" aria-hidden="true" />
-                    {property.location}
+              <div className="flex flex-1 flex-col p-6">
+                <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={property.type}>{property.type}</p>
+                <h3 className="mt-3 line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={property.title}>{property.title}</h3>
+                <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={property.description}>{property.description}</p>
+                <div className="mt-5 grid min-h-[5.25rem] gap-3 text-sm text-volcanic">
+                  <p className="flex min-w-0 items-center gap-2" title={property.location}>
+                    <MapPin className="size-4 shrink-0 text-river" aria-hidden="true" />
+                    <span className="line-clamp-1">{property.location}</span>
                   </p>
-                  <p className="flex items-center gap-2">
-                    <Home className="size-4 text-river" aria-hidden="true" />
-                    {property.area}
+                  <p className="flex min-w-0 items-center gap-2" title={property.area}>
+                    <Home className="size-4 shrink-0 text-river" aria-hidden="true" />
+                    <span className="line-clamp-1">{property.area}</span>
                   </p>
-                  <p className="flex items-center gap-2">
-                    <Ruler className="size-4 text-river" aria-hidden="true" />
-                    {property.landSize}
+                  <p className="flex min-w-0 items-center gap-2" title={property.landSize}>
+                    <Ruler className="size-4 shrink-0 text-river" aria-hidden="true" />
+                    <span className="line-clamp-1">{property.landSize}</span>
                   </p>
                 </div>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="font-display text-2xl font-bold text-forest">{property.price}</p>
+                <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="line-clamp-1 font-display text-2xl font-bold text-forest" title={property.price}>{property.price}</p>
                   <Link
                     href={`/propiedades/${property.slug}`}
-                    className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
+                    className="inline-flex items-center justify-center rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
                   >
-                    Ver propiedad
-                    <Search className="size-4" aria-hidden="true" />
+                    Ver más
                   </Link>
                 </div>
               </div>

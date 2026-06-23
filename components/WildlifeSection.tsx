@@ -51,7 +51,7 @@ type WildlifeCardProps = {
 
 function WildlifeCard({ title, icon, image, items, href }: WildlifeCardProps) {
   return (
-    <Link href={href} className="group grid overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 md:grid-cols-[0.9fr_1.1fr]">
+    <Link href={href} className="group grid h-full overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 md:grid-cols-[0.9fr_1.1fr]">
       <div className="relative min-h-72 overflow-hidden">
         <Image
           src={image}
@@ -61,15 +61,20 @@ function WildlifeCard({ title, icon, image, items, href }: WildlifeCardProps) {
           sizes="(min-width: 1024px) 24vw, 100vw"
         />
       </div>
-      <div className="p-7">
+      <div className="flex min-h-72 flex-col p-7">
         <div className="mb-6 flex size-12 items-center justify-center rounded-full bg-river text-white">{icon}</div>
-        <h3 className="font-display text-4xl font-bold text-canopy">{title}</h3>
+        <h3 className="line-clamp-2 font-display text-4xl font-bold leading-tight text-canopy" title={title}>{title}</h3>
         <div className="mt-6 flex flex-wrap gap-2">
-          {items.map((item) => (
-            <span key={item} className="rounded-md bg-mist px-3 py-2 text-sm font-semibold text-volcanic">
+          {items.slice(0, 8).map((item) => (
+            <span key={item} className="line-clamp-1 rounded-md bg-mist px-3 py-2 text-sm font-semibold text-volcanic" title={item}>
               {item}
             </span>
           ))}
+          {items.length > 8 ? (
+            <span className="rounded-md bg-sand px-3 py-2 text-sm font-bold text-canopy" title={items.slice(8).join(", ")}>
+              +{items.length - 8}
+            </span>
+          ) : null}
         </div>
       </div>
     </Link>
