@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SpeciesDirectory } from "@/components/SpeciesDirectory";
 import { getSiteData } from "@/lib/site-api";
@@ -28,6 +29,9 @@ export default async function FloraPage() {
       </NarrativeBlock>
       <div className="mt-10">
         <SpeciesDirectory species={species} type="flora" />
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="flora" />
       </div>
     </SimplePage>
   );

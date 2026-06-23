@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { WildlifeSection } from "@/components/WildlifeSection";
 import { getSiteData } from "@/lib/site-api";
@@ -64,6 +65,9 @@ export default async function FloraFaunaPage() {
       />
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <WildlifeSection wildlife={wildlife} showHeading={false} />
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="wildlife" />
       </div>
     </SimplePage>
   );

@@ -124,7 +124,7 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
         </aside>
       </div>
       <div className="-mx-5 mt-12 md:-mx-8">
-        <PromoSlot placement="business-detail" businesses={siteData.businesses.filter((item) => item.id !== business.id)} />
+        <PromoSlot placement="business-detail" businesses={siteData.businesses.filter((item) => item.id !== business.id)} experiences={siteData.experiences} properties={siteData.properties} />
       </div>
     </SimplePage>
     </>

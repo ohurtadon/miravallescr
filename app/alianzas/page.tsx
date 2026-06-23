@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Handshake, Megaphone, PenLine, Store, TicketCheck } from "lucide-react";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 
 export const metadata: Metadata = {
@@ -84,6 +85,9 @@ export default function PartnershipsPage() {
             </Link>
           </div>
         </div>
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="partnerships" />
       </div>
     </SimplePage>
   );

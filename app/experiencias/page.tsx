@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExperiencesSection } from "@/components/ExperiencesSection";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 import { PageViewTracker } from "@/components/PageViewTracker";
@@ -36,6 +37,9 @@ export default async function ExperiencesPage() {
           showHeading={false}
           showFilters
         />
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="experiences" />
       </div>
     </SimplePage>
     </>

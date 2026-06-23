@@ -2,7 +2,7 @@ const analyticsBaseUrl = (
   process.env.NEXT_PUBLIC_MIRAVALLESGTE_API_URL || "https://miravallesgte-api.onrender.com"
 ).replace(/\/$/, "");
 
-export type AnalyticsTargetType = "business" | "attraction" | "experience" | "category";
+export type AnalyticsTargetType = "business" | "attraction" | "experience" | "property" | "category";
 
 export function getAnalyticsIdentity() {
   return {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AttractionsGrid } from "@/components/AttractionsGrid";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 import { PageViewTracker } from "@/components/PageViewTracker";
@@ -54,6 +55,9 @@ export default async function AttractionsPage() {
       />
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <AttractionsGrid attractions={siteData.attractions} showHeading={false} />
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="attractions" />
       </div>
     </SimplePage>
     </>

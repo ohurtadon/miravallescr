@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MapSection } from "@/components/MapSection";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
 
@@ -28,6 +29,9 @@ export default async function MapPage() {
       </NarrativeBlock>
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <MapSection mapPoints={mapPoints} showHeading={false} />
+      </div>
+      <div className="-mx-5 mt-12 md:-mx-8">
+        <RecommendedSlot placement="map" />
       </div>
     </SimplePage>
   );

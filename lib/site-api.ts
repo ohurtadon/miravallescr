@@ -41,6 +41,8 @@ export type SiteBusiness = {
   sponsorLevel?: string;
   services: string[];
   openingHours?: string;
+  isBoosted?: boolean;
+  boostWeight?: number;
 };
 
 export type SiteExperience = {
@@ -60,6 +62,8 @@ export type SiteExperience = {
   whatsapp?: string;
   isFeatured: boolean;
   season: string;
+  isBoosted?: boolean;
+  boostWeight?: number;
 };
 
 export type SiteProperty = {
@@ -77,6 +81,8 @@ export type SiteProperty = {
   landSize: string;
   contactUrl: string;
   isFeatured: boolean;
+  isBoosted?: boolean;
+  boostWeight?: number;
 };
 
 export type SiteAttraction = {
@@ -104,19 +110,34 @@ export type SiteSponsor = {
 };
 
 export type SitePromoSlot = {
+  id?: string;
+  key?: string;
   eyebrow: string;
   title: string;
   description: string;
-  href: string;
   cta: string;
+  image?: string;
+  imageAlt?: string;
+  startsAt?: string;
+  endsAt?: string;
+  targetBusiness?: {
+    name?: string;
+    slug?: string;
+    category?: string;
+    description?: string;
+    image?: string;
+    imageAlt?: string;
+    href: string;
+  } | null;
 };
 
 export type SitePromotion = SitePromoSlot & {
   serveId: string;
   promotionId?: string;
-  targetType: "business";
+  targetType: "business" | "experience" | "property";
   targetId: string;
   category: string;
+  href: string;
   clickHref: string;
 };
 
@@ -251,6 +272,28 @@ export async function getPromotion(placement: string): Promise<SitePromotion | n
   }
 }
 
+export async function getPublicPromotions(): Promise<SitePromoSlot[]> {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions`, { cache: "no-store" });
+    if (!response.ok) return [];
+    const data = (await response.json()) as ApiList<ApiRecord>;
+    return (data.items ?? []).map(normalizePromoSlot);
+  } catch {
+    return [];
+  }
+}
+
+export async function getPublicPromotion(key: string): Promise<SitePromoSlot | null> {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions/${encodeURIComponent(key)}`, { cache: "no-store" });
+    if (!response.ok) return null;
+    const data = (await response.json()) as { item?: ApiRecord };
+    return data.item ? normalizePromoSlot(data.item) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchCollection(collection: string) {
   if (!apiBaseUrl) return [];
 
@@ -286,7 +329,9 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
     isSponsor: Boolean(item.sponsorLevel),
     sponsorLevel: item.sponsorLevel,
     services: item.services ?? [],
-    openingHours: item.openingHours
+    openingHours: item.openingHours,
+    isBoosted: Boolean(item.isBoosted),
+    boostWeight: Number(item.boostWeight ?? 1)
   };
 }
 
@@ -310,7 +355,9 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
     contactUrl: "/contacto",
     whatsapp: item.contact?.whatsapp || item.providerSnapshot?.whatsapp,
     isFeatured: Boolean(item.isFeatured),
-    season: item.season || "Todo el año"
+    season: item.season || "Todo el año",
+    isBoosted: Boolean(item.isBoosted),
+    boostWeight: Number(item.boostWeight ?? 1)
   };
 }
 
@@ -331,7 +378,9 @@ function normalizeProperty(item: ApiRecord): SiteProperty {
     area: item.area || "Consultar",
     landSize: item.landSize || "Consultar",
     contactUrl: "/contacto",
-    isFeatured: Boolean(item.isFeatured)
+    isFeatured: Boolean(item.isFeatured),
+    isBoosted: Boolean(item.isBoosted),
+    boostWeight: Number(item.boostWeight ?? 1)
   };
 }
 
@@ -359,19 +408,32 @@ function normalizeSponsor(item: ApiRecord): SiteSponsor {
     name: item.name,
     logo: item.logo?.url || item.name?.slice(0, 2)?.toUpperCase() || "SP",
     description: item.description || "",
-    website: item.website || "/alianzas",
+    website: normalizeExternalUrl(item.website) || "/alianzas",
     level: item.level || "aliado",
     active: item.active !== false
   };
 }
 
+function normalizeExternalUrl(value?: string) {
+  const url = value?.trim();
+  if (!url) return "";
+  if (url.startsWith("/") || /^https?:\/\//i.test(url) || /^mailto:/i.test(url) || /^tel:/i.test(url)) return url;
+  return `https://${url}`;
+}
+
 function normalizePromoSlot(item: ApiRecord): SitePromoSlot {
   return {
+    id: item.id || item._id,
+    key: item.key,
     eyebrow: item.eyebrow || "Destacado",
     title: item.title,
     description: item.description || "",
-    href: item.href || "/contacto",
-    cta: item.cta || "Ver más"
+    cta: item.cta || "Ver más",
+    image: item.image || normalizeImages(item.images)[0],
+    imageAlt: item.imageAlt || item.images?.[0]?.alt || item.title,
+    startsAt: item.startsAt,
+    endsAt: item.endsAt,
+    targetBusiness: item.targetBusiness ?? null
   };
 }
 
