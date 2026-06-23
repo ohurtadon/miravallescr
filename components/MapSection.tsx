@@ -4,7 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
-import { ArrowRight, Building2, MapPin, Mountain, X } from "lucide-react";
+import {
+  ArrowRight,
+  Binoculars,
+  Bus,
+  Coffee,
+  Flame,
+  HandHeart,
+  Hotel,
+  Leaf,
+  MapPin,
+  Mountain,
+  Store,
+  Utensils,
+  Waves,
+  X,
+  type LucideIcon
+} from "lucide-react";
 import type { SiteMapPoint } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -15,10 +31,109 @@ type MapSectionProps = {
   showHeading?: boolean;
 };
 
+type MapIconConfig = {
+  key: string;
+  label: string;
+  markerClass: string;
+  Icon: LucideIcon;
+  svg: string;
+};
+
 const filters: Array<{ value: MapFilter; label: string }> = [
   { value: "all", label: "Todos" },
   { value: "attraction", label: "Atractivos" },
   { value: "business", label: "Negocios" }
+];
+
+const mapIconConfigs = {
+  attraction: {
+    key: "attraction",
+    label: "Atractivo",
+    markerClass: "map-marker--attraction",
+    Icon: Mountain,
+    svg: '<path d="m3 20 7-12 4 7 2-3 5 8H3Z"/>'
+  },
+  nature: {
+    key: "nature",
+    label: "Naturaleza",
+    markerClass: "map-marker--nature",
+    Icon: Leaf,
+    svg: '<path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 12-9 2 8-2 12-7 12H7"/><path d="M9 15c1-3 3-5 6-7"/>'
+  },
+  water: {
+    key: "water",
+    label: "Agua / ríos",
+    markerClass: "map-marker--water",
+    Icon: Waves,
+    svg: '<path d="M2 12c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 17c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/>'
+  },
+  birding: {
+    key: "birding",
+    label: "Aves / miradores",
+    markerClass: "map-marker--birding",
+    Icon: Binoculars,
+    svg: '<path d="M10 10 8 5H5l-2 7v5a3 3 0 0 0 6 0v-5h6v5a3 3 0 0 0 6 0v-5l-2-7h-3l-2 5"/><path d="M9 17h6"/>'
+  },
+  lodging: {
+    key: "lodging",
+    label: "Hospedaje",
+    markerClass: "map-marker--lodging",
+    Icon: Hotel,
+    svg: '<path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M9 21v-5h6v5"/><path d="M8 7h.01M12 7h.01M16 7h.01M8 11h.01M12 11h.01M16 11h.01"/>'
+  },
+  restaurant: {
+    key: "restaurant",
+    label: "Restaurante",
+    markerClass: "map-marker--restaurant",
+    Icon: Utensils,
+    svg: '<path d="M4 3v8"/><path d="M8 3v8"/><path d="M4 7h4"/><path d="M6 11v10"/><path d="M17 3v18"/><path d="M13 3c0 4 2 7 4 7"/>'
+  },
+  coffee: {
+    key: "coffee",
+    label: "Café / producto local",
+    markerClass: "map-marker--coffee",
+    Icon: Coffee,
+    svg: '<path d="M3 8h13v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2"/><path d="M6 2v2M10 2v2M14 2v2"/>'
+  },
+  guide: {
+    key: "guide",
+    label: "Guía / tour",
+    markerClass: "map-marker--guide",
+    Icon: HandHeart,
+    svg: '<path d="M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.5.6L7 12"/><path d="m7 16 2 2c.5.5 1.2.8 2 .8h4c.8 0 1.5-.3 2-.8l3-3"/><path d="M5 11 2 14l6 6 3-3"/><path d="M19 8a3 3 0 0 0-6 0c0 2 3 4 3 4s3-2 3-4Z"/>'
+  },
+  thermal: {
+    key: "thermal",
+    label: "Termales",
+    markerClass: "map-marker--thermal",
+    Icon: Flame,
+    svg: '<path d="M12 22a7 7 0 0 0 7-7c0-4-3-6-4-9-.5 2-2 3-3 4-1.5-2-1-5-1-7-3 2-6 5-6 10a7 7 0 0 0 7 9Z"/>'
+  },
+  transport: {
+    key: "transport",
+    label: "Transporte",
+    markerClass: "map-marker--transport",
+    Icon: Bus,
+    svg: '<path d="M6 17h12l1-5V6a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v6Z"/><path d="M6 17v2M18 17v2M5 9h14M8 13h.01M16 13h.01"/>'
+  },
+  business: {
+    key: "business",
+    label: "Negocio",
+    markerClass: "map-marker--business",
+    Icon: Store,
+    svg: '<path d="M4 10h16l-1-5H5Z"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/><path d="M4 10c0 2 3 2 4 0 1 2 3 2 4 0 1 2 3 2 4 0 1 2 4 2 4 0"/>'
+  }
+} satisfies Record<string, MapIconConfig>;
+
+const legendItems = [
+  mapIconConfigs.attraction,
+  mapIconConfigs.restaurant,
+  mapIconConfigs.lodging,
+  mapIconConfigs.guide,
+  mapIconConfigs.thermal,
+  mapIconConfigs.transport,
+  mapIconConfigs.coffee,
+  mapIconConfigs.business
 ];
 
 export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
@@ -153,9 +268,12 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
               </div>
             ) : null}
 
-            <div className="pointer-events-none absolute bottom-4 left-4 flex gap-2 text-xs font-bold">
-              <span className="rounded-md bg-white/95 px-3 py-2 text-canopy shadow"><Mountain className="mr-1 inline size-4 text-river" /> Atractivo</span>
-              <span className="rounded-md bg-white/95 px-3 py-2 text-canopy shadow"><Building2 className="mr-1 inline size-4 text-forest" /> Negocio</span>
+            <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 text-xs font-bold">
+              {legendItems.map((item) => (
+                <span key={item.key} className="rounded-md bg-white/95 px-3 py-2 text-canopy shadow">
+                  <item.Icon className="mr-1 inline size-4 text-forest" /> {item.label}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -175,7 +293,7 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
                       className="rounded-md bg-mist p-4 text-left transition hover:bg-sand/60 focus:outline-none focus:ring-2 focus:ring-river"
                     >
                       <span className="flex items-start gap-3">
-                        {point.kind === "business" ? <Building2 className="mt-0.5 size-5 shrink-0 text-forest" /> : <Mountain className="mt-0.5 size-5 shrink-0 text-river" />}
+                        <PointIcon point={point} className="mt-0.5 size-5 shrink-0 text-forest" />
                         <span>
                           <span className="block font-bold">{point.name}</span>
                           <span className="mt-1 block text-xs text-volcanic">{point.category}</span>
@@ -194,11 +312,21 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
   );
 }
 
+function PointIcon({ point, className }: { point: SiteMapPoint; className?: string }) {
+  const { Icon } = getMapIconConfig(point);
+  return <Icon className={className} aria-hidden="true" />;
+}
+
 function MapPointCard({ point, onClose }: { point: SiteMapPoint; onClose: () => void }) {
+  const icon = getMapIconConfig(point);
+
   return (
     <article>
       <div className="flex items-start justify-between gap-3">
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-moss">{point.kind === "business" ? "Negocio local" : "Atractivo"}</p>
+        <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-moss">
+          <icon.Icon className="size-4" aria-hidden="true" />
+          {icon.label}
+        </p>
         <button type="button" onClick={onClose} className="rounded-full p-2 text-canopy transition hover:bg-mist" aria-label="Cerrar resumen">
           <X className="size-5" aria-hidden="true" />
         </button>
@@ -224,15 +352,46 @@ function MapPointCard({ point, onClose }: { point: SiteMapPoint; onClose: () => 
 }
 
 function createMarkerElement(point: SiteMapPoint, selected: boolean) {
+  const icon = getMapIconConfig(point);
   const element = document.createElement("button");
   element.type = "button";
-  element.className = `map-marker map-marker--${point.kind}${selected ? " is-selected" : ""}`;
+  element.className = `map-marker ${icon.markerClass}${selected ? " is-selected" : ""}`;
   element.setAttribute("aria-label", `Ver ${point.name}`);
   element.title = point.name;
-  element.innerHTML = point.kind === "business"
-    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg>'
-    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 20 7-12 4 7 2-3 5 8H3Z"/></svg>';
+  element.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${icon.svg}</svg>`;
   return element;
+}
+
+function getMapIconConfig(point: SiteMapPoint): MapIconConfig {
+  const value = normalizeIconText(`${point.category} ${point.name}`);
+
+  if (point.kind === "attraction") {
+    if (matchesAny(value, ["rio", "agua", "catarata", "poza"])) return mapIconConfigs.water;
+    if (matchesAny(value, ["ave", "aves", "mirador", "observacion"])) return mapIconConfigs.birding;
+    if (matchesAny(value, ["sendero", "bosque", "naturaleza"])) return mapIconConfigs.nature;
+    if (matchesAny(value, ["termal", "termales", "relajacion"])) return mapIconConfigs.thermal;
+    return mapIconConfigs.attraction;
+  }
+
+  if (matchesAny(value, ["restaurante", "comedor", "soda", "gastronomia", "cocina"])) return mapIconConfigs.restaurant;
+  if (matchesAny(value, ["hospedaje", "hotel", "lodge", "cabina", "cabana", "alojamiento"])) return mapIconConfigs.lodging;
+  if (matchesAny(value, ["guia", "tour", "operador", "experiencia"])) return mapIconConfigs.guide;
+  if (matchesAny(value, ["termal", "termales", "spa"])) return mapIconConfigs.thermal;
+  if (matchesAny(value, ["transporte", "traslado", "bus", "taxi"])) return mapIconConfigs.transport;
+  if (matchesAny(value, ["cafe", "producto local", "artesania", "tienda", "recuerdo"])) return mapIconConfigs.coffee;
+
+  return mapIconConfigs.business;
+}
+
+function matchesAny(value: string, terms: string[]) {
+  return terms.some((term) => value.includes(term));
+}
+
+function normalizeIconText(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
 
 function fitMapToPoints(map: mapboxgl.Map, points: SiteMapPoint[]) {
