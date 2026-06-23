@@ -6,7 +6,7 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { PageViewTracker } from "@/components/PageViewTracker";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
-import { getSiteData } from "@/lib/site-api";
+import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
 
 type PropertyPageProps = {
   params: Promise<{
@@ -28,11 +28,15 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 
 export default async function PropertyDetailPage({ params }: PropertyPageProps) {
   const { slug } = await params;
-  const { properties } = await getSiteData();
+  const { contact, properties } = await getSiteData();
   const property = properties.find((item) => item.slug === slug);
   if (!property) notFound();
 
   const related = properties.filter((item) => item.slug !== property.slug).slice(0, 3);
+  const whatsappHref = withWhatsAppMessage(
+    contact.whatsapp,
+    `Hola, te descubrí en miravallescr.com y quiero consultar sobre la propiedad: ${property.title}.`
+  );
 
   return (
     <>
@@ -78,11 +82,22 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               <p className="mt-6 rounded-md bg-mist p-4 font-display text-2xl font-bold text-forest">{property.price}</p>
               <Link
                 href={property.contactUrl}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-mist px-5 py-4 text-sm font-bold text-canopy ring-1 ring-canopy/10 transition hover:bg-sand"
               >
                 <MessageCircle className="size-4" aria-hidden="true" />
                 Consultar propiedad
               </Link>
+              {whatsappHref ? (
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
+                >
+                  <MessageCircle className="size-4" aria-hidden="true" />
+                  Contactar por WhatsApp
+                </a>
+              ) : null}
             </div>
             <div className="rounded-lg bg-[#dbe7d7] p-6 ring-1 ring-canopy/10">
               <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ubicación referencial</p>

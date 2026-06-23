@@ -30,7 +30,7 @@ export default async function PromotionsPage() {
       {promotions.length ? (
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {promotions.map((promotion) => (
-            <article key={promotion.id || promotion.title} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+            <article key={promotion.id || promotion.title} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
               <div className="relative aspect-[4/3] bg-mist">
                 {promotion.image ? (
                   <Image
@@ -49,10 +49,10 @@ export default async function PromotionsPage() {
                   {promotion.eyebrow}
                 </span>
               </div>
-              <div className="p-6">
-                <h2 className="font-display text-3xl font-bold text-canopy">{promotion.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-volcanic">{promotion.description}</p>
-                <Link href={`/promociones/${promotion.key}`} className="mt-6 inline-flex items-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy">
+              <div className="flex flex-1 flex-col p-6">
+                <h2 className="line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={promotion.title}>{promotion.title}</h2>
+                <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={promotion.description}>{promotion.description}</p>
+                <Link href={`/promociones/${promotion.key}`} className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy">
                   Ver promoción
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>

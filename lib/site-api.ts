@@ -180,6 +180,11 @@ export type SiteData = {
   attractions: SiteAttraction[];
   businesses: SiteBusiness[];
   businessCategories: string[];
+  contact: {
+    email: string;
+    whatsapp: string;
+  };
+  siteName: string;
   experiences: SiteExperience[];
   experienceCategories: string[];
   gallery: SiteGalleryItem[];
@@ -215,6 +220,7 @@ export async function getSiteData(): Promise<SiteData> {
   const normalizedSpecies = published(species).map(normalizeSpecies);
   const speciesSource = normalizedSpecies.length ? normalizedSpecies : normalizeFallbackSpecies();
   const mainSettings = settings.find((item) => item.key === "main")?.value;
+  const contactSettings = mainSettings?.contact && typeof mainSettings.contact === "object" ? mainSettings.contact : {};
 
   return {
     attractions: normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction),
@@ -229,6 +235,11 @@ export async function getSiteData(): Promise<SiteData> {
       "Artesanía",
       "Producto local"
     ]),
+    contact: {
+      email: contactSettings.email || "info@miravallescr.com",
+      whatsapp: normalizeWhatsAppUrl(contactSettings.whatsapp)
+    },
+    siteName: mainSettings?.siteName || "miravallescr.com",
     experiences: normalizedExperiences.length ? normalizedExperiences : fallbackExperiences.map(normalizeFallbackExperience),
     experienceCategories: unique(normalizedExperiences.map((item) => item.category), [
       "Naturaleza",
@@ -294,6 +305,12 @@ export async function getPublicPromotion(key: string): Promise<SitePromoSlot | n
   }
 }
 
+export function withWhatsAppMessage(whatsappUrl: string | undefined, message: string) {
+  if (!whatsappUrl) return "";
+  const separator = whatsappUrl.includes("?") ? "&" : "?";
+  return `${whatsappUrl}${separator}text=${encodeURIComponent(message)}`;
+}
+
 async function fetchCollection(collection: string) {
   if (!apiBaseUrl) return [];
 
@@ -321,8 +338,8 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
     images: normalizeImages(item.images),
     location: item.location?.text || item.location?.address || item.location?.area || "Miravalles",
     coordinates: item.location?.coordinates,
-    phone: item.contact?.phone,
-    whatsapp: item.contact?.whatsapp,
+    phone: formatCostaRicaPhone(item.contact?.phone),
+    whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp),
     website: item.contact?.website,
     socialLinks: item.contact?.socialLinks ?? {},
     isFeatured: Boolean(item.isFeatured),
@@ -353,7 +370,7 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
     provider: provider || "Aliado local",
     location: item.location?.text || "Miravalles",
     contactUrl: "/contacto",
-    whatsapp: item.contact?.whatsapp || item.providerSnapshot?.whatsapp,
+    whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp || item.providerSnapshot?.whatsapp),
     isFeatured: Boolean(item.isFeatured),
     season: item.season || "Todo el año",
     isBoosted: Boolean(item.isBoosted),
@@ -419,6 +436,26 @@ function normalizeExternalUrl(value?: string) {
   if (!url) return "";
   if (url.startsWith("/") || /^https?:\/\//i.test(url) || /^mailto:/i.test(url) || /^tel:/i.test(url)) return url;
   return `https://${url}`;
+}
+
+function normalizeWhatsAppUrl(value?: string) {
+  const digits = normalizeCostaRicaPhone(value);
+  return digits.length === 11 ? `https://wa.me/${digits}` : "";
+}
+
+function normalizeCostaRicaPhone(value?: string) {
+  const digits = value?.replace(/\D/g, "") ?? "";
+  if (!digits) return "";
+  if (digits.startsWith("506") && digits.length >= 11) return digits.slice(0, 11);
+  const localNumber = digits.length >= 8 ? digits.slice(-8) : digits;
+  return localNumber.length === 8 ? `506${localNumber}` : localNumber;
+}
+
+function formatCostaRicaPhone(value?: string) {
+  const digits = normalizeCostaRicaPhone(value);
+  if (!digits) return "";
+  if (!digits.startsWith("506") || digits.length !== 11) return digits;
+  return `+506 ${digits.slice(3, 7)}-${digits.slice(7)}`;
 }
 
 function normalizePromoSlot(item: ApiRecord): SitePromoSlot {
@@ -512,8 +549,8 @@ function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): S
     images: item.images,
     location: item.location,
     coordinates: item.coordinates,
-    phone: item.phone,
-    whatsapp: item.whatsapp,
+    phone: formatCostaRicaPhone(item.phone),
+    whatsapp: normalizeWhatsAppUrl(item.whatsapp),
     website: item.website,
     socialLinks: sanitizeSocialLinks(item.socialLinks),
     isFeatured: item.isFeatured,
@@ -543,7 +580,7 @@ function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number],
     provider: item.provider,
     location: item.location,
     contactUrl: item.contactUrl,
-    whatsapp: item.whatsapp,
+    whatsapp: normalizeWhatsAppUrl(item.whatsapp),
     isFeatured: item.isFeatured,
     season: item.season
   };

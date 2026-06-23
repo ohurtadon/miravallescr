@@ -33,15 +33,15 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
             const href = sponsor.website || "/alianzas";
             const external = /^https?:\/\//i.test(href);
             const content = (
-              <div className="flex items-start gap-4">
+              <div className="flex h-full items-start gap-4">
                 <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-forest font-bold text-white">
                   {sponsor.logo}
                 </span>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{sponsor.level}</p>
-                  <h3 className="mt-2 font-display text-2xl font-bold text-canopy">{sponsor.name}</h3>
-                  <p className="mt-3 text-sm leading-7 text-volcanic">{sponsor.description}</p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-forest">
+                <div className="flex min-w-0 flex-1 flex-col">
+                  <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={sponsor.level}>{sponsor.level}</p>
+                  <h3 className="mt-2 line-clamp-2 min-h-[4rem] font-display text-2xl font-bold leading-tight text-canopy" title={sponsor.name}>{sponsor.name}</h3>
+                  <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={sponsor.description}>{sponsor.description}</p>
+                  <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-forest">
                     Conocer aliado
                     <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
                   </span>
@@ -50,11 +50,11 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
             );
 
             return external ? (
-              <a key={sponsor.id} href={href} target="_blank" rel="noopener noreferrer" className="group rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+              <a key={sponsor.id} href={href} target="_blank" rel="noopener noreferrer" className="group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
                 {content}
               </a>
             ) : (
-              <Link key={sponsor.id} href={href} className="group rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+              <Link key={sponsor.id} href={href} className="group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
                 {content}
               </Link>
             );

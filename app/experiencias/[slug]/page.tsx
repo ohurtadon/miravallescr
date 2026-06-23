@@ -6,7 +6,7 @@ import { ExperienceCard } from "@/components/ExperienceCard";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
-import { getSiteData } from "@/lib/site-api";
+import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
 type ExperiencePageProps = {
@@ -34,6 +34,10 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
   if (!experience) notFound();
 
   const related = experiences.filter((item) => item.slug !== experience.slug).slice(0, 3);
+  const whatsappHref = withWhatsAppMessage(
+    experience.whatsapp,
+    `Hola, te descubrí en miravallescr.com y quiero saber más sobre la experiencia: ${experience.title}.`
+  );
 
   return (
     <>
@@ -72,7 +76,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
               Consultar disponibilidad
             </Link>
             <Link
-              href={experience.whatsapp || experience.contactUrl}
+              href={whatsappHref || experience.contactUrl}
               className="inline-flex items-center justify-center gap-2 rounded-md bg-mist px-5 py-4 text-sm font-bold text-canopy ring-1 ring-canopy/10 transition hover:bg-sand"
             >
               <MessageCircle className="size-4" aria-hidden="true" />

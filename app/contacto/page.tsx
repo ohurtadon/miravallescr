@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
+import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Contacto",
   description: "Información de contacto para planificar una visita a Miravalles, Guanacaste."
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { contact } = await getSiteData();
+  const whatsappHref = withWhatsAppMessage(
+    contact.whatsapp,
+    "Hola, te descubrí en miravallescr.com y quiero recibir más información para visitar Miravalles."
+  );
+
   return (
     <SimplePage
       eyebrow="Contacto"
@@ -33,12 +40,23 @@ export default function ContactPage() {
             </p>
             <p className="flex items-center gap-3">
               <Mail className="size-5 text-river" aria-hidden="true" />
-              info@miravallescr.com
+              {contact.email}
             </p>
             <p className="flex items-center gap-3">
               <Phone className="size-5 text-river" aria-hidden="true" />
               Contacto local por definir
             </p>
+            {whatsappHref ? (
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
+              >
+                <MessageCircle className="size-4" aria-hidden="true" />
+                Contactar por WhatsApp
+              </a>
+            ) : null}
             <p className="rounded-md bg-mist p-4 text-sm leading-7">
               Clima: sección preparada para integrar recomendaciones por temporada y datos actualizados en fases futuras.
             </p>

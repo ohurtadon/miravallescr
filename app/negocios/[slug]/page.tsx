@@ -5,7 +5,7 @@ import { BadgeCheck, Clock, ExternalLink, MapPin, MessageCircle, Phone } from "l
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
-import { getSiteData } from "@/lib/site-api";
+import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
 type BusinessPageProps = {
@@ -32,6 +32,10 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
   const { businesses } = siteData;
   const business = businesses.find((item) => item.slug === slug);
   if (!business) notFound();
+  const whatsappHref = withWhatsAppMessage(
+    business.whatsapp,
+    `Hola, te descubrí en ${siteData.siteName} y quiero saber más...`
+  );
 
   return (
     <>
@@ -95,7 +99,7 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
             </div>
             <div className="mt-6 grid gap-2">
               <Link
-                href={business.whatsapp || "/contacto"}
+                href={whatsappHref || "/contacto"}
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
               >
                 <MessageCircle className="size-4" aria-hidden="true" />
