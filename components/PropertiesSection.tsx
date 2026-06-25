@@ -32,7 +32,7 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
           <SectionHeading
             eyebrow="Propiedades"
             title="Te gustó la zona, quieres vivir acá"
-            copy="Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en Miravalles."
+            copy="Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en la región."
           />
         ) : null}
 

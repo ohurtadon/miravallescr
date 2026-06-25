@@ -8,7 +8,7 @@ import { getSiteData } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Patrocinadores",
-  description: "Aliados y patrocinadores que apoyan la promoción turística sostenible de Miravalles."
+  description: "Aliados y patrocinadores que apoyan la promoción turística sostenible de la región."
 };
 
 export default async function SponsorsPage() {
@@ -17,12 +17,12 @@ export default async function SponsorsPage() {
   return (
     <SimplePage
       eyebrow="Patrocinadores"
-      title="Aliados que impulsan Miravalles"
+      title="Aliados que impulsan la región"
       description="Espacio preparado para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable."
     >
       <NarrativeBlock title="Promover un destino también requiere aliados">
         <p>
-          Una plataforma regional crece mejor cuando se sostiene con participación local: comercios, guías, hospedajes, productores, organizaciones y personas que entienden el valor de mostrar Miravalles con cuidado.
+          Una plataforma regional crece mejor cuando se sostiene con participación local: comercios, guías, hospedajes, productores, organizaciones y personas que entienden el valor de mostrar el territorio con cuidado.
         </p>
       </NarrativeBlock>
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
@@ -33,7 +33,7 @@ export default async function SponsorsPage() {
         <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-volcanic">
           La sección de patrocinadores está lista para activarse con paquetes, niveles y beneficios editoriales en una fase posterior.
         </p>
-        <Link href="/alianzas" className="mt-6 inline-flex rounded-md bg-forest px-6 py-4 text-sm font-bold text-white hover:bg-canopy">
+        <Link href="/contacto#alianzas" className="mt-6 inline-flex rounded-md bg-forest px-6 py-4 text-sm font-bold text-white hover:bg-canopy">
           Ver opciones de alianza
         </Link>
       </div>

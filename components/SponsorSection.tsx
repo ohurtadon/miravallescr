@@ -24,13 +24,13 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
         {!compact && showHeading ? (
           <SectionHeading
             eyebrow="Patrocinadores"
-            title="Aliados que apoyan el desarrollo turístico de Miravalles"
+            title="Aliados que impulsan el turismo sostenible y el desarrollo de la región"
             copy="Espacios preparados para reconocer a negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable."
           />
         ) : null}
         <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
           {activeSponsors.map((sponsor) => {
-            const href = sponsor.website || "/alianzas";
+            const href = sponsor.website || "/contacto#alianzas";
             const external = /^https?:\/\//i.test(href);
             const content = (
               <div className="flex h-full items-start gap-4">

@@ -15,34 +15,44 @@ const display = Cormorant_Garamond({
   display: "swap"
 });
 
+const siteUrl = (
+  process.env.PUBLIC_SITE_URL ||
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://miravallescr.com")
+).replace(/\/$/, "");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://miravallescr.com"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Miravalles CR | Guia Regional y Plataforma Turistica en Guanacaste",
-    template: "%s | Miravalles CR"
+    default: "Raíz Volcanica | Guia Regional y Plataforma Turistica en Guanacaste",
+    template: "%s | Raíz Volcanica"
   },
   description:
-    "Guia regional y plataforma turistica para descubrir Miravalles, Guanacaste: atractivos naturales, aguas termales, senderos, biodiversidad, experiencias y negocios locales.",
+    "Guia regional y plataforma turistica para descubrir el corredor volcanico y natural del norte de Costa Rica: atractivos naturales, aguas termales, senderos, biodiversidad, experiencias y negocios locales.",
   keywords: [
+    "Raíz Volcanica",
     "Miravalles Costa Rica",
+    "Rincon de la Vieja",
+    "Volcan Tenorio",
     "turismo Miravalles",
     "Volcan Miravalles",
+    "Volcan Rincon de la Vieja",
     "Guanacaste ecoturismo",
-    "aguas termales Miravalles",
+    "aguas termales Costa Rica",
     "senderismo Guanacaste",
     "regional travel guide Costa Rica",
     "hiking Guanacaste",
-    "sustainable tourism Miravalles"
+    "sustainable tourism Costa Rica"
   ],
   alternates: {
-    canonical: "https://miravallescr.com"
+    canonical: siteUrl
   },
   openGraph: {
-    title: "Miravalles CR | Guia Regional y Plataforma Turistica",
+    title: "Raíz Volcanica | Guia Regional y Plataforma Turistica",
     description:
-      "Descubre atractivos, experiencias y negocios locales alrededor del Volcan Miravalles, Guanacaste.",
-    url: "https://miravallescr.com",
-    siteName: "Miravalles CR",
+      "Descubre atractivos, experiencias y negocios locales del corredor volcanico y natural del norte de Costa Rica.",
+    url: siteUrl,
+    siteName: "Raíz Volcanica",
     locale: "es_CR",
     type: "website",
     images: [
@@ -50,13 +60,13 @@ export const metadata: Metadata = {
         url: "/images/volcan-miravalles-arcoiris-guanacaste.webp",
         width: 2752,
         height: 1536,
-        alt: "Volcan Miravalles con paisaje eolico en Guanacaste"
+        alt: "Paisaje volcánico y natural del norte de Costa Rica"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Miravalles CR | Guia Regional y Plataforma Turistica",
+    title: "Raíz Volcanica | Guia Regional y Plataforma Turistica",
     description:
       "Explora atractivos, negocios locales, termales, senderos y ecoturismo en Guanacaste."
   }
@@ -65,10 +75,10 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TouristDestination",
-  name: "Miravalles CR",
+  name: "Raíz Volcanica",
   description:
-    "Guia regional y plataforma turistica para descubrir atractivos naturales, experiencias, negocios locales y biodiversidad alrededor del Volcan Miravalles.",
-  url: "https://miravallescr.com",
+    "Guia regional y plataforma turistica para descubrir atractivos naturales, experiencias, negocios locales y biodiversidad del corredor volcanico y natural del norte de Costa Rica.",
+  url: siteUrl,
   touristType: ["Ecoturistas", "Familias", "Viajeros de aventura", "Turismo rural"],
   address: {
     "@type": "PostalAddress",
@@ -87,11 +97,19 @@ const jsonLd = {
     },
     {
       "@type": "TouristAttraction",
-      name: "Aguas termales de Miravalles"
+      name: "Volcan Rincon de la Vieja"
     },
     {
       "@type": "TouristAttraction",
-      name: "Senderos y rios de Miravalles"
+      name: "Volcan Tenorio"
+    },
+    {
+      "@type": "TouristAttraction",
+      name: "Aguas termales del corredor volcánico"
+    },
+    {
+      "@type": "TouristAttraction",
+      name: "Senderos, rios y termales del norte de Costa Rica"
     }
   ]
 };

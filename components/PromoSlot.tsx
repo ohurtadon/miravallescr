@@ -11,17 +11,11 @@ type PromoSlotProps = {
 export async function PromoSlot({ placement, businesses = [], experiences = [], properties = [] }: PromoSlotProps) {
   const promotion = (await getPromotion(placement)) ?? fallbackPromotion({ businesses, experiences, properties });
   if (!promotion) return null;
-  const trackedHref = "clickHref" in promotion && typeof promotion.clickHref === "string"
-    ? promotion.clickHref
-    : promotion.href;
 
   return (
     <section className="bg-mist px-5 py-10 md:px-8">
       <div className="mx-auto max-w-7xl">
-        <TrackedPromoLink
-          {...promotion}
-          href={trackedHref}
-        />
+        <TrackedPromoLink {...promotion} />
       </div>
     </section>
   );

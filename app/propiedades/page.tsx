@@ -9,7 +9,7 @@ import { PageViewTracker } from "@/components/PageViewTracker";
 export const metadata: Metadata = {
   title: "Propiedades",
   description:
-    "Propiedades en venta y alquiler en Miravalles: casas, fincas, lotes y comercios para quienes desean vivir o invertir en la zona."
+    "Propiedades en venta y alquiler en la región: casas, fincas, lotes y comercios para quienes desean vivir o invertir cerca del corredor volcánico."
 };
 
 export default async function PropertiesPage() {
@@ -20,12 +20,12 @@ export default async function PropertiesPage() {
     <PageViewTracker targetType="category" targetId="propiedades" targetCategory="Propiedades" />
     <SimplePage
       eyebrow="Propiedades"
-      title="Vivir o invertir en Miravalles"
+      title="Vivir o invertir en la región"
       description="¿Te gustó la zona, quieres vivir acá? Tenemos ese lugar perfecto para vos."
     >
       <NarrativeBlock title="Quedarse también es una forma de conocer">
         <p>
-          Hay visitantes que llegan por una caminata, unas termales o una vista al volcán, y terminan preguntándose cómo sería despertar más cerca de este paisaje. Miravalles tiene esa mezcla de calma rural, naturaleza cercana y acceso a servicios que despierta ganas de quedarse.
+          Hay visitantes que llegan por una caminata, unas termales o una vista al volcán, y terminan preguntándose cómo sería despertar más cerca de este paisaje. La región tiene esa mezcla de calma rural, naturaleza cercana y acceso a servicios que despierta ganas de quedarse.
         </p>
         <p>
           Esta sección prepara un espacio ordenado para propiedades, fincas y oportunidades vinculadas a vivir, invertir o desarrollar proyectos responsables en la zona.

@@ -16,8 +16,8 @@ export function WildlifeSection({ wildlife, showHeading = true }: WildlifeSectio
         {showHeading ? (
           <SectionHeading
             eyebrow="Flora y fauna"
-            title="Biodiversidad que marca el carácter de Miravalles"
-            copy="Bosques, aves, mamíferos y plantas tropicales hacen de la zona un aula viva para visitantes y comunidades."
+            title="La biodiversidad que da vida a este territorio volcánico"
+            copy="Bosques, aves, mamíferos y plantas tropicales hacen de la región un aula viva para visitantes y comunidades."
           />
         ) : null}
         <div className={`${showHeading ? "mt-12" : ""} grid gap-6 lg:grid-cols-2`}>

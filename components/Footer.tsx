@@ -1,5 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram, Mountain, Youtube } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 const groups = [
   {
@@ -17,17 +18,17 @@ const groups = [
     links: [
       { label: "Cómo llegar", href: "/mapa" },
       { label: "Contacto", href: "/contacto" },
-      { label: "Clima", href: "/contacto#clima" },
-      { label: "Alianzas", href: "/alianzas" }
+      { label: "Clima", href: "/clima" },
+      { label: "Alianzas", href: "/contacto#alianzas" }
     ]
   },
   {
     title: "Comercial",
     links: [
       { label: "Patrocinadores", href: "/patrocinadores" },
-      { label: "Registrar mi negocio", href: "/alianzas" },
-      { label: "Promocionar experiencia", href: "/alianzas" },
-      { label: "Publicar propiedad", href: "/alianzas" }
+      { label: "Registrar mi negocio", href: "/contacto#alianzas" },
+      { label: "Promocionar experiencia", href: "/contacto#alianzas" },
+      { label: "Publicar propiedad", href: "/contacto#alianzas" }
     ]
   }
 ];
@@ -38,13 +39,19 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
         <div>
           <Link href="/" className="flex items-center gap-3 font-semibold">
-            <span className="flex size-10 items-center justify-center rounded-full bg-white/10">
-              <Mountain className="size-5" aria-hidden="true" />
+            <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white">
+              <Image
+                src="/images/raiz-volcanica-logo.webp"
+                alt="Raíz Volcanica"
+                fill
+                sizes="48px"
+                className="object-contain p-1"
+              />
             </span>
-            <span className="text-lg">Miravalles</span>
+            <span className="text-lg">Raíz Volcanica</span>
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">
-            Portal turístico y ecológico de Miravalles, Guanacaste. Naturaleza, termales, aventura y conservación.
+            La plataforma que conecta volcanes, bosques, ríos, termales, comunidades y experiencias del norte de Costa Rica.
           </p>
         </div>
         {groups.map((group) => (

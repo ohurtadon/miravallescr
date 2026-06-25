@@ -251,11 +251,11 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
         </div>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.45fr_0.55fr]">
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#dbe7d7] shadow-soft" aria-label="Mapa interactivo de Miravalles">
+          <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#dbe7d7] shadow-soft" aria-label="Mapa interactivo de la región">
             <div ref={containerRef} className="absolute inset-0" />
             {mapStatus === "loading" ? (
               <div className="absolute inset-0 grid place-items-center bg-mist text-center text-canopy">
-                <p className="font-bold">Cargando mapa de Miravalles…</p>
+                <p className="font-bold">Cargando mapa de la región...</p>
               </div>
             ) : null}
             {mapStatus === "error" ? (

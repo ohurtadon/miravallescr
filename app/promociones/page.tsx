@@ -9,7 +9,7 @@ import { getPublicPromotions } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Promociones",
-  description: "Anuncios y campañas promocionales activas de negocios, experiencias y aliados de Miravalles."
+  description: "Anuncios y campañas promocionales activas de negocios, experiencias y aliados de la región."
 };
 
 export default async function PromotionsPage() {
@@ -21,9 +21,9 @@ export default async function PromotionsPage() {
       title="Ofertas y campañas activas"
       description="Un espacio separado para anuncios promocionales independientes de los recomendados editoriales del sitio."
     >
-      <NarrativeBlock title="Promociones claras, sin mezclarlas con los recomendados">
+      <NarrativeBlock title="Aproveche las promociones de la región">
         <p>
-          Aquí aparecen campañas específicas: paquetes, descuentos, temporadas especiales o anuncios de aliados. Los recomendados del resto del sitio funcionan aparte como items potenciados.
+          Descubra ofertas, paquetes y campañas especiales para disfrutar mejor su visita.
         </p>
       </NarrativeBlock>
 

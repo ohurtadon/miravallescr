@@ -7,7 +7,7 @@ import { getSiteData } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Flora",
-  description: "Guanacaste, helechos, orquídeas y bosque nuboso en Miravalles."
+  description: "Guanacaste, helechos, orquídeas y bosque nuboso en el corredor volcánico del norte de Costa Rica."
 };
 
 export default async function FloraPage() {
@@ -21,7 +21,7 @@ export default async function FloraPage() {
     >
       <NarrativeBlock title="Cada planta sostiene una parte del paisaje">
         <p>
-          La flora de Miravalles no es solo fondo verde. Es sombra para los senderos, alimento para aves e insectos, protección para nacientes y una señal visible de cómo cambian la altura, la humedad y el uso de la tierra.
+          La flora de la región no es solo fondo verde. Es sombra para los senderos, alimento para aves e insectos, protección para nacientes y una señal visible de cómo cambian la altura, la humedad y el uso de la tierra.
         </p>
         <p>
           Documentar estas especies ayuda a mirar con más atención: reconocer árboles, helechos, flores y zonas de bosque convierte una caminata sencilla en una lectura viva del territorio.
