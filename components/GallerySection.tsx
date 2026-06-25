@@ -20,8 +20,8 @@ export function GallerySection({ gallery, showHeading = true }: GallerySectionPr
         {showHeading ? (
           <SectionHeading
             eyebrow="Galería"
-            title="Primeras postales de la experiencia Miravalles"
-            copy="Estas imágenes son referenciales y serán reemplazadas por material real de la zona en próximas iteraciones."
+            title="Primeras postales de un territorio donde la naturaleza es protagonista"
+            copy="Estas imágenes son referenciales y serán reemplazadas por material real de la región en próximas iteraciones."
           />
         ) : null}
         <div className={`${showHeading ? "mt-12" : ""} grid auto-rows-[260px] gap-4 md:grid-cols-3`}>

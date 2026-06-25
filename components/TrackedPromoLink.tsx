@@ -37,6 +37,11 @@ export function TrackedPromoLink(props: TrackedPromoLinkProps) {
     <a
       ref={linkRef}
       href={props.href}
+      onClick={() => {
+        if (props.serveId) {
+          void sendAnalyticsEvent({ eventType: "promo_click", serveId: props.serveId });
+        }
+      }}
       className="grid gap-5 rounded-lg bg-white p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft md:min-h-40 md:grid-cols-[0.7fr_1.3fr_auto] md:items-center md:p-8"
     >
       <p className="line-clamp-2 text-sm font-bold uppercase tracking-[0.18em] text-moss" title={props.eyebrow}>{props.eyebrow}</p>

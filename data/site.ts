@@ -24,7 +24,7 @@ export const navItems = [
   { label: "Promociones", href: "/promociones" },
   { label: "Galería", href: "/galeria" },
   { label: "Mapa", href: "/mapa" },
-  { label: "Alianzas", href: "/alianzas" }
+  { label: "Contacto", href: "/contacto" }
 ];
 
 export const stats = [
@@ -103,8 +103,8 @@ export const experiences = [
     duration: "2-4 horas",
     difficulty: "Baja a media",
     price: "Desde $35",
-    provider: "Guías locales de Miravalles",
-    location: "Senderos de Miravalles",
+    provider: "Guías locales de la región",
+    location: "Senderos del corredor volcánico",
     contactUrl: "/contacto",
     whatsapp: "https://wa.me/50600000000",
     isFeatured: true,
@@ -124,7 +124,7 @@ export const experiences = [
     difficulty: "Baja",
     price: "Consultar",
     provider: "Operadores termales aliados",
-    location: "Zona termal de Miravalles",
+    location: "Zona termal de la región",
     contactUrl: "/contacto",
     whatsapp: "https://wa.me/50600000000",
     isFeatured: true,
@@ -164,7 +164,7 @@ export const experiences = [
     difficulty: "Media",
     price: "Consultar",
     provider: "Fotógrafos y guías aliados",
-    location: "Miradores de Miravalles",
+    location: "Miradores del corredor volcánico",
     contactUrl: "/contacto",
     whatsapp: "https://wa.me/50600000000",
     isFeatured: false,
@@ -177,15 +177,15 @@ export const experiences = [
     slug: "ruta-rural",
     category: "Turismo rural",
     description:
-      "Visita a emprendimientos, productores y paisajes de comunidad para conocer el Miravalles cotidiano.",
+      "Visita a emprendimientos, productores y paisajes de comunidad para conocer la vida cotidiana del territorio.",
     image:
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1000&q=65",
     duration: "Medio día",
     difficulty: "Baja",
     price: "Desde $30",
     provider: "Emprendimientos locales",
-    location: "Comunidades de Miravalles",
-    contactUrl: "/alianzas",
+    location: "Comunidades de la región",
+    contactUrl: "/contacto#alianzas",
     whatsapp: "https://wa.me/50600000000",
     isFeatured: false,
     season: "Todo el año",
@@ -230,7 +230,7 @@ export const properties = [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=65",
     description:
       "Casa rodeada de vegetación, ideal para vivir cerca de rutas naturales y servicios locales.",
-    location: "Camino a Miravalles",
+    location: "Camino rural de la región",
     area: "220 m2 construcción",
     landSize: "1,200 m2 terreno",
     contactUrl: "/contacto",
@@ -247,7 +247,7 @@ export const properties = [
       "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=65",
     description:
       "Terreno amplio con potencial para proyecto familiar, agroecológico o turismo rural de baja escala.",
-    location: "Zona rural de Miravalles",
+    location: "Zona rural de la región",
     area: "Uso mixto",
     landSize: "3.5 hectáreas",
     contactUrl: "/contacto",
@@ -264,7 +264,7 @@ export const properties = [
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65",
     description:
       "Lote de ejemplo para residencia o cabaña, con vista abierta y acceso por camino local.",
-    location: "Mirador de Miravalles",
+    location: "Mirador del corredor volcánico",
     area: "Listo para diseño",
     landSize: "850 m2",
     contactUrl: "/contacto",
@@ -301,7 +301,7 @@ export const properties = [
     location: "Ruta de acceso principal",
     area: "90 m2",
     landSize: "Frente a calle",
-    contactUrl: "/alianzas",
+    contactUrl: "/contacto#alianzas",
     isFeatured: false
   }
 ];
@@ -314,12 +314,12 @@ export const businesses = [
     category: "Hospedaje",
     description: "Hospedaje tranquilo rodeado de bosque, ideal para explorar termales y senderos.",
     longDescription:
-      "Un hospedaje de ejemplo pensado para visitantes que buscan descanso, naturaleza y acceso sencillo a rutas de Miravalles. Esta ficha está lista para reemplazarse por datos reales del negocio.",
+      "Un hospedaje de ejemplo pensado para visitantes que buscan descanso, naturaleza y acceso sencillo a rutas del corredor volcánico. Esta ficha está lista para reemplazarse por datos reales del negocio.",
     images: [
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=65"
     ],
-    location: "Camino a Miravalles",
+    location: "Camino rural de la región",
     coordinates: { lat: 10.72, lng: -85.15 },
     phone: "+506 0000-0000",
     whatsapp: "https://wa.me/50600000000",
@@ -366,7 +366,7 @@ export const businesses = [
       "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=65"
     ],
-    location: "Miravalles y alrededores",
+    location: "Corredor volcánico y alrededores",
     coordinates: { lat: 10.74, lng: -85.13 },
     phone: "+506 0000-0000",
     whatsapp: "https://wa.me/50600000000",
@@ -413,7 +413,7 @@ export const businesses = [
       "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=65"
     ],
-    location: "Ruta rural de Miravalles",
+    location: "Ruta rural regional",
     coordinates: { lat: 10.68, lng: -85.16 },
     phone: "+506 0000-0000",
     whatsapp: "https://wa.me/50600000000",
@@ -435,7 +435,7 @@ export const businesses = [
     images: [
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65"
     ],
-    location: "Miravalles y conexiones cercanas",
+    location: "Región y conexiones cercanas",
     coordinates: { lat: 10.7, lng: -85.14 },
     phone: "+506 0000-0000",
     whatsapp: "https://wa.me/50600000000",
@@ -454,13 +454,13 @@ export const sponsors = [
     name: "Alianza Desarrollo Local",
     logo: "ADL",
     description: "Apoya iniciativas de turismo sostenible, promoción comunitaria y experiencias responsables.",
-    website: "/alianzas",
+    website: "/contacto#alianzas",
     level: "principal",
     active: true
   },
   {
     id: "sponsor-guias",
-    name: "Red de Guías Miravalles",
+    name: "Red de Guías Regionales",
     logo: "GM",
     description: "Conecta visitantes con caminatas, aves, termales y rutas rurales operadas localmente.",
     website: "/negocios/guias-del-volcan",
@@ -471,7 +471,7 @@ export const sponsors = [
     id: "sponsor-hospedaje",
     name: "Hospedajes Aliados",
     logo: "HA",
-    description: "Promueve estadías tranquilas para quienes desean conocer Miravalles con más tiempo.",
+    description: "Promueve estadías tranquilas para quienes desean conocer la región con más tiempo.",
     website: "/negocios/lodge-bosque-miravalles",
     level: "aliado",
     active: true
@@ -481,7 +481,7 @@ export const sponsors = [
 export const promoSlots = [
   {
     eyebrow: "Guia regional",
-    title: "Planifique su visita a Miravalles con orientacion local",
+    title: "Planifique su visita a la región con orientacion local",
     description: "Solicite informacion sobre atractivos, rutas, termales, negocios y recomendaciones mientras preparamos la guia descargable oficial.",
     href: "/contacto",
     cta: "Solicitar guia"
@@ -550,7 +550,7 @@ export const testimonials = [
     name: "Familia viajera"
   },
   {
-    quote: "Miravalles tiene esa mezcla preciosa de aventura y conservación.",
+    quote: "La región tiene esa mezcla preciosa de aventura y conservación.",
     name: "Fotógrafa de naturaleza"
   }
 ];

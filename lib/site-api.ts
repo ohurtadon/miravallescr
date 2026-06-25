@@ -239,7 +239,7 @@ export async function getSiteData(): Promise<SiteData> {
       email: contactSettings.email || "info@miravallescr.com",
       whatsapp: normalizeWhatsAppUrl(contactSettings.whatsapp)
     },
-    siteName: mainSettings?.siteName || "miravallescr.com",
+    siteName: mainSettings?.siteName || "Raíz Volcanica",
     experiences: normalizedExperiences.length ? normalizedExperiences : fallbackExperiences.map(normalizeFallbackExperience),
     experienceCategories: unique(normalizedExperiences.map((item) => item.category), [
       "Naturaleza",
@@ -336,7 +336,7 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
     description: item.summary || item.description || "",
     longDescription: item.description || item.summary || "",
     images: normalizeImages(item.images),
-    location: item.location?.text || item.location?.address || item.location?.area || "Miravalles",
+    location: item.location?.text || item.location?.address || item.location?.area || "Región norte de Costa Rica",
     coordinates: item.location?.coordinates,
     phone: formatCostaRicaPhone(item.contact?.phone),
     whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp),
@@ -368,7 +368,7 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
     difficulty: item.difficulty || "Consultar",
     price: item.price || "Consultar",
     provider: provider || "Aliado local",
-    location: item.location?.text || "Miravalles",
+    location: item.location?.text || "Región norte de Costa Rica",
     contactUrl: "/contacto",
     whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp || item.providerSnapshot?.whatsapp),
     isFeatured: Boolean(item.isFeatured),
@@ -391,7 +391,7 @@ function normalizeProperty(item: ApiRecord): SiteProperty {
     image: images[0] || fallbackProperties[0].image,
     images: images.length ? images : [fallbackProperties[0].image],
     description: item.summary || item.description || "",
-    location: item.location?.text || "Miravalles",
+    location: item.location?.text || "Región norte de Costa Rica",
     area: item.area || "Consultar",
     landSize: item.landSize || "Consultar",
     contactUrl: "/contacto",
@@ -414,7 +414,7 @@ function normalizeAttraction(item: ApiRecord): SiteAttraction {
     image: images[0] || fallbackAttractions[0].image,
     images: images.length ? images : [fallbackAttractions[0].image],
     icon: item.icon || "Leaf",
-    location: item.location?.text || "Miravalles",
+    location: item.location?.text || "Región norte de Costa Rica",
     coordinates: item.location?.coordinates
   };
 }
@@ -477,7 +477,7 @@ function normalizePromoSlot(item: ApiRecord): SitePromoSlot {
 function normalizeGalleryAsset(item: ApiRecord): SiteGalleryItem {
   return {
     src: item.url,
-    alt: item.alt || item.title || "Imagen de Miravalles",
+    alt: item.alt || item.title || "Imagen de la región",
     span: ""
   };
 }
@@ -628,7 +628,7 @@ function normalizeFallbackAttraction(item: (typeof fallbackAttractions)[number],
     image: item.image,
     images,
     icon: item.icon.displayName || item.icon.name || "Leaf",
-    location: "Miravalles",
+    location: "Región norte de Costa Rica",
     coordinates: undefined
   };
 }

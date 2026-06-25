@@ -9,20 +9,20 @@ export function DiscoverSection() {
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-soft">
           <Image
             src="/images/sitio-atardecer.webp"
-            alt="Atardecer en Miravalles - Eolicas"
+            alt="Atardecer en el corredor volcánico del norte de Costa Rica"
             fill
             className="object-cover"
             sizes="(min-width: 1024px) 52vw, 100vw"
           />
         </div>
         <div>
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-moss">Descubre Miravalles</p>
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-moss">Descubre la región</p>
           <h2 className="font-display text-4xl font-bold leading-tight text-canopy text-balance md:text-6xl">
             Un territorio vivo entre volcán, agua y bosque.
           </h2>
           <p className="mt-6 text-lg leading-8 text-volcanic">
-            Miravalles reúne rutas de montaña, aguas termales, ríos frescos y una biodiversidad que invita a
-            viajar con calma. Es una puerta a la naturaleza de Guanacaste para quienes buscan aventura,
+            Este corredor reúne rutas de montaña, aguas termales, ríos frescos y una biodiversidad que invita a
+            viajar con calma. Es una puerta a la naturaleza del norte de Costa Rica para quienes buscan aventura,
             descanso y turismo sostenible.
           </p>
           <Link

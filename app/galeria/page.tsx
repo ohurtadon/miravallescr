@@ -7,7 +7,7 @@ import { getSiteData } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Galería",
-  description: "Galería fotográfica referencial del paisaje natural y ecológico de Miravalles."
+  description: "Galería fotográfica referencial del paisaje natural y ecológico de la región."
 };
 
 export default async function GalleryPage() {
@@ -21,7 +21,7 @@ export default async function GalleryPage() {
     >
       <NarrativeBlock title="Una primera mirada al carácter del paisaje">
         <p>
-          La galería funciona como una ventana inicial: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que Miravalles puede ofrecer. Pronto este espacio deberá llenarse con fotografías propias de la zona.
+          La galería funciona como una ventana inicial: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que la región puede ofrecer. Pronto este espacio deberá llenarse con fotografías propias del territorio.
         </p>
         <p>
           La intención no es mostrar postales perfectas, sino construir memoria visual: imágenes que permitan reconocer lugares, emprendimientos, especies y momentos reales de la experiencia local.

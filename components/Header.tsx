@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { Menu, Mountain, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { navItems } from "@/data/site";
 
@@ -12,10 +13,17 @@ export function Header() {
     <header className="absolute left-0 right-0 top-0 z-30">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 text-white md:px-8">
         <Link href="/" className="flex items-center gap-3 font-semibold">
-          <span className="flex size-10 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur">
-            <Mountain className="size-5" aria-hidden="true" />
+          <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white/95 ring-1 ring-white/35 backdrop-blur">
+            <Image
+              src="/images/raiz-volcanica-logo.webp"
+              alt="Raíz Volcanica"
+              fill
+              sizes="48px"
+              className="object-contain p-1"
+              priority
+            />
           </span>
-          <span className="text-lg tracking-wide">Miravalles</span>
+          <span className="text-lg tracking-wide">Raíz Volcanica</span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm font-medium md:flex">
           {navItems.map((item) => (

@@ -8,7 +8,7 @@ import { PageViewTracker } from "@/components/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Experiencias",
-  description: "Caminatas ecológicas, termales, observación de aves y senderismo en Miravalles."
+  description: "Caminatas ecológicas, termales, observación de aves y senderismo en el corredor volcánico del norte de Costa Rica."
 };
 
 export default async function ExperiencesPage() {
@@ -24,7 +24,7 @@ export default async function ExperiencesPage() {
     >
       <NarrativeBlock title="El viaje aquí se vive despacio">
         <p>
-          Miravalles no se descubre corriendo de un punto a otro. Se entiende en la caminata fresca de la mañana, en el vapor que sube de la tierra, en una conversación con un guía local y en el descanso después de una ruta entre bosque y agua.
+          Esta región no se descubre corriendo de un punto a otro. Se entiende en la caminata fresca de la mañana, en el vapor que sube de la tierra, en una conversación con un guía local y en el descanso después de una ruta entre bosque y agua.
         </p>
         <p>
           Estas experiencias están pensadas como puertas de entrada: algunas invitan a moverse, otras a bajar el ritmo, pero todas buscan conectar al visitante con la naturaleza y con quienes conocen el territorio desde adentro.

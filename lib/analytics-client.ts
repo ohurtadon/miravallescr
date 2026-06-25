@@ -6,8 +6,8 @@ export type AnalyticsTargetType = "business" | "attraction" | "experience" | "pr
 
 export function getAnalyticsIdentity() {
   return {
-    visitorId: getOrCreateId("miravalles_visitor_id", localStorage),
-    sessionId: getOrCreateId("miravalles_session_id", sessionStorage)
+    visitorId: getOrCreateId("raiz_volcanica_visitor_id", localStorage),
+    sessionId: getOrCreateId("raiz_volcanica_session_id", sessionStorage)
   };
 }
 

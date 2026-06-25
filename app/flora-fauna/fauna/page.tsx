@@ -7,7 +7,7 @@ import { getSiteData } from "@/lib/site-api";
 
 export const metadata: Metadata = {
   title: "Fauna",
-  description: "Perezosos, tucanes, monos congo, mariposas y reptiles de Miravalles."
+  description: "Perezosos, tucanes, monos congo, mariposas y reptiles del corredor volcánico del norte de Costa Rica."
 };
 
 export default async function FaunaPage() {
@@ -21,7 +21,7 @@ export default async function FaunaPage() {
     >
       <NarrativeBlock title="La fauna aparece cuando el visitante baja el ritmo">
         <p>
-          En Miravalles, muchos encuentros silvestres no ocurren por casualidad, sino por paciencia: escuchar antes de avanzar, mirar hacia las copas, respetar distancia y entender que cada especie tiene su propio horario.
+          En la región, muchos encuentros silvestres no ocurren por casualidad, sino por paciencia: escuchar antes de avanzar, mirar hacia las copas, respetar distancia y entender que cada especie tiene su propio horario.
         </p>
         <p>
           Esta guía busca promover una observación responsable, donde ver un ave, un mono o una mariposa sea también una invitación a cuidar el bosque que los mantiene cerca.

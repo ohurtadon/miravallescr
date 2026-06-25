@@ -7,7 +7,7 @@ export function Hero() {
     <section className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
       <Image
         src="/images/volcan-miravalles-arcoiris-guanacaste.webp"
-        alt="Volcan Miravalles con paisaje eolico en Guanacaste"
+        alt="Paisaje volcánico y natural del norte de Costa Rica"
         fill
         priority
         className="object-cover"
@@ -21,17 +21,17 @@ export function Hero() {
             Guia regional y plataforma turistica
           </div>
           <h1 className="font-display text-5xl font-bold leading-[0.98] text-white text-balance drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
-            Miravalles CR: naturaleza, termales y aventura local
+            Raíz Volcanica: naturaleza, termales y aventura local
           </h1>
           <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white md:text-xl">
-            Explora atractivos, experiencias y negocios locales alrededor del Volcan Miravalles, en Guanacaste.
+            Explora atractivos, experiencias y negocios locales del corredor volcanico y natural del norte de Costa Rica.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="#atractivos"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-sand px-6 py-4 text-sm font-bold text-canopy transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-canopy"
             >
-              Explorar Miravalles
+              Explorar la región
               <ArrowDown className="size-4" aria-hidden="true" />
             </Link>
           </div>
