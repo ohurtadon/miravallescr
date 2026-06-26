@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteExperience } from "@/lib/site-api";
 import { ExperienceCard } from "./ExperienceCard";
 import { SectionHeading } from "./SectionHeading";
@@ -23,6 +24,7 @@ export function ExperiencesSection({
   showFilters = false
 }: ExperiencesSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const { t, tv } = useI18n();
 
   const items = useMemo(() => {
     return experiences
@@ -37,20 +39,20 @@ export function ExperiencesSection({
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
-            eyebrow="Experiencias"
-            title="Actividades para viajar con intención"
-            copy="Opciones promocionables de medio día o día completo, listas para conectar visitantes con guías, operadores y emprendimientos locales."
+            eyebrow={t("experiences.eyebrow")}
+            title={t("experiences.title")}
+            copy={t("experiences.copy")}
           />
         ) : null}
         {showFilters ? (
           <div className="mb-10 rounded-lg bg-mist p-6 ring-1 ring-canopy/10">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar experiencias</p>
-                <p className="mt-2 text-sm text-volcanic">Selecciona una categoría para ver actividades relacionadas.</p>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">{t("experiences.filterTitle")}</p>
+                <p className="mt-2 text-sm text-volcanic">{t("experiences.filterCopy")}</p>
               </div>
               <p className="text-sm font-bold text-canopy">
-                {items.length} {items.length === 1 ? "resultado" : "resultados"}
+                {items.length} {items.length === 1 ? t("results.singular") : t("results.plural")}
               </p>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
@@ -65,7 +67,7 @@ export function ExperiencesSection({
                       : "bg-white text-canopy ring-1 ring-canopy/25 hover:bg-sand"
                   }`}
                 >
-                  {category}
+                  {category === "Todos" ? t("filters.all") : tv(category)}
                 </button>
               ))}
             </div>

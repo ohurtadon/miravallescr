@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Bird, Flower2 } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteData } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -10,14 +13,16 @@ type WildlifeSectionProps = {
 };
 
 export function WildlifeSection({ wildlife, showHeading = true }: WildlifeSectionProps) {
+  const { t } = useI18n();
+
   return (
     <section className={`${showHeading ? "bg-mist" : "bg-white"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
-            eyebrow="Flora y fauna"
-            title="La biodiversidad que da vida a este territorio volcánico"
-            copy="Bosques, aves, mamíferos y plantas tropicales hacen de la región un aula viva para visitantes y comunidades."
+            eyebrow={t("wildlife.eyebrow")}
+            title={t("wildlife.title")}
+            copy={t("wildlife.copy")}
           />
         ) : null}
         <div className={`${showHeading ? "mt-12" : ""} grid gap-6 lg:grid-cols-2`}>

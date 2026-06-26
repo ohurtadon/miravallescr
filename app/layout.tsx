@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { I18nProvider } from "@/lib/i18n";
 import "./globals.css";
 
 const inter = Inter({
@@ -15,11 +16,20 @@ const display = Cormorant_Garamond({
   display: "swap"
 });
 
-const siteUrl = (
-  process.env.PUBLIC_SITE_URL ||
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://miravallescr.com")
-).replace(/\/$/, "");
+const DEFAULT_SITE_URL = "https://raizvolcanica.com";
+
+function getPublicSiteUrl() {
+  const configuredUrl = process.env.SITE_URL || process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL;
+  const siteUrl = (configuredUrl || DEFAULT_SITE_URL).replace(/\/$/, "");
+
+  if (siteUrl.includes(".vercel.app")) {
+    return DEFAULT_SITE_URL;
+  }
+
+  return siteUrl;
+}
+
+const siteUrl = getPublicSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -126,7 +136,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

@@ -1,3 +1,6 @@
+"use client";
+
+import { useI18n } from "@/lib/i18n";
 import { BackButton } from "./BackButton";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -10,6 +13,8 @@ type SimplePageProps = {
 };
 
 export function SimplePage({ eyebrow, title, description, children }: SimplePageProps) {
+  const { tv } = useI18n();
+
   return (
     <>
       <Header />
@@ -25,9 +30,9 @@ export function SimplePage({ eyebrow, title, description, children }: SimplePage
           <div className="absolute inset-0 bg-canopy/60" />
           <div className="relative mx-auto max-w-5xl">
             <BackButton />
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-sand">{eyebrow}</p>
-            <h1 className="font-display text-5xl font-bold leading-tight text-balance md:text-7xl">{title}</h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">{description}</p>
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-sand">{tv(eyebrow)}</p>
+            <h1 className="font-display text-5xl font-bold leading-tight text-balance md:text-7xl">{tv(title)}</h1>
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/78">{tv(description)}</p>
           </div>
         </section>
         <section className="bg-white px-5 py-16 md:px-8 md:py-20">

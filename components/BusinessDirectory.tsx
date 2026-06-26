@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteBusiness } from "@/lib/site-api";
 import { BusinessCard } from "./BusinessCard";
 import { SectionHeading } from "./SectionHeading";
@@ -25,6 +26,7 @@ export function BusinessDirectory({
   showFilters = false
 }: BusinessDirectoryProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const { t, tv } = useI18n();
 
   const items = useMemo(() => {
     return businesses
@@ -39,20 +41,20 @@ export function BusinessDirectory({
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
-            eyebrow="Negocios locales"
-            title="Servicios turísticos con raíz local"
-            copy="Un directorio preparado para conectar visitantes con hospedajes, restaurantes, guías, termales, transporte y productores de la zona."
+            eyebrow={t("businesses.eyebrow")}
+            title={t("businesses.title")}
+            copy={t("businesses.copy")}
           />
         ) : null}
         {showFilters ? (
           <div className="mb-10 rounded-lg bg-white p-6 ring-1 ring-canopy/10">
             <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar negocios</p>
-                <p className="mt-2 text-sm text-volcanic">Selecciona una categoría para ajustar el directorio.</p>
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">{t("businesses.filterTitle")}</p>
+                <p className="mt-2 text-sm text-volcanic">{t("businesses.filterCopy")}</p>
               </div>
               <p className="text-sm font-bold text-canopy">
-                {items.length} {items.length === 1 ? "resultado" : "resultados"}
+                {items.length} {items.length === 1 ? t("results.singular") : t("results.plural")}
               </p>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
@@ -67,7 +69,7 @@ export function BusinessDirectory({
                       : "bg-white text-canopy ring-1 ring-canopy/25 hover:bg-sand"
                   }`}
                 >
-                  {category}
+                  {category === "Todos" ? t("filters.all") : tv(category)}
                 </button>
               ))}
             </div>
@@ -84,7 +86,7 @@ export function BusinessDirectory({
               href="/negocios"
               className="inline-flex items-center gap-2 rounded-md bg-forest px-6 py-4 text-sm font-bold text-white transition hover:bg-canopy"
             >
-              Ver directorio completo
+              {t("businesses.directoryCta")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteSponsor } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -11,6 +14,7 @@ type SponsorSectionProps = {
 
 export function SponsorSection({ sponsors, compact = false, showHeading = true }: SponsorSectionProps) {
   const activeSponsors = sponsors.filter((sponsor) => sponsor.active);
+  const { t } = useI18n();
 
   return (
     <section
@@ -23,9 +27,9 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
       <div className="mx-auto max-w-7xl">
         {!compact && showHeading ? (
           <SectionHeading
-            eyebrow="Patrocinadores"
-            title="Aliados que impulsan el turismo sostenible y el desarrollo de la región"
-            copy="Espacios preparados para reconocer a negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable."
+            eyebrow={t("sponsors.eyebrow")}
+            title={t("sponsors.title")}
+            copy={t("sponsors.copy")}
           />
         ) : null}
         <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
@@ -42,7 +46,7 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
                   <h3 className="mt-2 line-clamp-2 min-h-[4rem] font-display text-2xl font-bold leading-tight text-canopy" title={sponsor.name}>{sponsor.name}</h3>
                   <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={sponsor.description}>{sponsor.description}</p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-forest">
-                    Conocer aliado
+                    {t("sponsors.cta")}
                     <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
                   </span>
                 </div>
