@@ -1,5 +1,7 @@
 const analyticsBaseUrl = (
-  process.env.NEXT_PUBLIC_MIRAVALLESGTE_API_URL || "https://miravallesgte-api.onrender.com"
+  process.env.NEXT_PUBLIC_RAIZ_VOLCANICA_API_URL ||
+  process.env.NEXT_PUBLIC_MIRAVALLESGTE_API_URL ||
+  "https://porta.raizvolcanica.com"
 ).replace(/\/$/, "");
 
 export type AnalyticsTargetType = "business" | "attraction" | "experience" | "property" | "category";

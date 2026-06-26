@@ -9,7 +9,12 @@ import {
   wildlife as fallbackWildlife
 } from "@/data/site";
 
-const apiBaseUrl = (process.env.MIRAVALLESGTE_API_URL || "https://miravallesgte-api.onrender.com").replace(/\/$/, "");
+const apiBaseUrl = (
+  process.env.RAIZ_VOLCANICA_API_URL ||
+  process.env.NEXT_PUBLIC_RAIZ_VOLCANICA_API_URL ||
+  process.env.MIRAVALLESGTE_API_URL ||
+  "https://porta.raizvolcanica.com"
+).replace(/\/$/, "");
 
 type ApiList<T> = {
   items: T[];
@@ -236,7 +241,7 @@ export async function getSiteData(): Promise<SiteData> {
       "Producto local"
     ]),
     contact: {
-      email: contactSettings.email || "info@miravallescr.com",
+      email: contactSettings.email || "info@raizvolcanica.com",
       whatsapp: normalizeWhatsAppUrl(contactSettings.whatsapp)
     },
     siteName: mainSettings?.siteName || "Raíz Volcanica",
