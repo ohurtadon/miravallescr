@@ -384,18 +384,24 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null);
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("es");
+export function I18nProvider({ children, initialLocale = "es" }: { children: React.ReactNode; initialLocale?: Locale }) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("rv-locale");
+    const cookieLocale = document.cookie
+      .split("; ")
+      .find((item) => item.startsWith("rv-locale="))
+      ?.split("=")[1];
+    const saved = cookieLocale || window.localStorage.getItem("rv-locale");
     if (saved === "es" || saved === "en") setLocaleState(saved);
   }, []);
 
   const setLocale = (nextLocale: Locale) => {
     setLocaleState(nextLocale);
     window.localStorage.setItem("rv-locale", nextLocale);
+    document.cookie = `rv-locale=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
     document.documentElement.lang = nextLocale;
+    window.location.reload();
   };
 
   useEffect(() => {

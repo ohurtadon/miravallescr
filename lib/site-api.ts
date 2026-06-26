@@ -8,6 +8,9 @@ import {
   stats as fallbackStats,
   wildlife as fallbackWildlife
 } from "@/data/site";
+import { cookies } from "next/headers";
+
+type Locale = "es" | "en";
 
 const apiBaseUrl = (
   process.env.RAIZ_VOLCANICA_API_URL ||
@@ -203,17 +206,18 @@ export type SiteData = {
   wildlife: typeof fallbackWildlife;
 };
 
-export async function getSiteData(): Promise<SiteData> {
+export async function getSiteData(locale?: Locale): Promise<SiteData> {
+  const requestLocale = locale ?? await getRequestLocale();
   const [businesses, experiences, properties, attractions, species, sponsors, gallery, settings] =
     await Promise.all([
-      fetchCollection("businesses"),
-      fetchCollection("experiences"),
-      fetchCollection("properties"),
-      fetchCollection("attractions"),
-      fetchCollection("species"),
-      fetchCollection("sponsors"),
-      fetchCollection("gallery-assets"),
-      fetchCollection("site-settings")
+      fetchCollection("businesses", requestLocale),
+      fetchCollection("experiences", requestLocale),
+      fetchCollection("properties", requestLocale),
+      fetchCollection("attractions", requestLocale),
+      fetchCollection("species", requestLocale),
+      fetchCollection("sponsors", requestLocale),
+      fetchCollection("gallery-assets", requestLocale),
+      fetchCollection("site-settings", requestLocale)
     ]);
 
   const normalizedBusinesses = published(businesses).map(normalizeBusiness);
@@ -270,9 +274,11 @@ export async function getSiteData(): Promise<SiteData> {
   };
 }
 
-export async function getPromotion(placement: string): Promise<SitePromotion | null> {
+export async function getPromotion(placement: string, locale?: Locale): Promise<SitePromotion | null> {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/public/promotions/serve?placement=${encodeURIComponent(placement)}`, {
+    const requestLocale = locale ?? await getRequestLocale();
+    const query = new URLSearchParams({ placement, lang: requestLocale });
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions/serve?${query.toString()}`, {
       cache: "no-store"
     });
     if (!response.ok) return null;
@@ -288,9 +294,10 @@ export async function getPromotion(placement: string): Promise<SitePromotion | n
   }
 }
 
-export async function getPublicPromotions(): Promise<SitePromoSlot[]> {
+export async function getPublicPromotions(locale?: Locale): Promise<SitePromoSlot[]> {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/public/promotions`, { cache: "no-store" });
+    const requestLocale = locale ?? await getRequestLocale();
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions?lang=${requestLocale}`, { cache: "no-store" });
     if (!response.ok) return [];
     const data = (await response.json()) as ApiList<ApiRecord>;
     return (data.items ?? []).map(normalizePromoSlot);
@@ -299,9 +306,10 @@ export async function getPublicPromotions(): Promise<SitePromoSlot[]> {
   }
 }
 
-export async function getPublicPromotion(key: string): Promise<SitePromoSlot | null> {
+export async function getPublicPromotion(key: string, locale?: Locale): Promise<SitePromoSlot | null> {
   try {
-    const response = await fetch(`${apiBaseUrl}/api/public/promotions/${encodeURIComponent(key)}`, { cache: "no-store" });
+    const requestLocale = locale ?? await getRequestLocale();
+    const response = await fetch(`${apiBaseUrl}/api/public/promotions/${encodeURIComponent(key)}?lang=${requestLocale}`, { cache: "no-store" });
     if (!response.ok) return null;
     const data = (await response.json()) as { item?: ApiRecord };
     return data.item ? normalizePromoSlot(data.item) : null;
@@ -316,11 +324,16 @@ export function withWhatsAppMessage(whatsappUrl: string | undefined, message: st
   return `${whatsappUrl}${separator}text=${encodeURIComponent(message)}`;
 }
 
-async function fetchCollection(collection: string) {
+async function fetchCollection(collection: string, locale: Locale) {
   if (!apiBaseUrl) return [];
 
   try {
-    const response = await fetch(`${apiBaseUrl}/api/public/${collection}?limit=100&sort=displayOrder,-updatedAt`, {
+    const query = new URLSearchParams({
+      limit: "100",
+      sort: "displayOrder,-updatedAt",
+      lang: locale
+    });
+    const response = await fetch(`${apiBaseUrl}/api/public/${collection}?${query.toString()}`, {
       cache: "no-store"
     });
 
@@ -330,6 +343,11 @@ async function fetchCollection(collection: string) {
   } catch {
     return [];
   }
+}
+
+async function getRequestLocale(): Promise<Locale> {
+  const cookieStore = await cookies();
+  return cookieStore.get("rv-locale")?.value === "en" ? "en" : "es";
 }
 
 function normalizeBusiness(item: ApiRecord): SiteBusiness {
@@ -392,7 +410,9 @@ function normalizeProperty(item: ApiRecord): SiteProperty {
     slug: item.slug,
     operation: item.operation === "rent" ? "Alquiler" : "Venta",
     type: item.type,
-    price: item.price?.label || (item.price?.amount ? `${item.price.currency || "USD"} ${item.price.amount}` : "Consultar"),
+    price: typeof item.price === "string"
+      ? item.price
+      : item.price?.label || (item.price?.amount ? `${item.price.currency || "USD"} ${item.price.amount}` : "Consultar"),
     image: images[0] || fallbackProperties[0].image,
     images: images.length ? images : [fallbackProperties[0].image],
     description: item.summary || item.description || "",
