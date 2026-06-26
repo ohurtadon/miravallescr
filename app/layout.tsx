@@ -15,11 +15,20 @@ const display = Cormorant_Garamond({
   display: "swap"
 });
 
-const siteUrl = (
-  process.env.PUBLIC_SITE_URL ||
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://miravallescr.com")
-).replace(/\/$/, "");
+const DEFAULT_SITE_URL = "https://raizvolcanica.com";
+
+function getPublicSiteUrl() {
+  const configuredUrl = process.env.SITE_URL || process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL;
+  const siteUrl = (configuredUrl || DEFAULT_SITE_URL).replace(/\/$/, "");
+
+  if (siteUrl.includes(".vercel.app")) {
+    return DEFAULT_SITE_URL;
+  }
+
+  return siteUrl;
+}
+
+const siteUrl = getPublicSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
