@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -36,10 +37,21 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
           {activeSponsors.map((sponsor) => {
             const href = sponsor.website || "/contacto#alianzas";
             const external = /^https?:\/\//i.test(href);
+            const logoIsImage = /^https?:\/\//i.test(sponsor.logo) || sponsor.logo.startsWith("/");
             const content = (
               <div className="flex h-full items-start gap-4">
-                <span className="flex size-14 shrink-0 items-center justify-center rounded-full bg-forest font-bold text-white">
-                  {sponsor.logo}
+                <span className="relative flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white font-bold text-forest ring-1 ring-canopy/10">
+                  {logoIsImage ? (
+                    <Image
+                      src={sponsor.logo}
+                      alt={`${sponsor.name} logo`}
+                      fill
+                      className="object-contain p-1.5"
+                      sizes="56px"
+                    />
+                  ) : (
+                    sponsor.logo
+                  )}
                 </span>
                 <div className="flex min-w-0 flex-1 flex-col">
                   <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={sponsor.level}>{sponsor.level}</p>
