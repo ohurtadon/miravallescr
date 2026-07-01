@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, isValidElement } from "react";
+import { Children, cloneElement, isValidElement } from "react";
 import { useI18n } from "@/lib/i18n";
 import { BackButton } from "./BackButton";
 import { Footer } from "./Footer";
@@ -17,7 +17,7 @@ export function SimplePage({ eyebrow, title, description, children }: SimplePage
   const { tv } = useI18n();
   const translateNode = (node: React.ReactNode): React.ReactNode => {
     if (typeof node === "string") return tv(node.trim()) || node;
-    if (Array.isArray(node)) return node.map((child) => translateNode(child));
+    if (Array.isArray(node)) return Children.map(node, (child) => translateNode(child));
     if (!isValidElement<{ children?: React.ReactNode }>(node)) return node;
     return cloneElement(node, undefined, translateNode(node.props.children));
   };

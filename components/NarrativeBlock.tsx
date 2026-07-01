@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, isValidElement, useMemo, useRef, useState } from "react";
+import { Children, cloneElement, isValidElement, useMemo, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 
 type NarrativeStory = {
@@ -24,7 +24,7 @@ export function NarrativeBlock({ title, children, stories }: NarrativeBlockProps
   );
   const translateNode = (node: React.ReactNode): React.ReactNode => {
     if (typeof node === "string") return tv(node.trim()) || node;
-    if (Array.isArray(node)) return node.map((child) => translateNode(child));
+    if (Array.isArray(node)) return Children.map(node, (child) => translateNode(child));
     if (!isValidElement<{ children?: React.ReactNode }>(node)) return node;
     return cloneElement(node, undefined, translateNode(node.props.children));
   };
