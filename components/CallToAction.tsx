@@ -1,17 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Store } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 export function CallToAction() {
+  const { t } = useI18n();
+
   return (
     <section className="bg-forest px-5 py-20 text-white md:px-8 md:py-24">
       <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
         <div>
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-sand">Plan de viaje</p>
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-sand">{t("cta.eyebrow")}</p>
           <h2 className="font-display text-4xl font-bold leading-tight text-balance md:text-6xl">
-            Explore la región o forme parte de nuestra red de aliados locales
+            {t("cta.title")}
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-white/80 md:text-base">
-            Conectamos visitantes con atractivos, experiencias y emprendimientos de la region mediante contacto directo.
+            {t("cta.copy")}
           </p>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
@@ -19,14 +24,14 @@ export function CallToAction() {
             href="/contacto"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-sand px-6 py-4 text-sm font-bold text-canopy transition hover:bg-white"
           >
-            Planificar visita
+            {t("cta.visit")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
           <Link
             href="/contacto#alianzas"
             className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white/10 px-6 py-4 text-sm font-bold text-white ring-1 ring-white/25 transition hover:bg-white/18"
           >
-            Registrar negocio
+            {t("cta.business")}
             <Store className="size-4" aria-hidden="true" />
           </Link>
         </div>

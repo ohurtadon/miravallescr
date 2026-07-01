@@ -1,8 +1,13 @@
+"use client";
+
 import Image from "next/image";
-import { ArrowDown, MapPin, Store } from "lucide-react";
+import { ArrowDown, MapPin } from "lucide-react";
 import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 export function Hero() {
+  const { t } = useI18n();
+
   return (
     <section className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
       <Image
@@ -18,20 +23,20 @@ export function Hero() {
         <div className="max-w-4xl">
           <div className="mb-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-white/14 px-4 py-2 text-sm font-semibold ring-1 ring-white/25 backdrop-blur">
             <MapPin className="size-4" aria-hidden="true" />
-            Guia regional y plataforma turistica
+            {t("hero.badge")}
           </div>
           <h1 className="font-display text-5xl font-bold leading-[0.98] text-white text-balance drop-shadow-[0_3px_18px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
-            Raíz Volcanica: naturaleza, termales y aventura local
+            {t("hero.title")}
           </h1>
           <p className="mt-6 max-w-2xl text-lg font-medium leading-8 text-white md:text-xl">
-            Explora atractivos, experiencias y negocios locales del corredor volcanico y natural del norte de Costa Rica.
+            {t("hero.copy")}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="#atractivos"
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-sand px-6 py-4 text-sm font-bold text-canopy transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-canopy"
             >
-              Explorar la región
+              {t("hero.cta")}
               <ArrowDown className="size-4" aria-hidden="true" />
             </Link>
           </div>

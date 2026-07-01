@@ -21,6 +21,7 @@ import {
   X,
   type LucideIcon
 } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteMapPoint } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -143,6 +144,7 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
   const [filter, setFilter] = useState<MapFilter>("all");
   const [selectedPoint, setSelectedPoint] = useState<SiteMapPoint | null>(null);
   const [mapStatus, setMapStatus] = useState<"loading" | "ready" | "error">("loading");
+  const { t, tv } = useI18n();
 
   const filteredPoints = useMemo(
     () => mapPoints.filter((point) => filter === "all" || point.kind === filter),
@@ -225,14 +227,14 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
-            eyebrow="Mapa interactivo"
-            title="Ubica atractivos y negocios locales"
-            copy="Explora el territorio en un mapa real y abre la ficha de cada lugar para conocerlo mejor."
+            eyebrow={t("map.eyebrow")}
+            title={t("map.title")}
+            copy={t("map.copy")}
             light
           />
         ) : null}
 
-        <div className={`${showHeading ? "mt-10" : ""} flex flex-wrap justify-center gap-3`} aria-label="Filtrar puntos del mapa">
+        <div className={`${showHeading ? "mt-10" : ""} flex flex-wrap justify-center gap-3`} aria-label={t("map.filterLabel")}>
           {filters.map((item) => (
             <button
               key={item.value}
@@ -245,25 +247,25 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
                   : showHeading ? "bg-white/10 text-white ring-1 ring-white/15 hover:bg-white/16" : "bg-white text-canopy ring-1 ring-canopy/20 hover:bg-mist"
               }`}
             >
-              {item.label}
+              {item.value === "all" ? t("filters.all") : tv(item.label)}
             </button>
           ))}
         </div>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.45fr_0.55fr]">
-          <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#dbe7d7] shadow-soft" aria-label="Mapa interactivo de la región">
+          <div className="relative min-h-[520px] overflow-hidden rounded-lg bg-[#dbe7d7] shadow-soft" aria-label={t("map.regionLabel")}>
             <div ref={containerRef} className="absolute inset-0" />
             {mapStatus === "loading" ? (
               <div className="absolute inset-0 grid place-items-center bg-mist text-center text-canopy">
-                <p className="font-bold">Cargando mapa de la región...</p>
+                <p className="font-bold">{t("map.loading")}</p>
               </div>
             ) : null}
             {mapStatus === "error" ? (
               <div className="absolute inset-0 grid place-items-center bg-mist p-8 text-center text-canopy">
                 <div>
                   <MapPin className="mx-auto size-10 text-forest" aria-hidden="true" />
-                  <p className="mt-4 font-bold">No fue posible cargar el mapa.</p>
-                  <p className="mt-2 text-sm text-volcanic">Revisa la conexión o la configuración del token de Mapbox.</p>
+                  <p className="mt-4 font-bold">{t("map.errorTitle")}</p>
+                  <p className="mt-2 text-sm text-volcanic">{t("map.errorCopy")}</p>
                 </div>
               </div>
             ) : null}
@@ -271,7 +273,7 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
             <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 text-xs font-bold">
               {legendItems.map((item) => (
                 <span key={item.key} className="rounded-md bg-white/95 px-3 py-2 text-canopy shadow">
-                  <item.Icon className="mr-1 inline size-4 text-forest" /> {item.label}
+                  <item.Icon className="mr-1 inline size-4 text-forest" /> {tv(item.label)}
                 </span>
               ))}
             </div>
@@ -282,8 +284,8 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
               <MapPointCard point={selectedPoint} onClose={() => setSelectedPoint(null)} />
             ) : (
               <>
-                <h3 className="font-display text-3xl font-bold">Lugares en el mapa</h3>
-                <p className="mt-2 text-sm leading-6 text-volcanic">Selecciona un marcador o un lugar para ver su resumen.</p>
+                <h3 className="font-display text-3xl font-bold">{t("map.placesTitle")}</h3>
+                <p className="mt-2 text-sm leading-6 text-volcanic">{t("map.placesCopy")}</p>
                 <div className="mt-5 grid gap-3">
                   {filteredPoints.map((point) => (
                     <button
@@ -296,12 +298,12 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
                         <PointIcon point={point} className="mt-0.5 size-5 shrink-0 text-forest" />
                         <span>
                           <span className="block font-bold">{point.name}</span>
-                          <span className="mt-1 block text-xs text-volcanic">{point.category}</span>
+                          <span className="mt-1 block text-xs text-volcanic">{tv(point.category)}</span>
                         </span>
                       </span>
                     </button>
                   ))}
-                  {!filteredPoints.length ? <p className="rounded-md bg-mist p-4 text-sm text-volcanic">No hay ubicaciones publicadas en esta categoría.</p> : null}
+                  {!filteredPoints.length ? <p className="rounded-md bg-mist p-4 text-sm text-volcanic">{t("map.empty")}</p> : null}
                 </div>
               </>
             )}
@@ -319,15 +321,16 @@ function PointIcon({ point, className }: { point: SiteMapPoint; className?: stri
 
 function MapPointCard({ point, onClose }: { point: SiteMapPoint; onClose: () => void }) {
   const icon = getMapIconConfig(point);
+  const { t, tv } = useI18n();
 
   return (
     <article>
       <div className="flex items-start justify-between gap-3">
         <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-moss">
           <icon.Icon className="size-4" aria-hidden="true" />
-          {icon.label}
+          {tv(icon.label)}
         </p>
-        <button type="button" onClick={onClose} className="rounded-full p-2 text-canopy transition hover:bg-mist" aria-label="Cerrar resumen">
+        <button type="button" onClick={onClose} className="rounded-full p-2 text-canopy transition hover:bg-mist" aria-label={t("map.closeSummary")}>
           <X className="size-5" aria-hidden="true" />
         </button>
       </div>
@@ -337,14 +340,14 @@ function MapPointCard({ point, onClose }: { point: SiteMapPoint; onClose: () => 
         </div>
       ) : null}
       <h3 className="mt-5 font-display text-3xl font-bold">{point.name}</h3>
-      <p className="mt-2 text-sm font-semibold text-moss">{point.category}</p>
+      <p className="mt-2 text-sm font-semibold text-moss">{tv(point.category)}</p>
       <p className="mt-4 text-sm leading-7 text-volcanic">{point.summary}</p>
       <p className="mt-4 flex gap-2 text-sm text-volcanic">
         <MapPin className="mt-0.5 size-4 shrink-0 text-river" />
-        <span>{point.location}<span className="mt-1 block text-xs font-semibold text-moss">Ubicación aproximada en Mogote</span></span>
+        <span>{point.location}<span className="mt-1 block text-xs font-semibold text-moss">{t("map.approxLocation")}</span></span>
       </p>
       <Link href={point.href} className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-canopy">
-        Ver página del lugar
+        {t("map.placePage")}
         <ArrowRight className="size-4" aria-hidden="true" />
       </Link>
     </article>

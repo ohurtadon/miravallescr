@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Binoculars, Flame, Leaf, MapPin, Mountain, Sparkles, Waves } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteAttraction } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -20,14 +23,16 @@ type AttractionsGridProps = {
 };
 
 export function AttractionsGrid({ attractions, showHeading = true }: AttractionsGridProps) {
+  const { t } = useI18n();
+
   return (
     <section id="atractivos" className={`bg-white px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
-            eyebrow="Principales atractivos"
-            title="Rutas naturales para cada ritmo de viaje"
-            copy="Agua, bosque, miradores y experiencias termales se combinan en un destino compacto y lleno de contrastes."
+            eyebrow={t("attractions.eyebrow")}
+            title={t("attractions.title")}
+            copy={t("attractions.copy")}
           />
         ) : null}
         <div className={`${showHeading ? "mt-12" : ""} grid gap-5 sm:grid-cols-2 lg:grid-cols-3`}>

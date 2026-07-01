@@ -1,39 +1,44 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram, Youtube } from "lucide-react";
+import { useI18n } from "@/lib/i18n";
 
 const groups = [
   {
-    title: "Explorar",
+    titleKey: "footer.explore",
     links: [
-      { label: "Atractivos", href: "/atractivos" },
-      { label: "Flora y fauna", href: "/flora-fauna" },
-      { label: "Experiencias", href: "/experiencias" },
-      { label: "Negocios locales", href: "/negocios" },
-      { label: "Propiedades", href: "/propiedades" }
+      { labelKey: "nav.attractions", href: "/atractivos" },
+      { labelKey: "nav.wildlife", href: "/flora-fauna" },
+      { labelKey: "nav.experiences", href: "/experiencias" },
+      { labelKey: "businesses.eyebrow", href: "/negocios" },
+      { labelKey: "nav.properties", href: "/propiedades" }
     ]
   },
   {
-    title: "Información",
+    titleKey: "footer.info",
     links: [
-      { label: "Cómo llegar", href: "/mapa" },
-      { label: "Contacto", href: "/contacto" },
-      { label: "Clima", href: "/clima" },
-      { label: "Alianzas", href: "/contacto#alianzas" }
+      { labelKey: "footer.directions", href: "/mapa" },
+      { labelKey: "nav.contact", href: "/contacto" },
+      { labelKey: "footer.weather", href: "/clima" },
+      { labelKey: "footer.partnerships", href: "/contacto#alianzas" }
     ]
   },
   {
-    title: "Comercial",
+    titleKey: "footer.commercial",
     links: [
-      { label: "Patrocinadores", href: "/patrocinadores" },
-      { label: "Registrar mi negocio", href: "/contacto#alianzas" },
-      { label: "Promocionar experiencia", href: "/contacto#alianzas" },
-      { label: "Publicar propiedad", href: "/contacto#alianzas" }
+      { labelKey: "sponsors.eyebrow", href: "/patrocinadores" },
+      { labelKey: "cta.business", href: "/contacto#alianzas" },
+      { labelKey: "footer.promoteExperience", href: "/contacto#alianzas" },
+      { labelKey: "footer.publishProperty", href: "/contacto#alianzas" }
     ]
   }
-];
+] as const;
 
 export function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="bg-canopy px-5 py-14 text-white md:px-8">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
@@ -51,23 +56,23 @@ export function Footer() {
             <span className="text-lg">Raíz Volcanica</span>
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">
-            La plataforma que conecta volcanes, bosques, ríos, termales, comunidades y experiencias del norte de Costa Rica.
+            {t("footer.copy")}
           </p>
         </div>
         {groups.map((group) => (
-          <div key={group.title}>
-            <h3 className="font-bold text-sand">{group.title}</h3>
+          <div key={group.titleKey}>
+            <h3 className="font-bold text-sand">{t(group.titleKey)}</h3>
             <nav className="mt-4 grid gap-3 text-sm text-white/72">
               {group.links.map((link) => (
-                <Link key={`${link.label}-${link.href}`} href={link.href} className="hover:text-white">
-                  {link.label}
+                <Link key={`${link.labelKey}-${link.href}`} href={link.href} className="hover:text-white">
+                  {t(link.labelKey)}
                 </Link>
               ))}
             </nav>
           </div>
         ))}
         <div>
-          <h3 className="font-bold text-sand">Redes sociales</h3>
+          <h3 className="font-bold text-sand">{t("footer.social")}</h3>
           <div className="mt-4 flex gap-3">
             <Link href="#" aria-label="Facebook" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
               <Facebook className="size-5" />
