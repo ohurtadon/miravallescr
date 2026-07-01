@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { Children, cloneElement, isValidElement, useMemo, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 
 type NarrativeStory = {
@@ -22,6 +22,12 @@ export function NarrativeBlock({ title, children, stories }: NarrativeBlockProps
     () => stories && stories.length > 0 ? stories : [{ title, content: children }],
     [children, stories, title]
   );
+  const translateNode = (node: React.ReactNode): React.ReactNode => {
+    if (typeof node === "string") return tv(node.trim()) || node;
+    if (Array.isArray(node)) return Children.map(node, (child) => translateNode(child));
+    if (!isValidElement<{ children?: React.ReactNode }>(node)) return node;
+    return cloneElement(node, undefined, translateNode(node.props.children));
+  };
 
   const goToSlide = (index: number) => {
     const scroller = scrollerRef.current;
@@ -48,7 +54,7 @@ export function NarrativeBlock({ title, children, stories }: NarrativeBlockProps
           <article key={`${slide.title}-${index}`} className="min-w-full snap-center px-1">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-moss">{tv(slide.title)}</p>
             <div className="mx-auto mt-6 max-w-4xl space-y-4 text-lg leading-9 text-volcanic md:text-xl md:leading-10">
-              {slide.content}
+              {translateNode(slide.content)}
             </div>
           </article>
         ))}

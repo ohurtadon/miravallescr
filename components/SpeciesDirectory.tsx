@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Leaf, Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 import type { SiteSpecies } from "@/lib/site-api";
 
 type SpeciesDirectoryProps = {
@@ -13,6 +14,7 @@ type SpeciesDirectoryProps = {
 export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [search, setSearch] = useState("");
+  const { t, tv } = useI18n();
 
   const items = useMemo(() => species.filter((item) => item.type === type), [species, type]);
   const categories = useMemo(() => ["Todos", ...new Set(items.map((item) => item.category).filter(Boolean))], [items]);
@@ -35,11 +37,11 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
       <section className="rounded-lg bg-white p-6 ring-1 ring-canopy/10">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Filtrar {type === "fauna" ? "fauna" : "flora"}</p>
-            <p className="mt-2 text-sm text-volcanic">Busca por nombre o selecciona una categoría.</p>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">{tv(`Filtrar ${type === "fauna" ? "fauna" : "flora"}`)}</p>
+            <p className="mt-2 text-sm text-volcanic">{tv("Busca por nombre o selecciona una categoría.")}</p>
           </div>
           <p className="text-sm font-bold text-canopy">
-            {filtered.length} {filtered.length === 1 ? "resultado" : "resultados"}
+            {filtered.length} {filtered.length === 1 ? t("results.singular") : t("results.plural")}
           </p>
         </div>
         <label className="relative mt-5 block">
@@ -47,7 +49,7 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar especie..."
+            placeholder={tv("Buscar especie...")}
             className="h-12 w-full rounded-md border border-canopy/15 bg-mist pl-10 pr-3 text-sm outline-none transition focus:border-river focus:bg-white"
           />
         </label>
@@ -63,7 +65,7 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
                   : "bg-mist text-volcanic ring-1 ring-canopy/10 hover:bg-sand hover:text-canopy"
               }`}
             >
-              {category}
+              {tv(category)}
             </button>
           ))}
         </div>
@@ -91,7 +93,7 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
               )}
             </div>
             <div className="flex flex-1 flex-col p-6">
-              <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={item.category}>{item.category}</p>
+              <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={tv(item.category)}>{tv(item.category)}</p>
               <h2 className="mt-3 line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={item.commonName}>{item.commonName}</h2>
               {item.scientificName ? <p className="mt-1 line-clamp-1 text-sm italic text-volcanic" title={item.scientificName}>{item.scientificName}</p> : <p className="mt-1 min-h-5 text-sm italic text-volcanic" aria-hidden="true">&nbsp;</p>}
               <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={item.description || item.summary}>{item.description || item.summary}</p>
@@ -99,13 +101,13 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
                 <dl className="mt-5 grid gap-3 text-sm">
                   {item.habitat ? (
                     <div className="rounded-md bg-mist p-4">
-                      <dt className="font-bold text-canopy">Hábitat</dt>
+                      <dt className="font-bold text-canopy">{tv("Hábitat")}</dt>
                       <dd className="mt-1 line-clamp-2 text-volcanic" title={item.habitat}>{item.habitat}</dd>
                     </div>
                   ) : null}
                   {item.conservationStatus ? (
                     <div className="rounded-md bg-mist p-4">
-                      <dt className="font-bold text-canopy">Estado de conservación</dt>
+                      <dt className="font-bold text-canopy">{tv("Estado de conservación")}</dt>
                       <dd className="mt-1 line-clamp-2 text-volcanic" title={item.conservationStatus}>{item.conservationStatus}</dd>
                     </div>
                   ) : null}

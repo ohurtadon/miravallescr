@@ -1,5 +1,6 @@
 "use client";
 
+import { Children, cloneElement, isValidElement } from "react";
 import { useI18n } from "@/lib/i18n";
 import { BackButton } from "./BackButton";
 import { Footer } from "./Footer";
@@ -14,6 +15,12 @@ type SimplePageProps = {
 
 export function SimplePage({ eyebrow, title, description, children }: SimplePageProps) {
   const { tv } = useI18n();
+  const translateNode = (node: React.ReactNode): React.ReactNode => {
+    if (typeof node === "string") return tv(node.trim()) || node;
+    if (Array.isArray(node)) return Children.map(node, (child) => translateNode(child));
+    if (!isValidElement<{ children?: React.ReactNode }>(node)) return node;
+    return cloneElement(node, undefined, translateNode(node.props.children));
+  };
 
   return (
     <>
@@ -36,7 +43,7 @@ export function SimplePage({ eyebrow, title, description, children }: SimplePage
           </div>
         </section>
         <section className="bg-white px-5 py-16 md:px-8 md:py-20">
-          <div className="mx-auto max-w-7xl">{children}</div>
+          <div className="mx-auto max-w-7xl">{translateNode(children)}</div>
         </section>
       </main>
       <Footer />
