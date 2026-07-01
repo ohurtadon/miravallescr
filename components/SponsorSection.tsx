@@ -30,7 +30,6 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
           <SectionHeading
             eyebrow={t("sponsors.eyebrow")}
             title={t("sponsors.title")}
-            copy={t("sponsors.copy")}
           />
         ) : null}
         <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
