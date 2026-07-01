@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n";
 
 type ImageCarouselProps = {
   images: string[];
@@ -24,6 +25,7 @@ export function ImageCarousel({
   const [isOpen, setIsOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const { tv } = useI18n();
 
   const goTo = (index: number) => {
     const nextIndex = (index + items.length) % items.length;
@@ -57,7 +59,7 @@ export function ImageCarousel({
             ref={scrollerRef}
             onScroll={updateActive}
             className="flex h-full snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            aria-label={`Imagenes de ${alt}`}
+            aria-label={`${tv("Imágenes de")} ${alt}`}
           >
             {items.map((src, index) => (
               <button
@@ -68,7 +70,7 @@ export function ImageCarousel({
                   setIsOpen(true);
                 }}
                 className="relative h-full min-w-full snap-center overflow-hidden text-left"
-                aria-label={`Ampliar imagen ${index + 1} de ${alt}`}
+                aria-label={`${tv("Ampliar imagen")} ${index + 1} ${tv("de")} ${alt}`}
               >
                 <Image
                   src={src}
@@ -89,7 +91,7 @@ export function ImageCarousel({
                 type="button"
                 onClick={() => goTo(activeIndex - 1)}
                 className="absolute left-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-canopy text-white shadow-[0_10px_32px_rgba(18,52,39,0.38)] ring-2 ring-white/90 transition hover:scale-105 hover:bg-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand md:left-4 md:size-14"
-                aria-label="Imagen anterior"
+                aria-label={tv("Imagen anterior")}
               >
                 <ChevronLeft className="size-6 md:size-7" aria-hidden="true" />
               </button>
@@ -97,7 +99,7 @@ export function ImageCarousel({
                 type="button"
                 onClick={() => goTo(activeIndex + 1)}
                 className="absolute right-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-canopy text-white shadow-[0_10px_32px_rgba(18,52,39,0.38)] ring-2 ring-white/90 transition hover:scale-105 hover:bg-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sand md:right-4 md:size-14"
-                aria-label="Imagen siguiente"
+                aria-label={tv("Imagen siguiente")}
               >
                 <ChevronRight className="size-6 md:size-7" aria-hidden="true" />
               </button>
@@ -112,7 +114,7 @@ export function ImageCarousel({
         {items.length > 1 ? (
           <div
             className="mt-3 flex snap-x gap-2 overflow-x-auto pb-2 [scrollbar-width:thin] [scrollbar-color:#6E8B3D_transparent]"
-            aria-label={`Miniaturas de ${alt}`}
+            aria-label={`${tv("Miniaturas de")} ${alt}`}
           >
             {items.map((src, index) => (
               <button
@@ -127,7 +129,7 @@ export function ImageCarousel({
                     ? "ring-4 ring-forest ring-offset-2 ring-offset-white"
                     : "opacity-75 ring-1 ring-canopy/12 hover:opacity-100 hover:ring-forest/50"
                 }`}
-                aria-label={`Ver imagen ${index + 1} de ${alt}`}
+                aria-label={`${tv("Ver imagen")} ${index + 1} ${tv("de")} ${alt}`}
                 aria-current={activeIndex === index ? "true" : undefined}
               >
                 <Image src={src} alt="" fill className="object-cover" sizes="8rem" />
@@ -143,7 +145,7 @@ export function ImageCarousel({
             type="button"
             onClick={() => setIsOpen(false)}
             className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white text-canopy shadow-sm"
-            aria-label="Cerrar imagen"
+            aria-label={tv("Cerrar imagen")}
           >
             <X className="size-5" aria-hidden="true" />
           </button>
@@ -152,7 +154,7 @@ export function ImageCarousel({
               type="button"
               onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
               className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
-              aria-label="Imagen anterior"
+              aria-label={tv("Imagen anterior")}
             >
               <ChevronLeft className="size-6" aria-hidden="true" />
             </button>
@@ -165,7 +167,7 @@ export function ImageCarousel({
               type="button"
               onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
               className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
-              aria-label="Imagen siguiente"
+              aria-label={tv("Imagen siguiente")}
             >
               <ChevronRight className="size-6" aria-hidden="true" />
             </button>
@@ -178,7 +180,7 @@ export function ImageCarousel({
                   type="button"
                   onClick={() => setActiveIndex(index)}
                   className={`size-2.5 rounded-full ${activeIndex === index ? "bg-white" : "bg-white/35"}`}
-                  aria-label={`Ver imagen ${index + 1}`}
+                  aria-label={`${tv("Ver imagen")} ${index + 1}`}
                 />
               ))}
             </div>

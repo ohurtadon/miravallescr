@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { sendAnalyticsEvent } from "@/lib/analytics-client";
+import { useI18n } from "@/lib/i18n";
 
 type TrackedPromoLinkProps = {
   serveId?: string;
@@ -15,6 +16,7 @@ type TrackedPromoLinkProps = {
 
 export function TrackedPromoLink(props: TrackedPromoLinkProps) {
   const linkRef = useRef<HTMLAnchorElement>(null);
+  const { tv } = useI18n();
 
   useEffect(() => {
     if (!props.serveId || !linkRef.current) return;
@@ -44,13 +46,13 @@ export function TrackedPromoLink(props: TrackedPromoLinkProps) {
       }}
       className="grid gap-5 rounded-lg bg-white p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft md:min-h-40 md:grid-cols-[0.7fr_1.3fr_auto] md:items-center md:p-8"
     >
-      <p className="line-clamp-2 text-sm font-bold uppercase tracking-[0.18em] text-moss" title={props.eyebrow}>{props.eyebrow}</p>
+      <p className="line-clamp-2 text-sm font-bold uppercase tracking-[0.18em] text-moss" title={tv(props.eyebrow)}>{tv(props.eyebrow)}</p>
       <div className="min-w-0">
-        <h3 className="line-clamp-2 font-display text-3xl font-bold leading-tight text-canopy" title={props.title}>{props.title}</h3>
-        <p className="mt-2 line-clamp-2 text-sm leading-7 text-volcanic" title={props.description}>{props.description}</p>
+        <h3 className="line-clamp-2 font-display text-3xl font-bold leading-tight text-canopy" title={tv(props.title)}>{tv(props.title)}</h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-7 text-volcanic" title={tv(props.description)}>{tv(props.description)}</p>
       </div>
-      <span className="inline-flex items-center gap-2 text-sm font-bold text-forest" title={props.cta}>
-        {props.cta}
+      <span className="inline-flex items-center gap-2 text-sm font-bold text-forest" title={tv(props.cta)}>
+        {tv(props.cta)}
         <ArrowRight className="size-4" aria-hidden="true" />
       </span>
     </a>
