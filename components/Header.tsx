@@ -17,14 +17,14 @@ export function Header() {
           <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white/95 ring-1 ring-white/35 backdrop-blur">
             <Image
               src="/images/raiz-volcanica-logo.webp"
-              alt="Raíz Volcanica"
+              alt="Raíz Volcánica"
               fill
               sizes="48px"
               className="object-contain p-1"
               priority
             />
           </span>
-          <span className="text-lg tracking-wide">Raíz Volcanica</span>
+          <span className="text-lg tracking-wide">Raíz Volcánica</span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm font-medium md:flex">
           {translatedNavItems.map((item) => (

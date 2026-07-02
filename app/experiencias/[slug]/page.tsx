@@ -36,7 +36,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
   const related = experiences.filter((item) => item.slug !== experience.slug).slice(0, 3);
   const whatsappHref = withWhatsAppMessage(
     experience.whatsapp,
-    `Hola, te descubrí en Raíz Volcanica y quiero saber más sobre la experiencia: ${experience.title}.`
+    `Hola, te descubrí en Raíz Volcánica y quiero saber más sobre la experiencia: ${experience.title}.`
   );
 
   return (

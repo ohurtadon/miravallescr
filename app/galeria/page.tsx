@@ -19,14 +19,50 @@ export default async function GalleryPage() {
       title="Imágenes para imaginar la visita"
       description="Banco visual temporal con fotografías referenciales hasta incorporar material real de la zona."
     >
-      <NarrativeBlock title="Una primera mirada al carácter del paisaje">
-        <p>
-          La galería funciona como una ventana inicial: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que la región puede ofrecer. Pronto este espacio deberá llenarse con fotografías propias del territorio.
-        </p>
-        <p>
-          La intención no es mostrar postales perfectas, sino construir memoria visual: imágenes que permitan reconocer lugares, emprendimientos, especies y momentos reales de la experiencia local.
-        </p>
-      </NarrativeBlock>
+      <NarrativeBlock
+        title="Una primera mirada al carácter del paisaje"
+        stories={[
+          {
+            title: "Una primera mirada al carácter del paisaje",
+            content: (
+              <>
+                <p>
+                  La galería funciona como una ventana inicial: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que la región puede ofrecer. Pronto este espacio deberá llenarse con fotografías propias del territorio.
+                </p>
+                <p>
+                  La intención no es mostrar postales perfectas, sino construir memoria visual: imágenes que permitan reconocer lugares, emprendimientos, especies y momentos reales de la experiencia local.
+                </p>
+              </>
+            )
+          },
+          {
+            title: "Imágenes para reconocer Miravalles y sus alrededores",
+            content: (
+              <>
+                <p>
+                  Una buena fotografía puede ayudar a ubicar el carácter de Miravalles, Guanacaste, Bijagua y Dos Ríos de Upala: el verde de los caminos, la presencia del volcán, el agua clara, los cielos cambiantes y la vida cotidiana de la zona norte.
+                </p>
+                <p>
+                  Al reunir imágenes del territorio, la galería también mejora la forma en que visitantes y buscadores entienden el destino: no como un punto aislado, sino como una región con identidad natural y comunitaria.
+                </p>
+              </>
+            )
+          },
+          {
+            title: "Del paisaje a la experiencia real",
+            content: (
+              <>
+                <p>
+                  Las imágenes deben contar lo que el visitante puede vivir: senderos, termales, ríos, cataratas, flora, fauna, hospedajes, comida local, guías, productores y momentos sencillos que hacen memorable el viaje.
+                </p>
+                <p>
+                  Con el tiempo, este banco visual puede convertirse en una herramienta poderosa para mostrar el turismo del norte de Costa Rica con más verdad, más contexto y más presencia local.
+                </p>
+              </>
+            )
+          }
+        ]}
+      />
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <GallerySection gallery={gallery} showHeading={false} />
       </div>
