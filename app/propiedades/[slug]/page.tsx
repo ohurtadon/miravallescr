@@ -35,7 +35,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   const related = properties.filter((item) => item.slug !== property.slug).slice(0, 3);
   const whatsappHref = withWhatsAppMessage(
     contact.whatsapp,
-    `Hola, te descubrí en Raíz Volcanica y quiero consultar sobre la propiedad: ${property.title}.`
+    `Hola, te descubrí en Raíz Volcánica y quiero consultar sobre la propiedad: ${property.title}.`
   );
 
   return (

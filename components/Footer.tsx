@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
 const groups = [
@@ -47,13 +47,13 @@ export function Footer() {
             <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white">
               <Image
                 src="/images/raiz-volcanica-logo.webp"
-                alt="Raíz Volcanica"
+                alt="Raíz Volcánica"
                 fill
                 sizes="48px"
                 className="object-contain p-1"
               />
             </span>
-            <span className="text-lg">Raíz Volcanica</span>
+            <span className="text-lg">Raíz Volcánica</span>
           </Link>
           <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">
             {t("footer.copy")}
@@ -74,14 +74,11 @@ export function Footer() {
         <div>
           <h3 className="font-bold text-sand">{t("footer.social")}</h3>
           <div className="mt-4 flex gap-3">
-            <Link href="#" aria-label="Facebook" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
+            <Link href="https://www.facebook.com/raizvolcanicacr" aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
               <Facebook className="size-5" />
             </Link>
-            <Link href="#" aria-label="Instagram" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
+            <Link href="https://www.instagram.com/raizvolcanica" aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
               <Instagram className="size-5" />
-            </Link>
-            <Link href="#" aria-label="YouTube" className="flex size-10 items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
-              <Youtube className="size-5" />
             </Link>
           </div>
         </div>

@@ -21,7 +21,7 @@ export default async function ContactPage() {
   const { contact } = await getSiteData();
   const whatsappHref = withWhatsAppMessage(
     contact.whatsapp,
-    "Hola, te descubrí en Raíz Volcanica y quiero recibir más información para visitar la región."
+    "Hola, te descubrí en Raíz Volcánica y quiero recibir más información para visitar la región."
   );
 
   return (
@@ -65,7 +65,7 @@ export default async function ContactPage() {
                 Consultar por WhatsApp
               </a>
             ) : null}
-            <a href={`mailto:${contact.email}?subject=Consulta%20desde%20Raiz%20Volcanica`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white/10 px-5 py-4 text-sm font-bold text-white ring-1 ring-white/25 hover:bg-white/18">
+            <a href={`mailto:${contact.email}?subject=Consulta%20desde%20Ra%C3%ADz%20Volc%C3%A1nica`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white/10 px-5 py-4 text-sm font-bold text-white ring-1 ring-white/25 hover:bg-white/18">
               <Mail className="size-4" aria-hidden="true" />
               Enviar correo
             </a>
@@ -105,7 +105,7 @@ export default async function ContactPage() {
               </a>
             ) : null}
             <a
-              href={`mailto:${contact.email}?subject=Consulta%20desde%20Raiz%20Volcanica`}
+              href={`mailto:${contact.email}?subject=Consulta%20desde%20Ra%C3%ADz%20Volc%C3%A1nica`}
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-mist px-5 py-4 text-sm font-bold text-forest transition hover:text-canopy"
             >
               <Mail className="size-4" aria-hidden="true" />

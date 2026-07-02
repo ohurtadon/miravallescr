@@ -248,7 +248,7 @@ export async function getSiteData(locale?: Locale): Promise<SiteData> {
       email: contactSettings.email || "info@raizvolcanica.com",
       whatsapp: normalizeWhatsAppUrl(contactSettings.whatsapp)
     },
-    siteName: mainSettings?.siteName || "Raíz Volcanica",
+    siteName: mainSettings?.siteName || "Raíz Volcánica",
     experiences: normalizedExperiences.length ? normalizedExperiences : fallbackExperiences.map(normalizeFallbackExperience),
     experienceCategories: unique(normalizedExperiences.map((item) => item.category), [
       "Naturaleza",

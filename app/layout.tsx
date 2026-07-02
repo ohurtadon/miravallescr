@@ -31,23 +31,27 @@ function getPublicSiteUrl() {
 }
 
 const siteUrl = getPublicSiteUrl();
+const siteTitle = "Raíz Volcánica | Turismo, naturaleza y experiencias del norte de Costa Rica";
+const siteDescription =
+  "Plataforma turística y ecológica que conecta volcanes, bosques, ríos, termales, biodiversidad, negocios locales y experiencias del norte de Costa Rica.";
+const siteName = "Raíz Volcánica";
+const ogImage = "/images/volcan-miravalles-arcoiris-guanacaste.webp";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Raíz Volcanica | Guia Regional y Plataforma Turistica en Guanacaste",
-    template: "%s | Raíz Volcanica"
+    default: siteTitle,
+    template: "%s | Raíz Volcánica"
   },
-  description:
-    "Guia regional y plataforma turistica para descubrir el corredor volcanico y natural del norte de Costa Rica: atractivos naturales, aguas termales, senderos, biodiversidad, experiencias y negocios locales.",
+  description: siteDescription,
   keywords: [
-    "Raíz Volcanica",
+    "Raíz Volcánica",
     "Miravalles Costa Rica",
-    "Rincon de la Vieja",
-    "Volcan Tenorio",
+    "Rincón de la Vieja",
+    "Volcán Tenorio",
     "turismo Miravalles",
-    "Volcan Miravalles",
-    "Volcan Rincon de la Vieja",
+    "Volcán Miravalles",
+    "Volcán Rincón de la Vieja",
     "Guanacaste ecoturismo",
     "aguas termales Costa Rica",
     "senderismo Guanacaste",
@@ -59,36 +63,34 @@ export const metadata: Metadata = {
     canonical: siteUrl
   },
   openGraph: {
-    title: "Raíz Volcanica | Guia Regional y Plataforma Turistica",
-    description:
-      "Descubre atractivos, experiencias y negocios locales del corredor volcanico y natural del norte de Costa Rica.",
+    title: siteTitle,
+    description: siteDescription,
     url: siteUrl,
-    siteName: "Raíz Volcanica",
+    siteName,
     locale: "es_CR",
     type: "website",
     images: [
       {
-        url: "/images/volcan-miravalles-arcoiris-guanacaste.webp",
-        width: 2752,
-        height: 1536,
+        url: ogImage,
+        width: 1920,
+        height: 1440,
         alt: "Paisaje volcánico y natural del norte de Costa Rica"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raíz Volcanica | Guia Regional y Plataforma Turistica",
-    description:
-      "Explora atractivos, negocios locales, termales, senderos y ecoturismo en Guanacaste."
+    title: siteTitle,
+    description: siteDescription,
+    images: [ogImage]
   }
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TouristDestination",
-  name: "Raíz Volcanica",
-  description:
-    "Guia regional y plataforma turistica para descubrir atractivos naturales, experiencias, negocios locales y biodiversidad del corredor volcanico y natural del norte de Costa Rica.",
+  name: siteName,
+  description: siteDescription,
   url: siteUrl,
   touristType: ["Ecoturistas", "Familias", "Viajeros de aventura", "Turismo rural"],
   address: {
@@ -99,7 +101,7 @@ const jsonLd = {
   containsPlace: [
     {
       "@type": "TouristAttraction",
-      name: "Volcan Miravalles",
+      name: "Volcán Miravalles",
       address: {
         "@type": "PostalAddress",
         addressCountry: "CR",
@@ -108,11 +110,11 @@ const jsonLd = {
     },
     {
       "@type": "TouristAttraction",
-      name: "Volcan Rincon de la Vieja"
+      name: "Volcán Rincón de la Vieja"
     },
     {
       "@type": "TouristAttraction",
-      name: "Volcan Tenorio"
+      name: "Volcán Tenorio"
     },
     {
       "@type": "TouristAttraction",
