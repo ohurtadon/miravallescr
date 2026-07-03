@@ -27,6 +27,52 @@ img {
   max-width: 100%;
 }
 
+.site-carousel {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(47 93 58 / 45%) transparent;
+}
+
+.site-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.site-carousel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.site-carousel::-webkit-scrollbar-thumb {
+  background: rgb(47 93 58 / 38%);
+  border-radius: 9999px;
+}
+
+.cherenga-walk-sprite {
+  display: block;
+  width: 144px;
+  height: 62.4px;
+  background-image: url("/images/cherenga-walk-sprite.png");
+  background-repeat: no-repeat;
+  background-size: 864px 62.4px;
+  filter: drop-shadow(0 10px 12px rgb(18 52 39 / 18%));
+  animation: cherenga-walk 0.72s steps(6) infinite;
+}
+
+@keyframes cherenga-walk {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -864px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cherenga-walk-sprite {
+    animation: none;
+  }
+}
+
 .text-balance {
   text-wrap: balance;
 }
