@@ -16,6 +16,7 @@ const routes = [
   "/mapa/",
   "/negocios/",
   "/patrocinadores/",
+  "/politica-de-privacidad/",
   "/promociones/",
   "/propiedades/"
 ];

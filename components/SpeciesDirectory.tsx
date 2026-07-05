@@ -84,7 +84,7 @@ export function SpeciesDirectory({ species, type }: SpeciesDirectoryProps) {
                   alt={item.commonName}
                   fill
                   className="object-cover transition duration-700 group-hover:scale-105"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  sizes="(min-width: 1280px) 400px, (min-width: 640px) 50vw, 100vw"
                 />
               ) : (
                 <div className="grid h-full place-items-center text-forest">

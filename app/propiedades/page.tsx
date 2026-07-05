@@ -4,13 +4,15 @@ import { PropertiesSection } from "@/components/PropertiesSection";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Propiedades",
   description:
-    "Propiedades en venta y alquiler en la región: casas, fincas, lotes y comercios para quienes desean vivir o invertir cerca del corredor volcánico."
-};
+    "Propiedades en venta y alquiler en la región: casas, fincas, lotes y comercios para quienes desean vivir o invertir cerca del corredor volcánico.",
+  path: "/propiedades"
+});
 
 export default async function PropertiesPage() {
   const siteData = await getSiteData();

@@ -6,6 +6,8 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
+import { buildBusinessJsonLd } from "@/lib/structured-data";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
 type BusinessPageProps = {
@@ -20,10 +22,12 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
   const business = businesses.find((item) => item.slug === slug);
   if (!business) return {};
 
-  return {
+  return buildPageMetadata({
     title: business.name,
-    description: business.description
-  };
+    description: business.description,
+    path: `/negocios/${business.slug}`,
+    image: business.images[0]
+  });
 }
 
 export default async function BusinessDetailPage({ params }: BusinessPageProps) {
@@ -36,9 +40,12 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
     business.whatsapp,
     `Hola, te descubrí en ${siteData.siteName} y quiero saber más...`
   );
+  const businessBadgeLabel = getBusinessBadgeLabel(business);
+  const jsonLd = buildBusinessJsonLd(business);
 
   return (
     <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <PageViewTracker targetType="business" targetId={business.id} targetCategory={business.category} />
     <SimplePage eyebrow={business.category} title={business.name} description={business.description}>
       <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
@@ -52,15 +59,10 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
           />
           <article className="rounded-lg bg-white p-7 ring-1 ring-canopy/10">
             <div className="flex flex-wrap gap-2">
-              {business.isFeatured ? (
+              {businessBadgeLabel ? (
                 <span className="inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy">
                   <BadgeCheck className="size-4" aria-hidden="true" />
-                  Socio destacado
-                </span>
-              ) : null}
-              {business.isSponsor ? (
-                <span className="rounded-md bg-mist px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-moss">
-                  Patrocinador {business.sponsorLevel}
+                  {businessBadgeLabel}
                 </span>
               ) : null}
             </div>
@@ -133,4 +135,20 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
     </SimplePage>
     </>
   );
+}
+
+function getBusinessBadgeLabel(business: { isFeatured: boolean; isSponsor?: boolean; sponsorLevel?: string }) {
+  const labels: string[] = [];
+
+  if (business.isFeatured) labels.push("Socio destacado");
+  if (business.isSponsor) labels.push(formatSponsorLevel(business.sponsorLevel));
+
+  return labels.filter(Boolean).join(" · ");
+}
+
+function formatSponsorLevel(level?: string) {
+  const normalizedLevel = level?.trim();
+  if (!normalizedLevel) return "Patrocinador";
+
+  return `Patrocinador ${normalizedLevel.toLocaleLowerCase("es-CR")}`;
 }

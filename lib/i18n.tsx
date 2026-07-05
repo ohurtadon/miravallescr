@@ -48,6 +48,7 @@ type TranslationKey =
   | "gallery.eyebrow"
   | "gallery.title"
   | "gallery.copy"
+  | "gallery.moreImages"
   | "gallery.close"
   | "map.eyebrow"
   | "map.title"
@@ -97,6 +98,7 @@ type TranslationKey =
   | "footer.directions"
   | "footer.weather"
   | "footer.partnerships"
+  | "footer.privacy"
   | "footer.promoteExperience"
   | "footer.publishProperty";
 
@@ -135,7 +137,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "experiences.filterCopy": "Selecciona una categoría para ver actividades relacionadas.",
     "businesses.eyebrow": "Negocios locales",
     "businesses.title": "Servicios turísticos con raíz local",
-    "businesses.copy": "Un directorio preparado para conectar visitantes con hospedajes, restaurantes, guías, termales, transporte y productores de la zona.",
+    "businesses.copy": "Un directorio para conectar visitantes con hospedajes, restaurantes, guías, termales, transporte y productores de la zona.",
     "businesses.filterTitle": "Filtrar negocios",
     "businesses.filterCopy": "Selecciona una categoría para ajustar el directorio.",
     "businesses.directoryCta": "Ver directorio completo",
@@ -144,7 +146,8 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "wildlife.copy": "Bosques, aves, mamíferos y plantas tropicales hacen de la región un aula viva para visitantes y comunidades.",
     "gallery.eyebrow": "Galería",
     "gallery.title": "Primeras postales de un territorio donde la naturaleza es protagonista",
-    "gallery.copy": "Estas imágenes son referenciales y serán reemplazadas por material real de la región en próximas iteraciones.",
+    "gallery.copy": "Imágenes del paisaje, el agua, los caminos y la vida local de la región.",
+    "gallery.moreImages": "Ver más imágenes en la galería",
     "gallery.close": "Cerrar galería",
     "map.eyebrow": "Mapa interactivo",
     "map.title": "Ubica atractivos y negocios locales",
@@ -162,7 +165,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.placePage": "Ver página del lugar",
     "properties.eyebrow": "Propiedades",
     "properties.title": "Te gustó la zona, quieres vivir acá",
-    "properties.copy": "Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en la región.",
+    "properties.copy": "Propiedades en venta y alquiler para vivir, invertir o desarrollar proyectos cerca del corredor volcánico.",
     "properties.filterTitle": "Filtrar propiedades",
     "properties.filterCopy": "Combina operación y tipo de propiedad.",
     "properties.operation": "Operación",
@@ -170,7 +173,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "properties.featured": "Destacada",
     "sponsors.eyebrow": "Patrocinadores",
     "sponsors.title": "Aliados que impulsan el turismo sostenible y el desarrollo de la región",
-    "sponsors.copy": "Espacios preparados para reconocer a negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable.",
+    "sponsors.copy": "Aliados que reconocen y apoyan negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable.",
     "sponsors.cta": "Conocer aliado",
     "cta.eyebrow": "Plan de viaje",
     "cta.title": "Explore la región o forme parte de nuestra red de aliados locales",
@@ -181,7 +184,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "card.featured": "Destacado",
     "card.duration": "Duración",
     "card.difficulty": "Dificultad",
-    "card.fallbackPrice": "Precio por definir",
+    "card.fallbackPrice": "Consultar precio",
     "card.more": "Ver más",
     "filters.all": "Todos",
     "results.singular": "resultado",
@@ -194,6 +197,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "footer.directions": "Cómo llegar",
     "footer.weather": "Clima",
     "footer.partnerships": "Alianzas",
+    "footer.privacy": "Política de privacidad",
     "footer.promoteExperience": "Promocionar experiencia",
     "footer.publishProperty": "Publicar propiedad"
   },
@@ -231,7 +235,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "experiences.filterCopy": "Choose a category to see related activities.",
     "businesses.eyebrow": "Local businesses",
     "businesses.title": "Tourism services with local roots",
-    "businesses.copy": "A directory built to connect visitors with lodging, restaurants, guides, hot springs, transportation, and local producers.",
+    "businesses.copy": "A directory to connect visitors with lodging, restaurants, guides, hot springs, transportation, and local producers.",
     "businesses.filterTitle": "Filter businesses",
     "businesses.filterCopy": "Choose a category to refine the directory.",
     "businesses.directoryCta": "View full directory",
@@ -240,7 +244,8 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "wildlife.copy": "Forests, birds, mammals, and tropical plants make the region a living classroom for visitors and communities.",
     "gallery.eyebrow": "Gallery",
     "gallery.title": "First postcards from a territory where nature leads",
-    "gallery.copy": "These images are references and will be replaced with real material from the region in future iterations.",
+    "gallery.copy": "Images of the landscape, water, roads, and local life of the region.",
+    "gallery.moreImages": "See more images in the gallery",
     "gallery.close": "Close gallery",
     "map.eyebrow": "Interactive map",
     "map.title": "Find attractions and local businesses",
@@ -258,7 +263,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.placePage": "View place page",
     "properties.eyebrow": "Properties",
     "properties.title": "You liked the area and want to live here",
-    "properties.copy": "Example properties prepared for future sale or rental opportunities in the region.",
+    "properties.copy": "Properties for sale and rent for living, investing, or developing projects near the volcanic corridor.",
     "properties.filterTitle": "Filter properties",
     "properties.filterCopy": "Combine operation and property type.",
     "properties.operation": "Operation",
@@ -266,7 +271,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "properties.featured": "Featured",
     "sponsors.eyebrow": "Sponsors",
     "sponsors.title": "Partners advancing sustainable tourism and regional development",
-    "sponsors.copy": "Spaces prepared to recognize businesses, organizations, and ventures that support responsible tourism promotion.",
+    "sponsors.copy": "Partners that recognize and support businesses, organizations, and ventures advancing responsible tourism promotion.",
     "sponsors.cta": "Meet partner",
     "cta.eyebrow": "Trip planning",
     "cta.title": "Explore the region or join our network of local partners",
@@ -277,7 +282,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "card.featured": "Featured",
     "card.duration": "Duration",
     "card.difficulty": "Difficulty",
-    "card.fallbackPrice": "Price TBD",
+    "card.fallbackPrice": "Ask for price",
     "card.more": "View more",
     "filters.all": "All",
     "results.singular": "result",
@@ -290,6 +295,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "footer.directions": "Getting here",
     "footer.weather": "Weather",
     "footer.partnerships": "Partnerships",
+    "footer.privacy": "Privacy policy",
     "footer.promoteExperience": "Promote experience",
     "footer.publishProperty": "Publish property"
   }
@@ -332,10 +338,28 @@ const valueTranslations: Record<Locale, Record<string, string>> = {
     "Transporte": "Transportation",
     "Turismo rural": "Rural tourism",
     "Venta": "Sale",
-    "Relatos de la pagina": "Page stories",
+    "Relatos de la página": "Page stories",
     "Controles de relatos": "Story controls",
     "Ver relato": "View story",
     "Atractivo": "Attraction",
+    "Privacidad": "Privacy",
+    "Política de privacidad": "Privacy policy",
+    "Esta página resume cómo Raíz Volcánica maneja información básica relacionada con consultas, enlaces externos, preferencias y contenido publicado.": "This page summarizes how Raíz Volcánica handles basic information related to inquiries, external links, preferences, and published content.",
+    "Datos que podemos recibir": "Data we may receive",
+    "Datos de contacto que usted decida enviar por WhatsApp, correo electrónico o formularios externos vinculados desde el sitio.": "Contact details you choose to send through WhatsApp, email, or external forms linked from the site.",
+    "Información técnica básica de navegación, como páginas visitadas, origen de la visita, dispositivo, navegador y fecha aproximada de acceso.": "Basic technical navigation information, such as pages visited, visit source, device, browser, and approximate access date.",
+    "Datos publicados por negocios, propiedades, experiencias o aliados cuando solicitan aparecer en la plataforma.": "Data published by businesses, properties, experiences, or partners when they request to appear on the platform.",
+    "Cómo usamos esa información": "How we use that information",
+    "Responder consultas de visitantes, negocios locales, operadores, propietarios y aliados.": "To respond to inquiries from visitors, local businesses, operators, property owners, and partners.",
+    "Dar seguimiento a solicitudes comerciales o de publicación dentro de Raíz Volcánica.": "To follow up on commercial or publishing requests within Raíz Volcánica.",
+    "Mejorar el contenido, navegación, seguridad y rendimiento del sitio.": "To improve the site's content, navigation, security, and performance.",
+    "WhatsApp y enlaces externos": "WhatsApp and external links",
+    "Al usar botones de WhatsApp, redes sociales, mapas o sitios externos, la interacción ocurre bajo las políticas de esas plataformas.": "When using WhatsApp buttons, social media, maps, or external sites, the interaction happens under those platforms' policies.",
+    "Raíz Volcánica no controla las prácticas de privacidad de servicios externos enlazados desde el sitio.": "Raíz Volcánica does not control the privacy practices of external services linked from the site.",
+    "Cookies y preferencias": "Cookies and preferences",
+    "El sitio puede guardar preferencias básicas, como idioma, para mejorar la experiencia de navegación.": "The site may save basic preferences, such as language, to improve the browsing experience.",
+    "También puede usarse medición agregada para entender qué secciones del sitio funcionan mejor.": "Aggregated measurement may also be used to understand which sections of the site perform better.",
+    "Para consultas sobre privacidad, actualización o retiro de información publicada, puede contactarnos desde la página de contacto.": "For privacy inquiries, updates, or removal of published information, you can contact us from the contact page.",
     "Guía regional y plataforma turística": "Regional guide and tourism platform",
     "Raíz Volcánica: naturaleza, termales y aventura local": "Raíz Volcánica: nature, hot springs, and local adventure",
     "Explora atractivos, experiencias y negocios locales del corredor volcánico y natural del norte de Costa Rica.": "Explore attractions, experiences, and local businesses across the volcanic and natural corridor of northern Costa Rica.",
@@ -348,40 +372,40 @@ const valueTranslations: Record<Locale, Record<string, string>> = {
     "Actividades para viajar con intención": "Activities for intentional travel",
     "Opciones promocionables de medio día o día completo, listas para conectar visitantes con guías, operadores y emprendimientos locales.": "Promotable half-day or full-day options ready to connect visitors with local guides, operators, and ventures.",
     "Servicios turísticos con raíz local": "Tourism services with local roots",
-    "Un directorio preparado para conectar visitantes con hospedajes, restaurantes, guías, termales, transporte y productores de la zona.": "A directory built to connect visitors with lodging, restaurants, guides, hot springs, transportation, and local producers.",
+    "Un directorio para conectar visitantes con hospedajes, restaurantes, guías, termales, transporte y productores de la zona.": "A directory to connect visitors with lodging, restaurants, guides, hot springs, transportation, and local producers.",
     "La biodiversidad que da vida a este territorio volcánico": "The biodiversity that brings this volcanic territory to life",
     "Bosques, aves, mamíferos y plantas tropicales hacen de la región un aula viva para visitantes y comunidades.": "Forests, birds, mammals, and tropical plants make the region a living classroom for visitors and communities.",
     "Primeras postales de un territorio donde la naturaleza es protagonista": "First postcards from a territory where nature leads",
-    "Estas imágenes son referenciales y serán reemplazadas por material real de la región en próximas iteraciones.": "These images are references and will be replaced with real material from the region in future iterations.",
+    "Imágenes del paisaje, el agua, los caminos y la vida local de la región.": "Images of the landscape, water, roads, and local life of the region.",
     "Mapa interactivo": "Interactive map",
     "Ubica atractivos y negocios locales": "Find attractions and local businesses",
     "Explora el territorio en un mapa real y abre la ficha de cada lugar para conocerlo mejor.": "Explore the territory on a real map and open each place profile to learn more.",
     "Te gustó la zona, quieres vivir acá": "You liked the area and want to live here",
-    "Te ofrecemos las siguientes propiedades de ejemplo para preparar futuras oportunidades de venta o alquiler en la región.": "Example properties prepared for future sale or rental opportunities in the region.",
+    "Propiedades en venta y alquiler para vivir, invertir o desarrollar proyectos cerca del corredor volcánico.": "Properties for sale and rent for living, investing, or developing projects near the volcanic corridor.",
     "Aliados que impulsan el turismo sostenible y el desarrollo de la región": "Partners advancing sustainable tourism and regional development",
-    "Espacios preparados para reconocer a negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable.": "Spaces prepared to recognize businesses, organizations, and ventures that support responsible tourism promotion.",
+    "Aliados que reconocen y apoyan negocios, organizaciones y emprendimientos que impulsan una promoción turística responsable.": "Partners that recognize and support businesses, organizations, and ventures advancing responsible tourism promotion.",
     "Plan de viaje": "Trip planning",
     "Explore la región o forme parte de nuestra red de aliados locales": "Explore the region or join our network of local partners",
     "Conectamos visitantes con atractivos, experiencias y emprendimientos de la región mediante contacto directo.": "We connect visitors with attractions, experiences, and local ventures through direct contact.",
     "Imágenes para imaginar la visita": "Images to imagine the visit",
-    "Banco visual temporal con fotografías referenciales hasta incorporar material real de la zona.": "Temporary visual bank with reference photography until real material from the area is added.",
+    "Una mirada visual al paisaje, el agua, los caminos y la vida local de la región.": "A visual look at the region's landscape, water, roads, and local life.",
     "Directorio turístico regional": "Regional tourism directory",
     "Te ayudamos a encontrar lo que necesitas, ya sea donde comer o hospedarte, incluso quien te lleve a tu destino.": "We help you find what you need, whether it is where to eat, where to stay, or who can take you to your destination.",
     "Puntos de interés para planificar la ruta": "Points of interest to plan your route",
     "Ubica atractivos por categoría y construye una visita equilibrada entre aventura, relajación y gastronomía.": "Find attractions by category and build a balanced visit with adventure, relaxation, and gastronomy.",
     "Naturaleza, agua y paisaje volcánico": "Nature, water, and volcanic landscapes",
-    "Una selección inicial de puntos de interés para descubrir la región con rutas de baja huella y mucho valor escénico.": "An initial selection of points of interest to discover the region through low-impact routes with strong scenic value.",
+    "Puntos de interés para descubrir la región con rutas de baja huella y mucho valor escénico.": "Points of interest to discover the region through low-impact routes with strong scenic value.",
     "Clima de montaña, bosque y llanura": "Mountain, forest, and lowland weather",
     "Una guía general para entender cómo cambia el tiempo durante el año en el corredor volcánico del norte de Costa Rica.": "A general guide to understand how the weather changes throughout the year in northern Costa Rica's volcanic corridor.",
     "Aliados que impulsan la región": "Partners moving the region forward",
-    "Espacio preparado para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable.": "A space prepared to recognize businesses, organizations, and ventures that support responsible tourism promotion.",
+    "Un espacio para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable.": "A space to recognize businesses, organizations, and ventures that support responsible tourism promotion.",
     "Encuentros silvestres para observar con respeto": "Wildlife encounters to observe with respect",
-    "Una guía inicial para ordenar avistamientos, especies emblemáticas y recomendaciones de conservación.": "An initial guide to organize sightings, emblematic species, and conservation recommendations.",
+    "Una guía para ordenar avistamientos, especies emblemáticas y recomendaciones de conservación.": "A guide to organize sightings, emblematic species, and conservation recommendations.",
     "Verde que cuenta la historia del territorio": "Greenery that tells the territory's story",
-    "Una base para documentar especies vegetales, zonas de bosque y valor ecológico de la región.": "A base for documenting plant species, forest areas, and the region's ecological value.",
+    "Una guía para reconocer especies vegetales, zonas de bosque y valor ecológico de la región.": "A guide to recognize plant species, forest areas, and the region's ecological value.",
     "Vivir o invertir en la región": "Live or invest in the region",
     "¿Te gustó la zona, quieres vivir acá? Tenemos ese lugar perfecto para vos.": "Did you like the area and want to live here? We have the perfect place for you.",
-    "Si buscas naturaleza, bienestar y aventura responsable, estas en el lugar correcto.": "If you are looking for nature, wellness, and responsible adventure, you are in the right place.",
+    "Si buscas naturaleza, bienestar y aventura responsable, estás en el lugar correcto.": "If you are looking for nature, wellness, and responsible adventure, you are in the right place.",
     "Ofertas y campañas activas": "Active offers and campaigns",
     "Un espacio separado para anuncios promocionales independientes de los recomendados editoriales del sitio.": "A dedicated space for promotional announcements independent from the site's editorial recommendations.",
     "Planifica tu visita o alianza": "Plan your visit or partnership",
@@ -472,21 +496,21 @@ const valueTranslations: Record<Locale, Record<string, string>> = {
     "Un buen recorrido no siempre es el que suma más paradas, sino el que permite disfrutar cada lugar con tiempo suficiente. En caminos rurales, una ruta corta puede incluir paisaje, clima cambiante, conversación y descubrimientos inesperados.": "A good route is not always the one with the most stops, but the one that gives enough time to enjoy each place. On rural roads, a short route can include landscape, changing weather, conversation, and unexpected discoveries.",
     "Por eso el mapa funciona como una herramienta de viaje responsable: ayuda a distribuir visitas, reconocer distancias, elegir experiencias cercanas y apoyar negocios locales sin perder el sentido del territorio.": "That is why the map works as a responsible travel tool: it helps distribute visits, understand distances, choose nearby experiences, and support local businesses without losing the sense of territory.",
     "Bosques, aves, mamíferos y plantas tropicales hacen de la zona un aula viva para visitantes y comunidades.": "Forests, birds, mammals, and tropical plants make the area a living classroom for visitors and communities.",
-    "La galería funciona como una ventana inicial: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que la región puede ofrecer. Pronto este espacio deberá llenarse con fotografías propias del territorio.": "The gallery works as an initial window: water, forest, mountains, rural roads, and scenes that help imagine the kind of trip the region can offer. Soon this space should be filled with photography from the territory itself.",
+    "La galería funciona como una ventana al territorio: agua, bosque, montaña, caminos rurales y escenas que ayudan a imaginar el tipo de viaje que la región puede ofrecer.": "The gallery works as a window into the territory: water, forest, mountains, rural roads, and scenes that help imagine the kind of trip the region can offer.",
     "La intención no es mostrar postales perfectas, sino construir memoria visual: imágenes que permitan reconocer lugares, emprendimientos, especies y momentos reales de la experiencia local.": "The intention is not to show perfect postcards, but to build visual memory: images that help people recognize places, ventures, species, and real moments from the local experience.",
     "Imágenes para reconocer Miravalles y sus alrededores": "Images to recognize Miravalles and its surroundings",
     "Una buena fotografía puede ayudar a ubicar el carácter de Miravalles, Guanacaste, Bijagua y Dos Ríos de Upala: el verde de los caminos, la presencia del volcán, el agua clara, los cielos cambiantes y la vida cotidiana de la zona norte.": "A good photograph can help reveal the character of Miravalles, Guanacaste, Bijagua, and Dos Ríos de Upala: the green roads, the presence of the volcano, clear water, changing skies, and daily life in the northern zone.",
     "Al reunir imágenes del territorio, la galería también mejora la forma en que visitantes y buscadores entienden el destino: no como un punto aislado, sino como una región con identidad natural y comunitaria.": "By gathering images of the territory, the gallery also improves how visitors and search engines understand the destination: not as an isolated point, but as a region with natural and community identity.",
     "Del paisaje a la experiencia real": "From landscape to real experience",
     "Las imágenes deben contar lo que el visitante puede vivir: senderos, termales, ríos, cataratas, flora, fauna, hospedajes, comida local, guías, productores y momentos sencillos que hacen memorable el viaje.": "Images should tell what visitors can experience: trails, hot springs, rivers, waterfalls, flora, fauna, lodging, local food, guides, producers, and simple moments that make the trip memorable.",
-    "Con el tiempo, este banco visual puede convertirse en una herramienta poderosa para mostrar el turismo del norte de Costa Rica con más verdad, más contexto y más presencia local.": "Over time, this visual bank can become a powerful tool for showing tourism in northern Costa Rica with more truth, more context, and stronger local presence.",
+    "Este recorrido visual muestra el turismo del norte de Costa Rica con contexto, identidad y presencia local.": "This visual journey presents tourism in northern Costa Rica with context, identity, and local presence.",
     "En la región, muchos encuentros silvestres no ocurren por casualidad, sino por paciencia: escuchar antes de avanzar, mirar hacia las copas, respetar distancia y entender que cada especie tiene su propio horario.": "In the region, many wildlife encounters do not happen by chance, but through patience: listening before moving ahead, looking into the canopy, keeping distance, and understanding that each species has its own schedule.",
     "Esta guía busca promover una observación responsable, donde ver un ave, un mono o una mariposa sea también una invitación a cuidar el bosque que los mantiene cerca.": "This guide seeks to promote responsible observation, where seeing a bird, a monkey, or a butterfly is also an invitation to care for the forest that keeps them nearby.",
     "La flora de la región no es solo fondo verde. Es sombra para los senderos, alimento para aves e insectos, protección para nacientes y una señal visible de cómo cambian la altura, la humedad y el uso de la tierra.": "The region's flora is not just a green backdrop. It is shade for trails, food for birds and insects, protection for springs, and a visible sign of how elevation, humidity, and land use change.",
     "Documentar estas especies ayuda a mirar con más atención: reconocer árboles, helechos, flores y zonas de bosque convierte una caminata sencilla en una lectura viva del territorio.": "Documenting these species helps people look more carefully: recognizing trees, ferns, flowers, and forest areas turns a simple walk into a living reading of the territory.",
-    "Ficha inicial": "Initial profile",
-    "Esta página funciona como base editorial para ampliar información específica del atractivo, agregar fotografías reales, recomendaciones de acceso, horarios sugeridos y buenas prácticas de visita.": "This page works as an editorial base for expanding specific attraction information, adding real photos, access recommendations, suggested hours, and good visit practices.",
-    "En esta fase se deja lista la ruta estática para SEO y navegación. El contenido local detallado puede incorporarse conforme se valide con guías, comercios y comunidad.": "At this stage, the static route is ready for SEO and navigation. Detailed local content can be added as it is validated with guides, businesses, and the community.",
+    "Resumen del atractivo": "Attraction overview",
+    "Esta ficha reúne información general del atractivo, su contexto natural y una primera guía para planificar una visita responsable.": "This profile brings together general information about the attraction, its natural context, and a first guide for planning a responsible visit.",
+    "Use esta página para ubicar el lugar, revisar imágenes y conectar este punto con otras rutas, comunidades y experiencias cercanas.": "Use this page to locate the place, review images, and connect this point with nearby routes, communities, and experiences.",
     "Consultas y alianzas": "Questions and partnerships",
     "Escríbanos y le orientamos": "Write to us and we will guide you",
     "Atendemos consultas de viaje, recomendaciones para visitar la zona y propuestas de negocios, tours, hospedajes, patrocinios o contenido regional.": "We handle travel questions, recommendations for visiting the area, and proposals for businesses, tours, lodging, sponsorships, or regional content.",
@@ -502,27 +526,27 @@ const valueTranslations: Record<Locale, Record<string, string>> = {
     "Para consultas de viaje, alianzas, negocios o contenido regional, escríbanos por WhatsApp o correo. Así podemos responder con más contexto y darle seguimiento real a cada solicitud.": "For travel questions, partnerships, businesses, or regional content, write to us by WhatsApp or email. That way we can respond with more context and follow up properly on each request.",
     "Correo": "Email",
     "¿Quiere apoyar la plataforma?": "Would you like to support the platform?",
-    "La sección de patrocinadores está lista para activarse con paquetes, niveles y beneficios editoriales en una fase posterior.": "The sponsors section is ready to be activated later with packages, levels, and editorial benefits.",
+    "Los aliados pueden sumar visibilidad, contenido regional y apoyo directo a una promoción turística responsable.": "Partners can add visibility, regional content, and direct support for responsible tourism promotion.",
     "Ver opciones de alianza": "View partnership options",
     "Ver promoción": "View promotion",
-    "Aún no hay promociones activas": "There are no active promotions yet",
-    "Cuando se publiquen campañas promocionales, aparecerán aquí de forma independiente a los items potenciados del sitio.": "When promotional campaigns are published, they will appear here independently from boosted site items.",
+    "No hay promociones activas en este momento": "There are no active promotions at this time",
+    "Las campañas promocionales activas se muestran aquí de forma independiente a los ítems potenciados del sitio.": "Active promotional campaigns are shown here independently from boosted site items.",
     "Descripción": "Description",
-    "Esta página está preparada para ampliar itinerario, recomendaciones, políticas, fotografías reales y proveedor local cuando la experiencia esté lista para comercializarse.": "This page is prepared to expand the itinerary, recommendations, policies, real photography, and local provider when the experience is ready to be marketed.",
+    "Esta ficha ayuda a revisar el tipo de actividad, duración, dificultad, ubicación y canal de contacto antes de planificar la visita.": "This profile helps review the type of activity, duration, difficulty, location, and contact channel before planning the visit.",
     "Detalles": "Details",
     "Mejor época": "Best season",
     "Ubicación": "Location",
     "Proveedor": "Provider",
-    "Por definir": "To be defined",
+    "Por definir": "To be confirmed",
     "Experiencias relacionadas": "Related experiences",
     "Sobre el negocio": "About the business",
     "Servicios ofrecidos": "Services offered",
     "Contacto y ubicación": "Contact and location",
     "Sobre la propiedad": "About the property",
-    "Esta ficha está preparada para ampliar información comercial, condiciones, fotografías reales, detalles de acceso y contacto del responsable cuando la oportunidad esté lista para publicarse.": "This profile is prepared to expand commercial information, conditions, real photos, access details, and the responsible contact when the opportunity is ready to publish.",
+    "Esta ficha reúne información comercial, condiciones generales, detalles de ubicación y contacto para valorar la oportunidad con mejor contexto.": "This profile brings together commercial information, general conditions, location details, and contact options to assess the opportunity with better context.",
     "Área": "Area",
     "Terreno": "Land",
-    "Ubicación referencial": "Reference location",
+    "Ubicación de la propiedad": "Property location",
     "Propiedades relacionadas": "Related properties",
     "Negocio promocionado": "Promoted business",
     "Ver negocio": "View business",
@@ -568,12 +592,22 @@ export function I18nProvider({ children, initialLocale = "es" }: { children: Rea
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   useEffect(() => {
+    const urlLocale = new URLSearchParams(window.location.search).get("lang");
     const cookieLocale = document.cookie
       .split("; ")
       .find((item) => item.startsWith("rv-locale="))
       ?.split("=")[1];
-    const saved = cookieLocale || window.localStorage.getItem("rv-locale");
-    if (saved === "es" || saved === "en") setLocaleState(saved);
+    const saved = urlLocale || cookieLocale || window.localStorage.getItem("rv-locale");
+
+    if (saved === "es" || saved === "en") {
+      setLocaleState(saved);
+      document.documentElement.lang = saved;
+
+      if (urlLocale === "es" || urlLocale === "en") {
+        window.localStorage.setItem("rv-locale", urlLocale);
+        document.cookie = `rv-locale=${urlLocale}; path=/; max-age=31536000; samesite=lax`;
+      }
+    }
   }, []);
 
   const setLocale = (nextLocale: Locale) => {
@@ -581,7 +615,10 @@ export function I18nProvider({ children, initialLocale = "es" }: { children: Rea
     window.localStorage.setItem("rv-locale", nextLocale);
     document.cookie = `rv-locale=${nextLocale}; path=/; max-age=31536000; samesite=lax`;
     document.documentElement.lang = nextLocale;
-    window.location.reload();
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("lang", nextLocale);
+    window.location.href = url.toString();
   };
 
   useEffect(() => {

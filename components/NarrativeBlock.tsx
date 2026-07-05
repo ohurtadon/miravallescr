@@ -48,7 +48,7 @@ export function NarrativeBlock({ title, children, stories }: NarrativeBlockProps
         ref={scrollerRef}
         onScroll={updateActiveSlide}
         className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        aria-label={tv("Relatos de la pagina")}
+        aria-label={tv("Relatos de la página")}
       >
         {slides.map((slide, index) => (
           <article key={`${slide.title}-${index}`} className="min-w-full snap-center px-1">

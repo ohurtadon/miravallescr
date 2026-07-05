@@ -4,6 +4,8 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
+import { buildAttractionJsonLd } from "@/lib/structured-data";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
 type AttractionPageProps = {
@@ -18,10 +20,12 @@ export async function generateMetadata({ params }: AttractionPageProps): Promise
   const attraction = attractions.find((item) => item.slug === slug);
   if (!attraction) return {};
 
-  return {
+  return buildPageMetadata({
     title: attraction.title,
-    description: attraction.summary
-  };
+    description: attraction.summary,
+    path: `/atractivos/${attraction.slug}`,
+    image: attraction.images[0] || attraction.image
+  });
 }
 
 export default async function AttractionDetailPage({ params }: AttractionPageProps) {
@@ -29,9 +33,11 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
   const { attractions } = await getSiteData();
   const attraction = attractions.find((item) => item.slug === slug);
   if (!attraction) notFound();
+  const jsonLd = buildAttractionJsonLd(attraction);
 
   return (
     <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <PageViewTracker targetType="attraction" targetId={attraction.id} targetCategory={attraction.category} />
     <SimplePage eyebrow="Atractivo" title={attraction.title} description={attraction.summary}>
       <div className="mb-8">
@@ -45,17 +51,17 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
       </div>
       <div className="grid gap-8 rounded-lg bg-white p-7 shadow-sm ring-1 ring-canopy/10 md:grid-cols-[0.8fr_1.2fr] md:p-10">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ficha inicial</p>
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Resumen del atractivo</p>
           <h2 className="mt-3 font-display text-4xl font-bold text-canopy">{attraction.title}</h2>
         </div>
         <div className="space-y-5 text-lg leading-8 text-volcanic">
           <p>
-            Esta página funciona como base editorial para ampliar información específica del atractivo, agregar
-            fotografías reales, recomendaciones de acceso, horarios sugeridos y buenas prácticas de visita.
+            Esta ficha reúne información general del atractivo, su contexto natural y una primera guía para planificar
+            una visita responsable.
           </p>
           <p>
-            En esta fase se deja lista la ruta estática para SEO y navegación. El contenido local detallado puede
-            incorporarse conforme se valide con guías, comercios y comunidad.
+            Use esta página para ubicar el lugar, revisar imágenes y conectar este punto con otras rutas, comunidades
+            y experiencias cercanas.
           </p>
         </div>
       </div>

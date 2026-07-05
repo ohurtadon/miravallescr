@@ -8,24 +8,27 @@ import type { SiteBusiness } from "@/lib/site-api";
 
 type BusinessCardProps = {
   business: SiteBusiness;
+  imageSizes?: string;
 };
 
-export function BusinessCard({ business }: BusinessCardProps) {
+export function BusinessCard({
+  business,
+  imageSizes = "(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
+}: BusinessCardProps) {
   const { t, tv } = useI18n();
-
-  return (
-    <article
-      className={`flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 transition hover:-translate-y-1 hover:shadow-soft ${
-        business.isFeatured ? "ring-moss/35" : "ring-canopy/10"
-      }`}
-    >
+  const href = `/negocios/${business.slug}`;
+  const cardClassName = `flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 transition hover:-translate-y-1 hover:shadow-soft ${
+    business.isFeatured ? "ring-moss/35" : "ring-canopy/10"
+  }`;
+  const content = (
+    <>
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={business.images[0]}
           alt={business.name}
           fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
+          sizes={imageSizes}
           loading="lazy"
         />
         {business.isFeatured ? (
@@ -43,15 +46,13 @@ export function BusinessCard({ business }: BusinessCardProps) {
           <MapPin className="size-4 shrink-0 text-river" aria-hidden="true" />
           <span className="line-clamp-1">{business.location}</span>
         </p>
-        <div className="mt-auto pt-6">
-          <Link
-            href={`/negocios/${business.slug}`}
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
-          >
-            {t("card.more")}
-          </Link>
-        </div>
       </div>
-    </article>
+    </>
+  );
+
+  return (
+    <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${business.name}`}>
+      {content}
+    </Link>
   );
 }

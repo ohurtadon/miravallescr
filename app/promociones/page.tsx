@@ -6,11 +6,13 @@ import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getPublicPromotions } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Promociones",
-  description: "Anuncios y campañas promocionales activas de negocios, experiencias y aliados de la región."
-};
+  description: "Anuncios y campañas promocionales activas de negocios, experiencias y aliados de la región.",
+  path: "/promociones"
+});
 
 export default async function PromotionsPage() {
   const promotions = await getPublicPromotions();
@@ -38,7 +40,7 @@ export default async function PromotionsPage() {
                     alt={promotion.imageAlt || promotion.title}
                     fill
                     className="object-cover"
-                    sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
                   />
                 ) : (
                   <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_30%,rgba(62,126,168,0.25),transparent_30%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-forest">
@@ -63,9 +65,9 @@ export default async function PromotionsPage() {
       ) : (
         <div className="mt-10 rounded-lg bg-white p-8 text-center ring-1 ring-canopy/10">
           <BadgePercent className="mx-auto size-10 text-moss" aria-hidden="true" />
-          <h2 className="mt-4 font-display text-3xl font-bold text-canopy">Aún no hay promociones activas</h2>
+          <h2 className="mt-4 font-display text-3xl font-bold text-canopy">No hay promociones activas en este momento</h2>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-volcanic">
-            Cuando se publiquen campañas promocionales, aparecerán aquí de forma independiente a los items potenciados del sitio.
+            Las campañas promocionales activas se muestran aquí de forma independiente a los ítems potenciados del sitio.
           </p>
         </div>
       )}

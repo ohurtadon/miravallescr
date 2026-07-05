@@ -3,11 +3,13 @@ import { Mail, MapPin, MessageCircle } from "lucide-react";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Contacto",
-  description: "Información de contacto para planificar una visita, registrar negocios o crear alianzas en la región."
-};
+  description: "Información de contacto para planificar una visita, registrar negocios o crear alianzas en la región.",
+  path: "/contacto"
+});
 
 const contactTopics = [
   "Orientación para visitantes",

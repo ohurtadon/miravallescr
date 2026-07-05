@@ -133,7 +133,10 @@ export function BusinessDirectory({
           >
             {items.map((business) => (
               <div key={business.id} className={carousel ? "w-[82vw] shrink-0 snap-start sm:w-[22rem] lg:w-[24rem]" : ""}>
-                <BusinessCard business={business} />
+                <BusinessCard
+                  business={business}
+                  imageSizes={carousel ? "(max-width: 639px) 82vw, 24rem" : undefined}
+                />
               </div>
             ))}
             {carousel ? <CarouselMoreCard href="/negocios" label={t("card.more")} progress={carouselState.endProgress} /> : null}

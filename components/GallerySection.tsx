@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { X } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, X } from "lucide-react";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteGalleryItem } from "@/lib/site-api";
@@ -10,9 +11,10 @@ import { SectionHeading } from "./SectionHeading";
 type GallerySectionProps = {
   gallery: SiteGalleryItem[];
   showHeading?: boolean;
+  galleryCtaHref?: string;
 };
 
-export function GallerySection({ gallery, showHeading = true }: GallerySectionProps) {
+export function GallerySection({ gallery, showHeading = true, galleryCtaHref }: GallerySectionProps) {
   const [active, setActive] = useState<SiteGalleryItem | null>(null);
   const { t } = useI18n();
 
@@ -46,6 +48,17 @@ export function GallerySection({ gallery, showHeading = true }: GallerySectionPr
             </button>
           ))}
         </div>
+        {galleryCtaHref ? (
+          <div className="mt-8 flex justify-center">
+            <Link
+              href={galleryCtaHref}
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-6 py-4 text-sm font-bold text-white transition hover:bg-canopy focus:outline-none focus:ring-2 focus:ring-river focus:ring-offset-2"
+            >
+              {t("gallery.moreImages")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+        ) : null}
       </div>
       {active ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-canopy/90 p-5" role="dialog" aria-modal="true">

@@ -133,7 +133,10 @@ export function ExperiencesSection({
           >
             {items.map((experience) => (
               <div key={experience.id} className={carousel ? "w-[82vw] shrink-0 snap-start sm:w-[22rem] lg:w-[24rem]" : ""}>
-                <ExperienceCard experience={experience} />
+                <ExperienceCard
+                  experience={experience}
+                  imageSizes={carousel ? "(max-width: 639px) 82vw, 24rem" : undefined}
+                />
               </div>
             ))}
             {carousel ? <ViewMoreCard href="/experiencias" label={t("card.more")} progress={carouselState.endProgress} /> : null}

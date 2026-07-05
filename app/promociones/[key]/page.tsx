@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, BadgePercent, Store } from "lucide-react";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getPublicPromotion } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
 type PromotionPageProps = {
   params: Promise<{
@@ -18,10 +19,12 @@ export async function generateMetadata({ params }: PromotionPageProps): Promise<
   const promotion = await getPublicPromotion(key);
   if (!promotion) return {};
 
-  return {
+  return buildPageMetadata({
     title: promotion.title,
-    description: plainText(promotion.description)
-  };
+    description: plainText(promotion.description),
+    path: `/promociones/${promotion.key || key}`,
+    image: promotion.image
+  });
 }
 
 export default async function PromotionDetailPage({ params }: PromotionPageProps) {

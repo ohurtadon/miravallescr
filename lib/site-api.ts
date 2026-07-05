@@ -8,7 +8,7 @@ import {
   stats as fallbackStats,
   wildlife as fallbackWildlife
 } from "@/data/site";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 type Locale = "es" | "en";
 
@@ -346,6 +346,10 @@ async function fetchCollection(collection: string, locale: Locale) {
 }
 
 async function getRequestLocale(): Promise<Locale> {
+  const requestHeaders = await headers();
+  const headerLocale = requestHeaders.get("x-rv-locale");
+  if (headerLocale === "en" || headerLocale === "es") return headerLocale;
+
   const cookieStore = await cookies();
   return cookieStore.get("rv-locale")?.value === "en" ? "en" : "es";
 }

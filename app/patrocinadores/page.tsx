@@ -5,11 +5,13 @@ import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SponsorSection } from "@/components/SponsorSection";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Patrocinadores",
-  description: "Aliados y patrocinadores que apoyan la promoción turística sostenible de la región."
-};
+  description: "Aliados y patrocinadores que apoyan la promoción turística sostenible de la región.",
+  path: "/patrocinadores"
+});
 
 export default async function SponsorsPage() {
   const { sponsors } = await getSiteData();
@@ -18,7 +20,7 @@ export default async function SponsorsPage() {
     <SimplePage
       eyebrow="Patrocinadores"
       title="Aliados que impulsan la región"
-      description="Espacio preparado para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable."
+      description="Un espacio para reconocer a negocios, organizaciones y emprendimientos que apoyan la promoción turística responsable."
     >
       <NarrativeBlock title="Promover un destino también requiere aliados">
         <p>
@@ -31,7 +33,7 @@ export default async function SponsorsPage() {
       <div className="mt-12 rounded-lg bg-white p-7 text-center ring-1 ring-canopy/10">
         <h2 className="font-display text-4xl font-bold text-canopy">¿Quiere apoyar la plataforma?</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-volcanic">
-          La sección de patrocinadores está lista para activarse con paquetes, niveles y beneficios editoriales en una fase posterior.
+          Los aliados pueden sumar visibilidad, contenido regional y apoyo directo a una promoción turística responsable.
         </p>
         <Link href="/contacto#alianzas" className="mt-6 inline-flex rounded-md bg-forest px-6 py-4 text-sm font-bold text-white hover:bg-canopy">
           Ver opciones de alianza
