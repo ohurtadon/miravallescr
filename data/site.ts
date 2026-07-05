@@ -263,7 +263,7 @@ export const properties = [
     image:
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65",
     description:
-      "Lote de ejemplo para residencia o cabaña, con vista abierta y acceso por camino local.",
+      "Lote para residencia o cabaña, con vista abierta y acceso por camino local.",
     location: "Mirador del corredor volcánico",
     area: "Listo para diseño",
     landSize: "850 m2",
@@ -280,7 +280,7 @@ export const properties = [
     image:
       "https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200&q=65",
     description:
-      "Opción temporal para quienes desean probar la zona antes de comprar o invertir.",
+      "Cabina amueblada para quienes desean vivir cerca de servicios y naturaleza.",
     location: "Cerca del centro",
     area: "2 habitaciones",
     landSize: "Patio pequeño",
@@ -297,7 +297,7 @@ export const properties = [
     image:
       "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=65",
     description:
-      "Espacio comercial de ejemplo para emprendimiento ligado a visitantes, productos locales o servicios turísticos.",
+      "Espacio comercial para emprendimiento ligado a visitantes, productos locales o servicios turísticos.",
     location: "Ruta de acceso principal",
     area: "90 m2",
     landSize: "Frente a calle",
@@ -314,7 +314,7 @@ export const businesses = [
     category: "Hospedaje",
     description: "Hospedaje tranquilo rodeado de bosque, ideal para explorar termales y senderos.",
     longDescription:
-      "Un hospedaje de ejemplo pensado para visitantes que buscan descanso, naturaleza y acceso sencillo a rutas del corredor volcánico. Esta ficha está lista para reemplazarse por datos reales del negocio.",
+      "Hospedaje pensado para visitantes que buscan descanso, naturaleza y acceso sencillo a rutas del corredor volcánico.",
     images: [
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=65"
@@ -338,7 +338,7 @@ export const businesses = [
     category: "Restaurante",
     description: "Cocina local con ingredientes frescos y atención familiar para viajeros.",
     longDescription:
-      "Restaurante de ejemplo para mostrar cómo el directorio puede destacar gastronomía local, horarios, servicios y botones de contacto directo.",
+      "Restaurante de cocina local con horarios, servicios y contacto directo para viajeros que recorren la región.",
     images: [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=65"
@@ -361,7 +361,7 @@ export const businesses = [
     category: "Guía turístico",
     description: "Acompañamiento local para caminatas, aves, miradores y rutas rurales.",
     longDescription:
-      "Servicio de guía de ejemplo para estructurar futuras alianzas con guías certificados y operadores locales.",
+      "Servicio de guía local para caminatas, interpretación ambiental, observación de aves y rutas rurales.",
     images: [
       "https://images.unsplash.com/photo-1528543606781-2f6e6857f318?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=1200&q=65"
@@ -385,7 +385,7 @@ export const businesses = [
     category: "Termales",
     description: "Espacio de relajación con aguas termales y entorno natural.",
     longDescription:
-      "Ficha de ejemplo para termales, preparada para integrar precios, horarios, galería y contacto directo.",
+      "Espacio termal para descansar, disfrutar aguas calientes y conectar con el entorno natural.",
     images: [
       "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1200&q=65"
@@ -408,7 +408,7 @@ export const businesses = [
     category: "Producto local",
     description: "Café, productos artesanales y recuerdos elaborados por familias locales.",
     longDescription:
-      "Ejemplo de negocio para productores locales y artesanos que quieran visibilidad dentro del portal turístico.",
+      "Punto para descubrir café, productos artesanales y recuerdos elaborados por familias locales.",
     images: [
       "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=65",
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=65"
@@ -431,7 +431,7 @@ export const businesses = [
     category: "Transporte",
     description: "Traslados locales para visitantes, grupos pequeños y rutas turísticas.",
     longDescription:
-      "Ficha de ejemplo para transporte turístico local, útil para futuras alianzas y consultas de disponibilidad.",
+      "Servicio de transporte turístico local para visitantes, grupos pequeños y conexiones cercanas.",
     images: [
       "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=65"
     ],
@@ -480,11 +480,11 @@ export const sponsors = [
 
 export const promoSlots = [
   {
-    eyebrow: "Guia regional",
-    title: "Planifique su visita a la región con orientacion local",
-    description: "Solicite informacion sobre atractivos, rutas, termales, negocios y recomendaciones mientras preparamos la guia descargable oficial.",
+    eyebrow: "Guía regional",
+    title: "Planifique su visita a la región con orientación local",
+    description: "Solicite información sobre atractivos, rutas, termales, negocios y recomendaciones mientras preparamos la guía descargable oficial.",
     href: "/contacto",
-    cta: "Solicitar guia"
+    cta: "Solicitar guía"
   },
   {
     eyebrow: "Tour destacado",

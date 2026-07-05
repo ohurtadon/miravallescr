@@ -4,11 +4,13 @@ import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SpeciesDirectory } from "@/components/SpeciesDirectory";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Flora",
-  description: "Guanacaste, helechos, orquídeas y bosque nuboso en el corredor volcánico del norte de Costa Rica."
-};
+  description: "Guanacaste, helechos, orquídeas y bosque nuboso en el corredor volcánico del norte de Costa Rica.",
+  path: "/flora-fauna/flora"
+});
 
 export default async function FloraPage() {
   const { species } = await getSiteData();
@@ -17,7 +19,7 @@ export default async function FloraPage() {
     <SimplePage
       eyebrow="Flora"
       title="Verde que cuenta la historia del territorio"
-      description="Una base para documentar especies vegetales, zonas de bosque y valor ecológico de la región."
+      description="Una guía para reconocer especies vegetales, zonas de bosque y valor ecológico de la región."
     >
       <NarrativeBlock title="Cada planta sostiene una parte del paisaje">
         <p>

@@ -4,11 +4,13 @@ import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SpeciesDirectory } from "@/components/SpeciesDirectory";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Fauna",
-  description: "Perezosos, tucanes, monos congo, mariposas y reptiles del corredor volcánico del norte de Costa Rica."
-};
+  description: "Perezosos, tucanes, monos congo, mariposas y reptiles del corredor volcánico del norte de Costa Rica.",
+  path: "/flora-fauna/fauna"
+});
 
 export default async function FaunaPage() {
   const { species } = await getSiteData();
@@ -17,7 +19,7 @@ export default async function FaunaPage() {
     <SimplePage
       eyebrow="Fauna"
       title="Encuentros silvestres para observar con respeto"
-      description="Una guía inicial para ordenar avistamientos, especies emblemáticas y recomendaciones de conservación."
+      description="Una guía para ordenar avistamientos, especies emblemáticas y recomendaciones de conservación."
     >
       <NarrativeBlock title="La fauna aparece cuando el visitante baja el ritmo">
         <p>

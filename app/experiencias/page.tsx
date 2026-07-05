@@ -4,12 +4,14 @@ import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Experiencias",
-  description: "Caminatas ecológicas, termales, observación de aves y senderismo en el corredor volcánico del norte de Costa Rica."
-};
+  description: "Caminatas ecológicas, termales, observación de aves y senderismo en el corredor volcánico del norte de Costa Rica.",
+  path: "/experiencias"
+});
 
 export default async function ExperiencesPage() {
   const siteData = await getSiteData();
@@ -20,7 +22,7 @@ export default async function ExperiencesPage() {
     <SimplePage
       eyebrow="Experiencias"
       title="Actividades para viajar con intención"
-      description="Si buscas naturaleza, bienestar y aventura responsable, estas en el lugar correcto."
+      description="Si buscas naturaleza, bienestar y aventura responsable, estás en el lugar correcto."
     >
       <NarrativeBlock
         title="El viaje aquí se vive despacio"

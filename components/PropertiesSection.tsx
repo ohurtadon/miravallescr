@@ -67,14 +67,19 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {filteredProperties.map((property) => (
-            <article key={property.id} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+            <Link
+              key={property.id}
+              href={`/propiedades/${property.slug}`}
+              className="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft"
+              aria-label={`${t("card.more")}: ${property.title}`}
+            >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={property.image}
                   alt={property.title}
                   fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
+                  sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
                   loading="lazy"
                 />
                 {property.isFeatured ? (
@@ -98,24 +103,18 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
                   </p>
                   <p className="flex min-w-0 items-center gap-2" title={property.area}>
                     <Home className="size-4 shrink-0 text-river" aria-hidden="true" />
-                    <span className="line-clamp-1">{property.area}</span>
+                    <span className="line-clamp-1">Construcción: {property.area}</span>
                   </p>
                   <p className="flex min-w-0 items-center gap-2" title={property.landSize}>
                     <Ruler className="size-4 shrink-0 text-river" aria-hidden="true" />
-                    <span className="line-clamp-1">{property.landSize}</span>
+                    <span className="line-clamp-1">Terreno: {property.landSize}</span>
                   </p>
                 </div>
                 <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
                   <p className="line-clamp-1 font-display text-2xl font-bold text-forest" title={property.price}>{property.price}</p>
-                  <Link
-                    href={`/propiedades/${property.slug}`}
-                    className="inline-flex items-center justify-center rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
-                  >
-                    {t("card.more")}
-                  </Link>
                 </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

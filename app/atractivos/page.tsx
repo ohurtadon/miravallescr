@@ -4,12 +4,14 @@ import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Atractivos turísticos",
-  description: "Explora ríos, termales, senderos, miradores y rutas naturales del corredor volcánico del norte de Costa Rica."
-};
+  description: "Explora ríos, termales, senderos, miradores y rutas naturales del corredor volcánico del norte de Costa Rica.",
+  path: "/atractivos"
+});
 
 export default async function AttractionsPage() {
   const siteData = await getSiteData();
@@ -20,7 +22,7 @@ export default async function AttractionsPage() {
     <SimplePage
       eyebrow="Atractivos"
       title="Naturaleza, agua y paisaje volcánico"
-      description="Una selección inicial de puntos de interés para descubrir la región con rutas de baja huella y mucho valor escénico."
+      description="Puntos de interés para descubrir la región con rutas de baja huella y mucho valor escénico."
     >
       <NarrativeBlock
         title="Un volcán que todavía conversa con el agua"

@@ -5,13 +5,15 @@ import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SponsorSection } from "@/components/SponsorSection";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Negocios locales",
   description:
-    "Directorio de hospedajes, restaurantes, guías, termales, transporte, artesanos y productores locales de la región."
-};
+    "Directorio de hospedajes, restaurantes, guías, termales, transporte, artesanos y productores locales de la región.",
+  path: "/negocios"
+});
 
 export default async function BusinessesPage() {
   const siteData = await getSiteData();

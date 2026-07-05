@@ -15,6 +15,7 @@ import { WildlifeSection } from "@/components/WildlifeSection";
 import { getSiteData, type SiteBusiness, type SiteExperience } from "@/lib/site-api";
 
 const HOME_CAROUSEL_LIMIT = 10;
+const HOME_GALLERY_LIMIT = 9;
 
 export default async function Home() {
   const siteData = await getSiteData();
@@ -44,7 +45,7 @@ export default async function Home() {
         <MapSection mapPoints={siteData.mapPoints} />
         <WildlifeSection wildlife={siteData.wildlife} />
         <SponsorSection sponsors={siteData.sponsors} />
-        <GallerySection gallery={siteData.gallery} />
+        <GallerySection gallery={siteData.gallery.slice(0, HOME_GALLERY_LIMIT)} galleryCtaHref="/galeria" />
         <CallToAction />
       </main>
       <Footer />

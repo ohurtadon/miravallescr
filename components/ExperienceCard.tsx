@@ -8,21 +8,26 @@ import type { SiteExperience } from "@/lib/site-api";
 
 type ExperienceCardProps = {
   experience: SiteExperience;
+  imageSizes?: string;
 };
 
-export function ExperienceCard({ experience }: ExperienceCardProps) {
+export function ExperienceCard({
+  experience,
+  imageSizes = "(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
+}: ExperienceCardProps) {
   const { t, tv } = useI18n();
   const fallbackPrice = t("card.fallbackPrice");
-
-  return (
-    <article className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+  const href = `/experiencias/${experience.slug}`;
+  const cardClassName = "flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft";
+  const content = (
+    <>
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={experience.image}
           alt={experience.title}
           fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition duration-700 group-hover:scale-105"
+          sizes={imageSizes}
           loading="lazy"
         />
         {experience.isFeatured ? (
@@ -53,15 +58,13 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
           </div>
         </dl>
         <p className="mt-5 line-clamp-1 text-sm font-bold text-canopy" title={experience.price || fallbackPrice}>{experience.price || fallbackPrice}</p>
-        <div className="mt-auto pt-6">
-          <Link
-            href={`/experiencias/${experience.slug}`}
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-forest px-4 py-3 text-sm font-bold text-white transition hover:bg-canopy"
-          >
-            {t("card.more")}
-          </Link>
-        </div>
       </div>
-    </article>
+    </>
+  );
+
+  return (
+    <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${experience.title}`}>
+      {content}
+    </Link>
   );
 }

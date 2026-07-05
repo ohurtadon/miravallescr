@@ -7,6 +7,7 @@ import { ImageCarousel } from "@/components/ImageCarousel";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 import { PageViewTracker } from "@/components/PageViewTracker";
 
 type ExperiencePageProps = {
@@ -21,10 +22,12 @@ export async function generateMetadata({ params }: ExperiencePageProps): Promise
   const experience = experiences.find((item) => item.slug === slug);
   if (!experience) return {};
 
-  return {
+  return buildPageMetadata({
     title: experience.title,
-    description: experience.description
-  };
+    description: experience.description,
+    path: `/experiencias/${experience.slug}`,
+    image: experience.images[0] || experience.image
+  });
 }
 
 export default async function ExperienceDetailPage({ params }: ExperiencePageProps) {
@@ -55,7 +58,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
           <h2 className="mt-8 font-display text-4xl font-bold text-canopy">Descripción</h2>
           <p className="mt-4 text-lg leading-8 text-volcanic">{experience.description}</p>
           <p className="mt-4 text-lg leading-8 text-volcanic">
-            Esta página está preparada para ampliar itinerario, recomendaciones, políticas, fotografías reales y proveedor local cuando la experiencia esté lista para comercializarse.
+            Esta ficha ayuda a revisar el tipo de actividad, duración, dificultad, ubicación y canal de contacto antes de planificar la visita.
           </p>
         </div>
         <aside className="rounded-lg bg-white p-6 ring-1 ring-canopy/10">
@@ -67,7 +70,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
             <Detail icon={<MapPin className="size-5" />} label="Ubicación" value={experience.location} />
             <Detail icon={<UserRound className="size-5" />} label="Proveedor" value={experience.provider || "Por definir"} />
           </dl>
-          <p className="mt-6 rounded-md bg-mist p-4 text-sm font-bold text-canopy">{experience.price || "Precio por definir"}</p>
+          <p className="mt-6 rounded-md bg-mist p-4 text-sm font-bold text-canopy">{experience.price || "Consultar precio"}</p>
           <div className="mt-6 grid gap-2">
             <Link
               href={experience.contactUrl}

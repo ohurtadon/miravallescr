@@ -22,7 +22,8 @@ const groups = [
       { labelKey: "footer.directions", href: "/mapa" },
       { labelKey: "nav.contact", href: "/contacto" },
       { labelKey: "footer.weather", href: "/clima" },
-      { labelKey: "footer.partnerships", href: "/contacto#alianzas" }
+      { labelKey: "footer.partnerships", href: "/contacto#alianzas" },
+      { labelKey: "footer.privacy", href: "/politica-de-privacidad" }
     ]
   },
   {

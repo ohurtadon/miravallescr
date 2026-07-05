@@ -279,7 +279,7 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
             </div>
           </div>
 
-          <aside className="min-h-[300px] rounded-lg bg-white p-5 text-canopy ring-1 ring-canopy/10 lg:max-h-[520px] lg:overflow-y-auto">
+          <aside className="h-[420px] overflow-y-auto overscroll-contain rounded-lg bg-white p-5 text-canopy ring-1 ring-canopy/10 md:h-[460px] lg:h-[520px]">
             {selectedPoint ? (
               <MapPointCard point={selectedPoint} onClose={() => setSelectedPoint(null)} />
             ) : (

@@ -4,11 +4,13 @@ import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Mapa",
-  description: "Mapa interactivo de ríos, termales, cataratas, miradores y senderos del corredor volcánico del norte de Costa Rica."
-};
+  description: "Mapa interactivo de ríos, termales, cataratas, miradores y senderos del corredor volcánico del norte de Costa Rica.",
+  path: "/mapa"
+});
 
 export default async function MapPage() {
   const { mapPoints } = await getSiteData();

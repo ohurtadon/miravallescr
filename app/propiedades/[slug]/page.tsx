@@ -7,6 +7,8 @@ import { PageViewTracker } from "@/components/PageViewTracker";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
+import { buildPropertyJsonLd } from "@/lib/structured-data";
 
 type PropertyPageProps = {
   params: Promise<{
@@ -20,10 +22,12 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
   const property = properties.find((item) => item.slug === slug);
   if (!property) return {};
 
-  return {
+  return buildPageMetadata({
     title: property.title,
-    description: property.description
-  };
+    description: property.description,
+    path: `/propiedades/${property.slug}`,
+    image: property.images[0] || property.image
+  });
 }
 
 export default async function PropertyDetailPage({ params }: PropertyPageProps) {
@@ -37,9 +41,11 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
     contact.whatsapp,
     `Hola, te descubrí en Raíz Volcánica y quiero consultar sobre la propiedad: ${property.title}.`
   );
+  const jsonLd = buildPropertyJsonLd(property);
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <PageViewTracker targetType="property" targetId={property.id} targetCategory={property.type} />
       <SimplePage eyebrow={`${property.operation} · ${property.type}`} title={property.title} description={property.description}>
         <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
@@ -66,7 +72,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               <h2 className="mt-6 font-display text-4xl font-bold text-canopy">Sobre la propiedad</h2>
               <p className="mt-4 text-lg leading-8 text-volcanic">{property.description}</p>
               <p className="mt-4 text-lg leading-8 text-volcanic">
-                Esta ficha está preparada para ampliar información comercial, condiciones, fotografías reales, detalles de acceso y contacto del responsable cuando la oportunidad esté lista para publicarse.
+                Esta ficha reúne información comercial, condiciones generales, detalles de ubicación y contacto para valorar la oportunidad con mejor contexto.
               </p>
             </article>
           </div>
@@ -100,7 +106,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               ) : null}
             </div>
             <div className="rounded-lg bg-[#dbe7d7] p-6 ring-1 ring-canopy/10">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ubicación referencial</p>
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ubicación de la propiedad</p>
               <div className="mt-4 grid min-h-52 place-items-center rounded-lg bg-[radial-gradient(circle_at_30%_40%,rgba(62,126,168,0.35),transparent_28%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-center">
                 <div>
                   <MapPin className="mx-auto size-9 text-forest" aria-hidden="true" />

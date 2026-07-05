@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { I18nProvider } from "@/lib/i18n";
+import { absoluteSiteUrl, buildLanguageAlternates, getPublicSiteUrl, siteName } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,24 +18,10 @@ const display = Cormorant_Garamond({
   display: "swap"
 });
 
-const DEFAULT_SITE_URL = "https://raizvolcanica.com";
-
-function getPublicSiteUrl() {
-  const configuredUrl = process.env.SITE_URL || process.env.PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL;
-  const siteUrl = (configuredUrl || DEFAULT_SITE_URL).replace(/\/$/, "");
-
-  if (siteUrl.includes(".vercel.app")) {
-    return DEFAULT_SITE_URL;
-  }
-
-  return siteUrl;
-}
-
 const siteUrl = getPublicSiteUrl();
 const siteTitle = "Raíz Volcánica | Turismo, naturaleza y experiencias del norte de Costa Rica";
 const siteDescription =
   "Plataforma turística y ecológica que conecta volcanes, bosques, ríos, termales, biodiversidad, negocios locales y experiencias del norte de Costa Rica.";
-const siteName = "Raíz Volcánica";
 const ogImage = "/images/volcan-miravalles-arcoiris-guanacaste.webp";
 
 export const metadata: Metadata = {
@@ -60,7 +47,8 @@ export const metadata: Metadata = {
     "sustainable tourism Costa Rica"
   ],
   alternates: {
-    canonical: siteUrl
+    canonical: absoluteSiteUrl("/"),
+    languages: buildLanguageAlternates("/")
   },
   icons: {
     icon: "/icon.png",
@@ -69,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: siteUrl,
+    url: absoluteSiteUrl("/"),
     siteName,
     locale: "es_CR",
     type: "website",
@@ -126,7 +114,7 @@ const jsonLd = {
     },
     {
       "@type": "TouristAttraction",
-      name: "Senderos, rios y termales del norte de Costa Rica"
+      name: "Senderos, ríos y termales del norte de Costa Rica"
     }
   ]
 };
@@ -136,8 +124,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
   const cookieStore = await cookies();
-  const locale = cookieStore.get("rv-locale")?.value === "en" ? "en" : "es";
+  const requestLocale = requestHeaders.get("x-rv-locale");
+  const locale = requestLocale === "en" || requestLocale === "es"
+    ? requestLocale
+    : cookieStore.get("rv-locale")?.value === "en" ? "en" : "es";
 
   return (
     <html lang={locale} className={`${inter.variable} ${display.variable}`}>

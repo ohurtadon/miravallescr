@@ -32,6 +32,7 @@ export function AttractionsGrid({ attractions, showHeading = true, carousel = fa
   const [carouselState, setCarouselState] = useState({ endProgress: 0, scrollProgress: 0, atEnd: false });
   const [isWalking, setIsWalking] = useState(false);
   const itemClassName = carousel ? "w-[82vw] shrink-0 snap-start sm:w-[22rem] lg:w-[24rem]" : "";
+  const imageSizes = carousel ? "(max-width: 639px) 82vw, 24rem" : "(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw";
   const syncCarouselState = useCallback((activateWalk = false) => {
     const node = carouselRef.current;
     if (!node || !carousel) return;
@@ -105,7 +106,7 @@ export function AttractionsGrid({ attractions, showHeading = true, carousel = fa
                       alt={item.title}
                       fill
                       className="object-cover transition duration-700 group-hover:scale-105"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes={imageSizes}
                       loading="lazy"
                     />
                   </div>

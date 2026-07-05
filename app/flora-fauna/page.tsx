@@ -4,11 +4,13 @@ import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { WildlifeSection } from "@/components/WildlifeSection";
 import { getSiteData } from "@/lib/site-api";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Flora y fauna",
-  description: "Conoce especies de fauna, flora tropical y bosque nuboso del corredor volcánico del norte de Costa Rica."
-};
+  description: "Conoce especies de fauna, flora tropical y bosque nuboso del corredor volcánico del norte de Costa Rica.",
+  path: "/flora-fauna"
+});
 
 export default async function FloraFaunaPage() {
   const { wildlife } = await getSiteData();

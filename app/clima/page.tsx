@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { SimplePage } from "@/components/SimplePage";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Clima",
-  description: "Guía general del clima durante el año en el corredor volcánico del norte de Costa Rica."
-};
+  description: "Guía general del clima durante el año en el corredor volcánico del norte de Costa Rica.",
+  path: "/clima"
+});
 
 export default function WeatherPage() {
   return (
