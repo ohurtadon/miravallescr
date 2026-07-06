@@ -105,15 +105,6 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 </a>
               ) : null}
             </div>
-            <div className="rounded-lg bg-[#dbe7d7] p-6 ring-1 ring-canopy/10">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ubicación de la propiedad</p>
-              <div className="mt-4 grid min-h-52 place-items-center rounded-lg bg-[radial-gradient(circle_at_30%_40%,rgba(62,126,168,0.35),transparent_28%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-center">
-                <div>
-                  <MapPin className="mx-auto size-9 text-forest" aria-hidden="true" />
-                  <p className="mt-2 text-sm font-bold text-canopy">{property.location}</p>
-                </div>
-              </div>
-            </div>
           </aside>
         </div>
         {related.length ? (

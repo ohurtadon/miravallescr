@@ -15,6 +15,8 @@ import {
   Leaf,
   MapPin,
   Mountain,
+  Navigation,
+  Search,
   Store,
   Utensils,
   Waves,
@@ -22,6 +24,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { getGoogleMapsDirectionsUrl } from "@/lib/google-maps";
 import type { SiteMapPoint } from "@/lib/site-api";
 import { SectionHeading } from "./SectionHeading";
 
@@ -137,18 +140,32 @@ const legendItems = [
   mapIconConfigs.business
 ];
 
+type MapCategoryFilter = keyof typeof mapIconConfigs;
+
 export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<Map<string, mapboxgl.Marker>>(new Map());
   const [filter, setFilter] = useState<MapFilter>("all");
+  const [categoryFilter, setCategoryFilter] = useState<MapCategoryFilter | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedPoint, setSelectedPoint] = useState<SiteMapPoint | null>(null);
   const [mapStatus, setMapStatus] = useState<"loading" | "ready" | "error">("loading");
   const { t, tv } = useI18n();
 
+  const normalizedSearchQuery = useMemo(() => normalizeIconText(searchQuery.trim()), [searchQuery]);
   const filteredPoints = useMemo(
-    () => mapPoints.filter((point) => filter === "all" || point.kind === filter),
-    [filter, mapPoints]
+    () => mapPoints.filter((point) => {
+      const pointText = normalizeIconText(`${point.name} ${point.category} ${point.location} ${point.summary}`);
+      const pointCategory = getMapIconConfig(point).key;
+
+      return (
+        (filter === "all" || point.kind === filter) &&
+        (!categoryFilter || pointCategory === categoryFilter) &&
+        (!normalizedSearchQuery || pointText.includes(normalizedSearchQuery))
+      );
+    }),
+    [categoryFilter, filter, mapPoints, normalizedSearchQuery]
   );
 
   useEffect(() => {
@@ -207,14 +224,22 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
     });
   }, [filteredPoints, selectedPoint?.id]);
 
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map || mapStatus !== "ready") return;
+    fitMapToPoints(map, filteredPoints);
+  }, [filteredPoints, mapStatus]);
+
   function changeFilter(nextFilter: MapFilter) {
     setFilter(nextFilter);
+    setCategoryFilter(null);
     setSelectedPoint(null);
-    const map = mapInstanceRef.current;
-    if (map) {
-      const nextPoints = mapPoints.filter((point) => nextFilter === "all" || point.kind === nextFilter);
-      fitMapToPoints(map, nextPoints);
-    }
+  }
+
+  function changeCategoryFilter(nextFilter: MapCategoryFilter) {
+    setFilter("all");
+    setCategoryFilter((current) => current === nextFilter ? null : nextFilter);
+    setSelectedPoint(null);
   }
 
   function selectPoint(point: SiteMapPoint) {
@@ -234,7 +259,38 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
           />
         ) : null}
 
-        <div className={`${showHeading ? "mt-10" : ""} flex flex-wrap justify-center gap-3`} aria-label={t("map.filterLabel")}>
+        <div className={`${showHeading ? "mt-10" : ""} mx-auto max-w-xl`}>
+          <label htmlFor="map-search" className="sr-only">{t("map.searchLabel")}</label>
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-moss" aria-hidden="true" />
+            <input
+              id="map-search"
+              type="search"
+              value={searchQuery}
+              onChange={(event) => {
+                setSearchQuery(event.target.value);
+                setSelectedPoint(null);
+              }}
+              placeholder={t("map.searchPlaceholder")}
+              className="h-12 w-full rounded-md border border-canopy/15 bg-white py-2 pl-12 pr-12 text-sm font-semibold text-canopy shadow-sm outline-none transition placeholder:text-volcanic/65 focus:border-river focus:ring-2 focus:ring-river/25"
+            />
+            {searchQuery ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedPoint(null);
+                }}
+                className="absolute right-2 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full text-volcanic transition hover:bg-mist hover:text-canopy"
+                aria-label={t("map.clearSearch")}
+              >
+                <X className="size-4" aria-hidden="true" />
+              </button>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap justify-center gap-3" aria-label={t("map.filterLabel")}>
           {filters.map((item) => (
             <button
               key={item.value}
@@ -270,12 +326,27 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
               </div>
             ) : null}
 
-            <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 text-xs font-bold">
-              {legendItems.map((item) => (
-                <span key={item.key} className="rounded-md bg-white/95 px-3 py-2 text-canopy shadow">
-                  <item.Icon className="mr-1 inline size-4 text-forest" /> {tv(item.label)}
-                </span>
-              ))}
+            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 text-xs font-bold" aria-label={t("map.categoryFilterLabel")}>
+              {legendItems.map((item) => {
+                const itemKey = item.key as MapCategoryFilter;
+                const isActive = categoryFilter === itemKey;
+
+                return (
+                  <button
+                    key={item.key}
+                    type="button"
+                    onClick={() => changeCategoryFilter(itemKey)}
+                    aria-pressed={isActive}
+                    className={`rounded-md px-3 py-2 shadow transition focus:outline-none focus:ring-2 focus:ring-river ${
+                      isActive
+                        ? "bg-canopy text-white"
+                        : "bg-white/95 text-canopy hover:bg-sand"
+                    }`}
+                  >
+                    <item.Icon className={`mr-1 inline size-4 ${isActive ? "text-sand" : "text-forest"}`} /> {tv(item.label)}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -346,7 +417,19 @@ function MapPointCard({ point, onClose }: { point: SiteMapPoint; onClose: () => 
         <MapPin className="mt-0.5 size-4 shrink-0 text-river" />
         <span>{point.location}<span className="mt-1 block text-xs font-semibold text-moss">{t("map.approxLocation")}</span></span>
       </p>
-      <Link href={point.href} className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-canopy">
+      <a
+        href={getGoogleMapsDirectionsUrl({
+          coordinates: { lat: point.lat, lng: point.lng },
+          fallbackDestination: `${point.name}, ${point.location}`
+        })}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-mist px-5 py-3 text-sm font-bold text-canopy ring-1 ring-canopy/10 transition hover:bg-sand"
+      >
+        <Navigation className="size-4" aria-hidden="true" />
+        {t("map.googleMaps")}
+      </a>
+      <Link href={point.href} className="mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-canopy">
         {t("map.placePage")}
         <ArrowRight className="size-4" aria-hidden="true" />
       </Link>
