@@ -15,6 +15,7 @@ import {
   MapPin,
   MessageCircle,
   Mountain,
+  Palette,
   Sprout
 } from "lucide-react";
 import { useState } from "react";
@@ -105,6 +106,11 @@ const founders = [
     name: "Deivis Arias",
     role: "Ingeniero Ambiental",
     Icon: Leaf
+  },
+  {
+    name: "Thaís Jiménez",
+    role: "Artista Visual",
+    Icon: Palette
   }
 ];
 
@@ -255,7 +261,7 @@ export function AboutUsCanvasPage({ contactEmail, whatsappHref }: AboutUsCanvasP
             <span className="mb-2 block font-display text-lg font-semibold tracking-wider text-[#c5b49a]">Fundadores</span>
             <h2 className="font-display text-3xl font-bold text-white md:text-5xl">El equipo que impulsa la raíz</h2>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {founders.map((founder) => (
               <div key={founder.name} className="rounded-3xl border border-[#c5b49a]/10 bg-[#121c17]/80 p-8 shadow-2xl transition duration-300 hover:-translate-y-1 hover:border-[#c5b49a]/35">
                 <div className="mb-6 flex size-14 items-center justify-center rounded-2xl bg-[#c5b49a]/10 text-[#c5b49a]">
