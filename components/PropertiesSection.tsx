@@ -6,6 +6,7 @@ import { BadgeCheck, Home, MapPin, Ruler } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteProperty } from "@/lib/site-api";
+import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "./SectionHeading";
 
 type PropertiesSectionProps = {
@@ -66,55 +67,56 @@ export function PropertiesSection({ properties, propertyOperations, propertyType
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {filteredProperties.map((property) => (
-            <Link
-              key={property.id}
-              href={`/propiedades/${property.slug}`}
-              className="group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft"
-              aria-label={`${t("card.more")}: ${property.title}`}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={property.image}
-                  alt={property.title}
-                  fill
-                  className="object-cover transition duration-700 group-hover:scale-105"
-                  sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
-                  loading="lazy"
-                />
-                {property.isFeatured ? (
-                  <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy shadow">
-                    <BadgeCheck className="size-4" aria-hidden="true" />
-                    {t("properties.featured")}
+          {filteredProperties.map((property, index) => (
+            <ScrollReveal key={property.id} className="h-full" delay={(index % 3) * 0.04} y={14}>
+              <Link
+                href={`/propiedades/${property.slug}`}
+                className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10"
+                aria-label={`${t("card.more")}: ${property.title}`}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={property.image}
+                    alt={property.title}
+                    fill
+                    className="rv-media-zoom object-cover"
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
+                    loading="lazy"
+                  />
+                  {property.isFeatured ? (
+                    <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy shadow">
+                      <BadgeCheck className="size-4" aria-hidden="true" />
+                      {t("properties.featured")}
+                    </span>
+                  ) : null}
+                  <span className="absolute right-4 top-4 rounded-md bg-canopy/85 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white">
+                    {tv(property.operation)}
                   </span>
-                ) : null}
-                <span className="absolute right-4 top-4 rounded-md bg-canopy/85 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-white">
-                  {tv(property.operation)}
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={tv(property.type)}>{tv(property.type)}</p>
-                <h3 className="mt-3 line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={property.title}>{property.title}</h3>
-                <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={property.description}>{property.description}</p>
-                <div className="mt-5 grid min-h-[5.25rem] gap-3 text-sm text-volcanic">
-                  <p className="flex min-w-0 items-center gap-2" title={property.location}>
-                    <MapPin className="size-4 shrink-0 text-river" aria-hidden="true" />
-                    <span className="line-clamp-1">{property.location}</span>
-                  </p>
-                  <p className="flex min-w-0 items-center gap-2" title={property.area}>
-                    <Home className="size-4 shrink-0 text-river" aria-hidden="true" />
-                    <span className="line-clamp-1">Construcción: {property.area}</span>
-                  </p>
-                  <p className="flex min-w-0 items-center gap-2" title={property.landSize}>
-                    <Ruler className="size-4 shrink-0 text-river" aria-hidden="true" />
-                    <span className="line-clamp-1">Terreno: {property.landSize}</span>
-                  </p>
                 </div>
-                <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="line-clamp-1 font-display text-2xl font-bold text-forest" title={property.price}>{property.price}</p>
+                <div className="flex flex-1 flex-col p-6">
+                  <p className="line-clamp-1 text-xs font-bold uppercase tracking-[0.18em] text-moss" title={tv(property.type)}>{tv(property.type)}</p>
+                  <h3 className="mt-3 line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={property.title}>{property.title}</h3>
+                  <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={property.description}>{property.description}</p>
+                  <div className="mt-5 grid min-h-[5.25rem] gap-3 text-sm text-volcanic">
+                    <p className="flex min-w-0 items-center gap-2" title={property.location}>
+                      <MapPin className="size-4 shrink-0 text-river" aria-hidden="true" />
+                      <span className="line-clamp-1">{property.location}</span>
+                    </p>
+                    <p className="flex min-w-0 items-center gap-2" title={property.area}>
+                      <Home className="size-4 shrink-0 text-river" aria-hidden="true" />
+                      <span className="line-clamp-1">Construcción: {property.area}</span>
+                    </p>
+                    <p className="flex min-w-0 items-center gap-2" title={property.landSize}>
+                      <Ruler className="size-4 shrink-0 text-river" aria-hidden="true" />
+                      <span className="line-clamp-1">Terreno: {property.landSize}</span>
+                    </p>
+                  </div>
+                  <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="line-clamp-1 font-display text-2xl font-bold text-forest" title={property.price}>{property.price}</p>
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </ScrollReveal>
           ))}
         </div>
       </div>

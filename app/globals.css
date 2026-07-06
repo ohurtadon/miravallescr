@@ -27,8 +27,44 @@ img {
   max-width: 100%;
 }
 
+.rv-card-interactive {
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out,
+    border-color 180ms ease-out,
+    background-color 180ms ease-out;
+  will-change: transform;
+}
+
+.rv-card-interactive:active {
+  transform: translateY(-1px) scale(0.992);
+}
+
+.rv-card-interactive:focus-visible {
+  outline: 2px solid #3e7ea8;
+  outline-offset: 4px;
+}
+
+.rv-media-zoom {
+  transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rv-card-interactive:hover {
+    transform: translateY(-0.25rem);
+    box-shadow:
+      0 10px 24px rgb(18 52 39 / 10%),
+      0 18px 42px -24px rgb(18 52 39 / 22%);
+  }
+
+  .group:hover .rv-media-zoom {
+    transform: scale(1.045);
+  }
+}
+
 .site-carousel {
   -webkit-overflow-scrolling: touch;
+  padding-bottom: 2.75rem;
   scrollbar-width: thin;
   scrollbar-color: rgb(47 93 58 / 45%) transparent;
 }
@@ -70,6 +106,17 @@ img {
 @media (prefers-reduced-motion: reduce) {
   .cherenga-walk-sprite {
     animation: none;
+  }
+
+  .rv-card-interactive,
+  .rv-media-zoom {
+    transition: none;
+  }
+
+  .rv-card-interactive:hover,
+  .rv-card-interactive:active,
+  .group:hover .rv-media-zoom {
+    transform: none;
   }
 }
 

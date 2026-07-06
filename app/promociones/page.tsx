@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, BadgePercent } from "lucide-react";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { SimplePage } from "@/components/SimplePage";
 import { getPublicPromotions } from "@/lib/site-api";
 import { buildPageMetadata } from "@/lib/seo";
@@ -31,15 +32,16 @@ export default async function PromotionsPage() {
 
       {promotions.length ? (
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {promotions.map((promotion) => (
-            <article key={promotion.id || promotion.title} className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+          {promotions.map((promotion, index) => (
+            <ScrollReveal key={promotion.id || promotion.title} className="h-full" delay={(index % 3) * 0.04} y={14}>
+            <article className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10">
               <div className="relative aspect-[4/3] bg-mist">
                 {promotion.image ? (
                   <Image
                     src={promotion.image}
                     alt={promotion.imageAlt || promotion.title}
                     fill
-                    className="object-cover"
+                    className="rv-media-zoom object-cover"
                     sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
                   />
                 ) : (
@@ -60,6 +62,7 @@ export default async function PromotionsPage() {
                 </Link>
               </div>
             </article>
+            </ScrollReveal>
           ))}
         </div>
       ) : (

@@ -1,3 +1,5 @@
+import { ScrollReveal } from "./ScrollReveal";
+
 type SectionHeadingProps = {
   eyebrow: string;
   title: string;
@@ -7,7 +9,7 @@ type SectionHeadingProps = {
 
 export function SectionHeading({ eyebrow, title, copy, light = false }: SectionHeadingProps) {
   return (
-    <div className="mx-auto max-w-3xl text-center">
+    <ScrollReveal className="mx-auto max-w-3xl text-center" y={16}>
       <p className={`mb-3 text-sm font-bold uppercase tracking-[0.22em] ${light ? "text-sand" : "text-moss"}`}>
         {eyebrow}
       </p>
@@ -19,6 +21,6 @@ export function SectionHeading({ eyebrow, title, copy, light = false }: SectionH
           {copy}
         </p>
       ) : null}
-    </div>
+    </ScrollReveal>
   );
 }
