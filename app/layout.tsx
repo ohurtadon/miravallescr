@@ -51,8 +51,12 @@ export const metadata: Metadata = {
     languages: buildLanguageAlternates("/")
   },
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-icon.png"
+    icon: [
+      { url: "/favicon-48x48.png?v=20260706", sizes: "48x48", type: "image/png" },
+      { url: "/favicon-96x96.png?v=20260706", sizes: "96x96", type: "image/png" },
+      { url: "/icon.png?v=20260706", sizes: "512x512", type: "image/png" }
+    ],
+    apple: [{ url: "/apple-icon.png?v=20260706", sizes: "180x180", type: "image/png" }]
   },
   openGraph: {
     title: siteTitle,

@@ -13,14 +13,14 @@ export function Header() {
   return (
     <header className="absolute left-0 right-0 top-0 z-30">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 text-white md:px-8">
-        <Link href="/" className="flex items-center gap-3 font-semibold">
-          <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white/95 ring-1 ring-white/35 backdrop-blur">
+        <Link href="/" className="flex items-center gap-4 font-semibold">
+          <span className="relative flex size-16 items-center justify-center overflow-hidden rounded-full bg-[#e8e4d4] ring-1 ring-white/35 backdrop-blur">
             <Image
-              src="/images/raiz-volcanica-logo.webp"
+              src="/images/raiz-volcanica-logo.webp?v=20260706"
               alt="Raíz Volcánica"
               fill
-              sizes="48px"
-              className="object-contain p-1"
+              sizes="64px"
+              className="object-contain p-0.5"
               priority
             />
           </span>

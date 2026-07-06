@@ -46,13 +46,13 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
         <div>
           <Link href="/" className="flex items-center gap-3 font-semibold">
-            <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white">
+            <span className="relative flex size-14 items-center justify-center overflow-hidden rounded-full bg-[#e8e4d4]">
               <Image
-                src="/images/raiz-volcanica-logo.webp"
+                src="/images/raiz-volcanica-logo.webp?v=20260706"
                 alt="Raíz Volcánica"
                 fill
-                sizes="48px"
-                className="object-contain p-1"
+                sizes="56px"
+                className="object-contain p-0.5"
               />
             </span>
             <span className="text-lg">Raíz Volcánica</span>

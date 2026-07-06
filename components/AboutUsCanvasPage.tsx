@@ -139,13 +139,13 @@ export function AboutUsCanvasPage({ contactEmail, whatsappHref }: AboutUsCanvasP
 
         <nav className="relative z-20 flex w-full items-center justify-between bg-gradient-to-b from-black/50 to-transparent px-6 py-6 md:px-12">
           <Link href="/" className="flex items-center gap-3">
-            <span className="relative flex size-12 items-center justify-center overflow-hidden rounded-full bg-white ring-2 ring-[#c5b49a]">
+            <span className="relative flex size-14 items-center justify-center overflow-hidden rounded-full bg-[#e8e4d4] ring-2 ring-[#c5b49a] md:size-16">
               <Image
-                src="/images/raiz-volcanica-logo.webp"
+                src="/images/raiz-volcanica-logo.webp?v=20260706"
                 alt="Raíz Volcánica"
                 fill
-                sizes="48px"
-                className="object-contain p-1"
+                sizes="64px"
+                className="object-contain p-0.5"
               />
             </span>
             <span className="font-display text-xl font-bold text-white md:text-2xl">Raíz Volcánica</span>
@@ -380,13 +380,13 @@ export function AboutUsCanvasPage({ contactEmail, whatsappHref }: AboutUsCanvasP
       <footer className="relative overflow-hidden border-t border-[#c5b49a]/20 bg-[#121c17] px-6 py-20 text-center text-white md:px-16 lg:px-24">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#1c2d24]/40 to-transparent" />
         <div className="relative z-10 mx-auto max-w-4xl space-y-8">
-          <div className="relative mx-auto flex size-20 items-center justify-center overflow-hidden rounded-full border-2 border-[#c5b49a] bg-white p-1.5 shadow-2xl transition duration-300 hover:scale-105">
+          <div className="relative mx-auto flex size-24 items-center justify-center overflow-hidden rounded-full border-2 border-[#c5b49a] bg-[#e8e4d4] p-1.5 shadow-2xl transition duration-300 hover:scale-105">
             <Image
-              src="/images/raiz-volcanica-logo.webp"
+              src="/images/raiz-volcanica-logo.webp?v=20260706"
               alt="Raíz Volcánica"
               fill
-              sizes="80px"
-              className="object-contain p-1"
+              sizes="96px"
+              className="object-contain p-0.5"
             />
           </div>
           <h3 className="font-display text-3xl font-bold md:text-5xl">Sé parte del desarrollo local</h3>
