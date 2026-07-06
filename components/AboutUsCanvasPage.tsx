@@ -171,7 +171,7 @@ export function AboutUsCanvasPage({ contactEmail, whatsappHref }: AboutUsCanvasP
               Raíz Volcánica: naturaleza, termales y aventura local
             </h1>
             <p className="max-w-2xl text-lg font-light leading-relaxed text-white/90 md:text-2xl">
-              Explora atractivos, experiencias y negocios locales del corredor volcánico y natural del norte de Costa Rica.
+              Explora atractivos, experiencias y negocios locales de la Cordillera Volcánica de Guanacaste.
             </p>
           </div>
         </div>
@@ -197,7 +197,7 @@ export function AboutUsCanvasPage({ contactEmail, whatsappHref }: AboutUsCanvasP
                 Conectando el corredor natural de Costa Rica
               </h2>
               <p className="text-justify text-base leading-relaxed text-white/80 md:text-lg">
-                Raíz Volcánica es una plataforma digital creada para promover el corredor volcánico y natural del norte de Costa Rica, la cual actúa como un punto de referencia para conectar a los visitantes con los principales atractivos, experiencias y negocios locales de la región. Con el propósito de entrelazar la naturaleza, la comunidad y el turismo, este ecosistema busca impulsar el desarrollo sostenible y dar mayor visibilidad a las comunidades y emprendimientos que conforman este territorio.
+                Raíz Volcánica es una plataforma digital creada para promover la Cordillera Volcánica de Guanacaste, la cual actúa como un punto de referencia para conectar a los visitantes con los principales atractivos, experiencias y negocios locales de la región. Con el propósito de entrelazar la naturaleza, la comunidad y el turismo, este ecosistema busca impulsar el desarrollo sostenible y dar mayor visibilidad a las comunidades y emprendimientos que conforman este territorio.
               </p>
             </div>
 
