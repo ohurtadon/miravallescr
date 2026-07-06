@@ -120,7 +120,7 @@ export function BusinessDirectory({
           </div>
         ) : null}
         <div className={carousel ? `${showHeading || showFilters ? "mt-12" : ""} relative` : showHeading || showFilters ? "mt-12" : ""}>
-          {carousel ? <SwipeHint hidden={carouselState.atEnd} /> : null}
+          {carousel ? <SwipeHint hidden={carouselState.atEnd || carouselState.scrollProgress > 0.02} /> : null}
           {carousel ? <CherengaWalk active={isWalking} /> : null}
           <div
             ref={carouselRef}
@@ -175,9 +175,9 @@ function CarouselMoreCard({ href, label, progress }: { href: string; label: stri
     <Link
       href={href}
       className="group flex min-h-[32rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy transition hover:-translate-y-1"
-      style={{ opacity: progress, transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
+      style={{ transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
     >
-      <span className="flex items-center gap-3 rounded-full bg-canopy/90 px-4 py-3 text-sm font-bold text-white shadow-sm">
+      <span className="flex items-center gap-3 rounded-full bg-canopy px-4 py-3 text-sm font-bold text-white shadow-sm">
         {label}
         <ArrowRight className="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
       </span>
