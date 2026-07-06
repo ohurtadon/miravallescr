@@ -7,6 +7,7 @@ import { ArrowRight, ArrowUpRight, Binoculars, Flame, Leaf, MapPin, Mountain, Sp
 import { useI18n } from "@/lib/i18n";
 import type { SiteAttraction } from "@/lib/site-api";
 import { CherengaWalk } from "./CherengaWalk";
+import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "./SectionHeading";
 
 const icons = {
@@ -92,35 +93,41 @@ export function AttractionsGrid({ attractions, showHeading = true, carousel = fa
                 : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
             }
           >
-            {attractions.map((item) => {
+            {attractions.map((item, index) => {
               const Icon = icons[item.icon as keyof typeof icons] ?? Leaf;
               return (
-                <Link
+                <ScrollReveal
                   key={item.slug}
-                  href={`/atractivos/${item.slug}`}
-                  className={`group flex h-full flex-col overflow-hidden rounded-lg bg-mist shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft ${itemClassName}`}
+                  className={carousel ? itemClassName : "h-full"}
+                  delay={carousel ? 0 : (index % 3) * 0.04}
+                  y={14}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition duration-700 group-hover:scale-105"
-                      sizes={imageSizes}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <div className="mb-5 flex items-center justify-between">
-                      <span className="flex size-10 items-center justify-center rounded-full bg-forest text-white">
-                        <Icon className="size-5" aria-hidden="true" />
-                      </span>
-                      <ArrowUpRight className="size-5 text-canopy transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <Link
+                    href={`/atractivos/${item.slug}`}
+                    className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-mist shadow-sm ring-1 ring-canopy/10"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="rv-media-zoom object-cover"
+                        sizes={imageSizes}
+                        loading="lazy"
+                      />
                     </div>
-                    <h3 className="line-clamp-2 min-h-[4rem] font-display text-2xl font-bold leading-tight text-canopy" title={item.title}>{item.title}</h3>
-                    <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={item.summary}>{item.summary}</p>
-                  </div>
-                </Link>
+                    <div className="flex flex-1 flex-col p-6">
+                      <div className="mb-5 flex items-center justify-between">
+                        <span className="flex size-10 items-center justify-center rounded-full bg-forest text-white">
+                          <Icon className="size-5" aria-hidden="true" />
+                        </span>
+                        <ArrowUpRight className="size-5 text-canopy transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      </div>
+                      <h3 className="line-clamp-2 min-h-[4rem] font-display text-2xl font-bold leading-tight text-canopy" title={item.title}>{item.title}</h3>
+                      <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={item.summary}>{item.summary}</p>
+                    </div>
+                  </Link>
+                </ScrollReveal>
               );
             })}
             {carousel ? <ViewMoreCard href="/atractivos" label={t("card.more")} progress={carouselState.endProgress} /> : null}
@@ -147,7 +154,7 @@ function ViewMoreCard({ href, label, progress }: { href: string; label: string; 
   return (
     <Link
       href={href}
-      className="group flex min-h-[30rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy transition hover:-translate-y-1"
+      className="rv-card-interactive group flex min-h-[30rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy"
       style={{ opacity: progress, transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
     >
       <span className="flex items-center gap-3 rounded-full bg-canopy/90 px-4 py-3 text-sm font-bold text-white shadow-sm">

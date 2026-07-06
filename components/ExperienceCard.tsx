@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BadgeCheck, Clock, Gauge } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteExperience } from "@/lib/site-api";
+import { ScrollReveal } from "./ScrollReveal";
 
 type ExperienceCardProps = {
   experience: SiteExperience;
@@ -18,7 +19,7 @@ export function ExperienceCard({
   const { t, tv } = useI18n();
   const fallbackPrice = t("card.fallbackPrice");
   const href = `/experiencias/${experience.slug}`;
-  const cardClassName = "flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft";
+  const cardClassName = "rv-card-interactive flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10";
   const content = (
     <>
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -26,7 +27,7 @@ export function ExperienceCard({
           src={experience.image}
           alt={experience.title}
           fill
-          className="object-cover transition duration-700 group-hover:scale-105"
+          className="rv-media-zoom object-cover"
           sizes={imageSizes}
           loading="lazy"
         />
@@ -63,8 +64,10 @@ export function ExperienceCard({
   );
 
   return (
-    <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${experience.title}`}>
-      {content}
-    </Link>
+    <ScrollReveal className="h-full" y={14}>
+      <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${experience.title}`}>
+        {content}
+      </Link>
+    </ScrollReveal>
   );
 }

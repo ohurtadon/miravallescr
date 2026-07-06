@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BadgeCheck, MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteBusiness } from "@/lib/site-api";
+import { ScrollReveal } from "./ScrollReveal";
 
 type BusinessCardProps = {
   business: SiteBusiness;
@@ -17,7 +18,7 @@ export function BusinessCard({
 }: BusinessCardProps) {
   const { t, tv } = useI18n();
   const href = `/negocios/${business.slug}`;
-  const cardClassName = `flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 transition hover:-translate-y-1 hover:shadow-soft ${
+  const cardClassName = `rv-card-interactive flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ${
     business.isFeatured ? "ring-moss/35" : "ring-canopy/10"
   }`;
   const content = (
@@ -27,7 +28,7 @@ export function BusinessCard({
           src={business.images[0]}
           alt={business.name}
           fill
-          className="object-cover transition duration-700 group-hover:scale-105"
+          className="rv-media-zoom object-cover"
           sizes={imageSizes}
           loading="lazy"
         />
@@ -51,8 +52,10 @@ export function BusinessCard({
   );
 
   return (
-    <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${business.name}`}>
-      {content}
-    </Link>
+    <ScrollReveal className="h-full" y={14}>
+      <Link href={href} className={`group ${cardClassName}`} aria-label={`${t("card.more")}: ${business.name}`}>
+        {content}
+      </Link>
+    </ScrollReveal>
   );
 }

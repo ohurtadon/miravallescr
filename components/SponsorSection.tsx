@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteSponsor } from "@/lib/site-api";
+import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "./SectionHeading";
 
 type SponsorSectionProps = {
@@ -33,7 +34,7 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
           />
         ) : null}
         <div className={`${compact || !showHeading ? "mt-0" : "mt-12"} grid gap-4 md:grid-cols-3`}>
-          {activeSponsors.map((sponsor) => {
+          {activeSponsors.map((sponsor, index) => {
             const href = sponsor.website || "/contacto#alianzas";
             const external = /^https?:\/\//i.test(href);
             const logoIsImage = /^https?:\/\//i.test(sponsor.logo) || sponsor.logo.startsWith("/");
@@ -65,13 +66,17 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
             );
 
             return external ? (
-              <a key={sponsor.id} href={href} target="_blank" rel="noopener noreferrer" className="group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
-                {content}
-              </a>
+              <ScrollReveal key={sponsor.id} className="h-full" delay={(index % 3) * 0.04} y={14}>
+                <a href={href} target="_blank" rel="noopener noreferrer" className="rv-card-interactive group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10">
+                  {content}
+                </a>
+              </ScrollReveal>
             ) : (
-              <Link key={sponsor.id} href={href} className="group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
-                {content}
-              </Link>
+              <ScrollReveal key={sponsor.id} className="h-full" delay={(index % 3) * 0.04} y={14}>
+                <Link href={href} className="rv-card-interactive group flex h-full rounded-lg bg-mist p-6 ring-1 ring-canopy/10">
+                  {content}
+                </Link>
+              </ScrollReveal>
             );
           })}
         </div>

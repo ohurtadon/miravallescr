@@ -1,23 +1,34 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowDown, MapPin } from "lucide-react";
 import Link from "next/link";
+import { ArrowDown, MapPin } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { useI18n } from "@/lib/i18n";
 
 export function Hero() {
   const { t } = useI18n();
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0px", "48px"]);
 
   return (
-    <section className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
-      <Image
-        src="/images/volcan-miravalles-arcoiris-guanacaste.webp"
-        alt="Paisaje volcánico y natural del norte de Costa Rica"
-        fill
-        priority
-        className="object-cover"
-        sizes="100vw"
-      />
+    <section ref={sectionRef} className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
+      <motion.div className="absolute -inset-4 md:-inset-8" style={reduceMotion ? undefined : { y: imageY }}>
+        <Image
+          src="/images/volcan-miravalles-arcoiris-guanacaste.webp"
+          alt="Paisaje volcánico y natural del norte de Costa Rica"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+      </motion.div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,28,20,0.94),rgba(18,52,39,0.74),rgba(18,52,39,0.38))]" />
       <div className="relative mx-auto flex min-h-[92vh] max-w-7xl items-end px-5 pb-20 pt-32 md:px-8 md:pb-24">
         <div className="max-w-4xl">

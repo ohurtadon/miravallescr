@@ -121,7 +121,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             <h2 className="font-display text-4xl font-bold text-canopy">Propiedades relacionadas</h2>
             <div className="mt-6 grid gap-5 md:grid-cols-3">
               {related.map((item) => (
-                <Link key={item.id} href={`/propiedades/${item.slug}`} className="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10 transition hover:-translate-y-1 hover:shadow-soft">
+                <Link key={item.id} href={`/propiedades/${item.slug}`} className="rv-card-interactive overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10">
                   <div className="p-6">
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-moss">{item.type}</p>
                     <h3 className="mt-3 font-display text-3xl font-bold text-canopy">{item.title}</h3>
