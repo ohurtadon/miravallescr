@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MapPin, Navigation } from "lucide-react";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
+import { getGoogleMapsDirectionsUrl } from "@/lib/google-maps";
 import { getSiteData } from "@/lib/site-api";
 import { buildPageMetadata } from "@/lib/seo";
 import { buildAttractionJsonLd } from "@/lib/structured-data";
@@ -65,6 +67,30 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
           </p>
         </div>
       </div>
+      <section className="mt-6 rounded-lg bg-[#dbe7d7] p-6 ring-1 ring-canopy/10 md:p-7">
+        <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Cómo llegar</p>
+            <p className="mt-3 flex gap-3 text-sm font-bold text-canopy">
+              <MapPin className="size-5 shrink-0 text-forest" aria-hidden="true" />
+              {attraction.location}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-volcanic">Abra la ruta en Google Maps para navegar hasta este atractivo.</p>
+          </div>
+          <a
+            href={getGoogleMapsDirectionsUrl({
+              coordinates: attraction.coordinates,
+              fallbackDestination: `${attraction.title}, ${attraction.location}`
+            })}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-3 text-sm font-bold text-white transition hover:bg-canopy md:w-auto"
+          >
+            <Navigation className="size-4" aria-hidden="true" />
+            Cómo llegar en Google Maps
+          </a>
+        </div>
+      </section>
       <div className="-mx-5 mt-12 md:-mx-8">
         <RecommendedSlot placement="attraction-detail" />
       </div>

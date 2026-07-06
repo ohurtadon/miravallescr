@@ -16,6 +16,7 @@ type TranslationKey =
   | "nav.promotions"
   | "nav.gallery"
   | "nav.map"
+  | "nav.about"
   | "nav.contact"
   | "header.openMenu"
   | "header.closeMenu"
@@ -54,6 +55,10 @@ type TranslationKey =
   | "map.title"
   | "map.copy"
   | "map.filterLabel"
+  | "map.categoryFilterLabel"
+  | "map.searchLabel"
+  | "map.searchPlaceholder"
+  | "map.clearSearch"
   | "map.regionLabel"
   | "map.loading"
   | "map.errorTitle"
@@ -63,6 +68,7 @@ type TranslationKey =
   | "map.empty"
   | "map.closeSummary"
   | "map.approxLocation"
+  | "map.googleMaps"
   | "map.placePage"
   | "properties.eyebrow"
   | "properties.title"
@@ -115,6 +121,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "nav.promotions": "Promociones",
     "nav.gallery": "Galería",
     "nav.map": "Mapa",
+    "nav.about": "Sobre nosotros",
     "nav.contact": "Contacto",
     "header.openMenu": "Abrir menú",
     "header.closeMenu": "Cerrar menú",
@@ -153,6 +160,10 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.title": "Ubica atractivos y negocios locales",
     "map.copy": "Explora el territorio en un mapa real y abre la ficha de cada lugar para conocerlo mejor.",
     "map.filterLabel": "Filtrar puntos del mapa",
+    "map.categoryFilterLabel": "Filtrar puntos por categoría",
+    "map.searchLabel": "Buscar lugares en el mapa",
+    "map.searchPlaceholder": "Buscar por nombre, categoría o ubicación",
+    "map.clearSearch": "Limpiar búsqueda",
     "map.regionLabel": "Mapa interactivo de la región",
     "map.loading": "Cargando mapa de la región...",
     "map.errorTitle": "No fue posible cargar el mapa.",
@@ -162,6 +173,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.empty": "No hay ubicaciones publicadas en esta categoría.",
     "map.closeSummary": "Cerrar resumen",
     "map.approxLocation": "Ubicación aproximada en Mogote",
+    "map.googleMaps": "Cómo llegar en Google Maps",
     "map.placePage": "Ver página del lugar",
     "properties.eyebrow": "Propiedades",
     "properties.title": "Te gustó la zona, quieres vivir acá",
@@ -213,6 +225,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "nav.promotions": "Promotions",
     "nav.gallery": "Gallery",
     "nav.map": "Map",
+    "nav.about": "About us",
     "nav.contact": "Contact",
     "header.openMenu": "Open menu",
     "header.closeMenu": "Close menu",
@@ -251,6 +264,10 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.title": "Find attractions and local businesses",
     "map.copy": "Explore the territory on a real map and open each place profile to learn more.",
     "map.filterLabel": "Filter map points",
+    "map.categoryFilterLabel": "Filter points by category",
+    "map.searchLabel": "Search places on the map",
+    "map.searchPlaceholder": "Search by name, category, or location",
+    "map.clearSearch": "Clear search",
     "map.regionLabel": "Interactive regional map",
     "map.loading": "Loading regional map...",
     "map.errorTitle": "The map could not be loaded.",
@@ -260,6 +277,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "map.empty": "There are no published locations in this category.",
     "map.closeSummary": "Close summary",
     "map.approxLocation": "Approximate location in Mogote",
+    "map.googleMaps": "Get directions in Google Maps",
     "map.placePage": "View place page",
     "properties.eyebrow": "Properties",
     "properties.title": "You liked the area and want to live here",
@@ -542,6 +560,11 @@ const valueTranslations: Record<Locale, Record<string, string>> = {
     "Sobre el negocio": "About the business",
     "Servicios ofrecidos": "Services offered",
     "Contacto y ubicación": "Contact and location",
+    "Cómo llegar": "Getting there",
+    "Abra la ruta en Google Maps para navegar hasta este destino.": "Open the route in Google Maps to navigate to this destination.",
+    "Abra la ruta en Google Maps para navegar hasta esta ubicación.": "Open the route in Google Maps to navigate to this location.",
+    "Abra la ruta en Google Maps para navegar hasta este atractivo.": "Open the route in Google Maps to navigate to this attraction.",
+    "Cómo llegar en Google Maps": "Get directions in Google Maps",
     "Sobre la propiedad": "About the property",
     "Esta ficha reúne información comercial, condiciones generales, detalles de ubicación y contacto para valorar la oportunidad con mejor contexto.": "This profile brings together commercial information, general conditions, location details, and contact options to assess the opportunity with better context.",
     "Área": "Area",

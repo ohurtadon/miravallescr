@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BadgeCheck, Home, MapPin, MessageCircle, Ruler, Search } from "lucide-react";
+import { BadgeCheck, Home, MapPin, MessageCircle, Navigation, Ruler, Search } from "lucide-react";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { PageViewTracker } from "@/components/PageViewTracker";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
+import { getGoogleMapsDirectionsUrl } from "@/lib/google-maps";
 import { getSiteData, withWhatsAppMessage } from "@/lib/site-api";
 import { buildPageMetadata } from "@/lib/seo";
 import { buildPropertyJsonLd } from "@/lib/structured-data";
@@ -106,13 +107,25 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               ) : null}
             </div>
             <div className="rounded-lg bg-[#dbe7d7] p-6 ring-1 ring-canopy/10">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Ubicación de la propiedad</p>
-              <div className="mt-4 grid min-h-52 place-items-center rounded-lg bg-[radial-gradient(circle_at_30%_40%,rgba(62,126,168,0.35),transparent_28%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-center">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-moss">Cómo llegar</p>
+              <div className="mt-4 grid min-h-40 place-items-center rounded-lg bg-white/70 p-5 text-center ring-1 ring-canopy/10">
                 <div>
                   <MapPin className="mx-auto size-9 text-forest" aria-hidden="true" />
                   <p className="mt-2 text-sm font-bold text-canopy">{property.location}</p>
+                  <p className="mt-2 text-xs leading-5 text-volcanic">Abra la ruta en Google Maps para navegar hasta esta ubicación.</p>
                 </div>
               </div>
+              <a
+                href={getGoogleMapsDirectionsUrl({
+                  fallbackDestination: `${property.title}, ${property.location}`
+                })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
+              >
+                <Navigation className="size-4" aria-hidden="true" />
+                Cómo llegar en Google Maps
+              </a>
             </div>
           </aside>
         </div>

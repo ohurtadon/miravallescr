@@ -18,7 +18,8 @@ const routes = [
   "/patrocinadores/",
   "/politica-de-privacidad/",
   "/promociones/",
-  "/propiedades/"
+  "/propiedades/",
+  "/sobre-nosotros/"
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
