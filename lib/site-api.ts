@@ -135,6 +135,7 @@ export type SitePromoSlot = {
   eyebrow: string;
   title: string;
   description: string;
+  content?: SitePromoContent;
   cta: string;
   image?: string;
   imageAlt?: string;
@@ -151,6 +152,28 @@ export type SitePromoSlot = {
   } | null;
 };
 
+export type SitePromoContent =
+  | {
+      mode: "html";
+      theme?: string;
+      html: string;
+    }
+  | {
+      mode: "blocks";
+      theme?: string;
+      blocks: SitePromoContentBlock[];
+    };
+
+export type SitePromoContentBlock = {
+  type: "heading" | "paragraph" | "highlight" | "list" | "note" | "cta" | "divider";
+  text?: string;
+  items?: string[];
+  label?: string;
+  href?: string;
+  theme?: string;
+  align?: "left" | "center";
+};
+
 export type SitePromotion = SitePromoSlot & {
   serveId: string;
   promotionId?: string;
@@ -165,6 +188,14 @@ export type SiteGalleryItem = {
   src: string;
   alt: string;
   span: string;
+  credit?: string;
+  source?: string;
+  relatedLabel?: string;
+  relatedName?: string;
+  relatedTo?: {
+    collection?: string;
+    id?: string;
+  };
 };
 
 export type SiteMapPoint = {
@@ -259,6 +290,12 @@ export async function getSiteData(locale?: Locale): Promise<SiteData> {
   const normalizedAttractions = published(attractions).map(normalizeAttraction);
   const normalizedSponsors = published(sponsors).map(normalizeSponsor);
   const normalizedGallery = published(gallery).map(normalizeGalleryAsset);
+  const enrichedGallery = enrichGalleryRelations(normalizedGallery, {
+    businesses: normalizedBusinesses.length ? normalizedBusinesses : fallbackBusinesses.map(normalizeFallbackBusiness),
+    experiences: normalizedExperiences.length ? normalizedExperiences : fallbackExperiences.map(normalizeFallbackExperience),
+    properties: normalizedProperties.length ? normalizedProperties : fallbackProperties.map(normalizeFallbackProperty),
+    attractions: normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction)
+  });
   const normalizedSpecies = published(species).map(normalizeSpecies);
   const speciesSource = normalizedSpecies.length ? normalizedSpecies : normalizeFallbackSpecies();
   const mainSettings = settings.find((item) => item.key === "main")?.value;
@@ -292,7 +329,7 @@ export async function getSiteData(locale?: Locale): Promise<SiteData> {
       "Observación de aves",
       "Turismo rural"
     ]),
-    gallery: normalizedGallery.length ? normalizedGallery : fallbackGallery,
+    gallery: enrichedGallery.length ? enrichedGallery : fallbackGallery,
     mapPoints: buildMapPoints(
       normalizedBusinesses.length ? normalizedBusinesses : fallbackBusinesses.map(normalizeFallbackBusiness),
       normalizedAttractions.length ? normalizedAttractions : fallbackAttractions.map(normalizeFallbackAttraction)
@@ -568,6 +605,7 @@ function normalizePromoSlot(item: ApiRecord): SitePromoSlot {
     eyebrow: item.eyebrow || "Destacado",
     title: item.title,
     description: item.description || "",
+    content: normalizePromoContent(item.content),
     cta: item.cta || "Ver más",
     image: item.image || normalizeImages(item.images)[0],
     imageAlt: item.imageAlt || item.images?.[0]?.alt || item.title,
@@ -577,12 +615,92 @@ function normalizePromoSlot(item: ApiRecord): SitePromoSlot {
   };
 }
 
+function normalizePromoContent(value: unknown): SitePromoContent | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const source = value as ApiRecord;
+  if (source.mode === "html" && typeof source.html === "string" && source.html.trim()) {
+    return { mode: "html", theme: stringValue(source.theme), html: source.html };
+  }
+  if (source.mode === "blocks" && Array.isArray(source.blocks)) {
+    const blocks = source.blocks.map(normalizePromoContentBlock).filter(Boolean) as SitePromoContentBlock[];
+    return blocks.length ? { mode: "blocks", theme: stringValue(source.theme), blocks } : undefined;
+  }
+  return undefined;
+}
+
+function normalizePromoContentBlock(value: unknown): SitePromoContentBlock | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const source = value as ApiRecord;
+  const type = ["heading", "paragraph", "highlight", "list", "note", "cta", "divider"].includes(String(source.type))
+    ? source.type as SitePromoContentBlock["type"]
+    : "paragraph";
+
+  if (type === "divider") return { type, theme: stringValue(source.theme), align: source.align === "center" ? "center" : "left" };
+  if (type === "list") {
+    const items = Array.isArray(source.items) ? source.items.map((item) => String(item)).filter(Boolean) : [];
+    return items.length ? { type, items, theme: stringValue(source.theme), align: source.align === "center" ? "center" : "left" } : undefined;
+  }
+  if (type === "cta") {
+    const label = stringValue(source.label);
+    return label ? { type, label, href: stringValue(source.href), theme: stringValue(source.theme), align: source.align === "center" ? "center" : "left" } : undefined;
+  }
+
+  const text = stringValue(source.text);
+  return text ? { type, text, theme: stringValue(source.theme), align: source.align === "center" ? "center" : "left" } : undefined;
+}
+
+function stringValue(value: unknown) {
+  return typeof value === "string" ? value : "";
+}
+
 function normalizeGalleryAsset(item: ApiRecord): SiteGalleryItem {
   return {
     src: item.url,
     alt: item.alt || item.title || "Imagen de la región",
-    span: ""
+    span: "",
+    credit: item.credit || "",
+    source: item.source || "",
+    relatedLabel: relatedCollectionLabel(item.relatedTo?.collection),
+    relatedName: item.relatedName || item.relatedTo?.name || "",
+    relatedTo: {
+      collection: item.relatedTo?.collection || "",
+      id: item.relatedTo?.id ? String(item.relatedTo.id) : ""
+    }
   };
+}
+
+function enrichGalleryRelations(
+  gallery: SiteGalleryItem[],
+  collections: {
+    businesses: SiteBusiness[];
+    experiences: SiteExperience[];
+    properties: SiteProperty[];
+    attractions: SiteAttraction[];
+  }
+) {
+  const names = new Map<string, string>();
+  for (const item of collections.businesses) names.set(`businesses:${item.id}`, item.name);
+  for (const item of collections.experiences) names.set(`experiences:${item.id}`, item.title);
+  for (const item of collections.properties) names.set(`properties:${item.id}`, item.title);
+  for (const item of collections.attractions) names.set(`attractions:${item.id}`, item.title);
+
+  return gallery.map((item) => {
+    if (item.relatedName) return item;
+    const collection = item.relatedTo?.collection;
+    const id = item.relatedTo?.id;
+    const relatedName = collection && id ? names.get(`${collection}:${id}`) : "";
+    return relatedName ? { ...item, relatedName } : item;
+  });
+}
+
+function relatedCollectionLabel(value: unknown) {
+  const labels: Record<string, string> = {
+    businesses: "Negocio local",
+    experiences: "Experiencia",
+    properties: "Propiedad",
+    attractions: "Atractivo"
+  };
+  return typeof value === "string" ? labels[value] || "" : "";
 }
 
 function normalizeSpecies(item: ApiRecord): SiteSpecies {
