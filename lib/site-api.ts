@@ -196,6 +196,16 @@ export type SiteSpecies = {
   isFeatured: boolean;
 };
 
+export type BillingPeriod = "monthly" | "semiannual" | "annual";
+export type PlanPeriodPricing = Record<BillingPeriod, number>;
+export type PublicPlanPricing = {
+  semilla: PlanPeriodPricing;
+  raiz: PlanPeriodPricing;
+  cima: PlanPeriodPricing & {
+    corporate: PlanPeriodPricing;
+  };
+};
+
 export type SiteData = {
   attractions: SiteAttraction[];
   businesses: SiteBusiness[];
@@ -217,6 +227,17 @@ export type SiteData = {
   stats: typeof fallbackStats;
   wildlife: typeof fallbackWildlife;
 };
+
+export async function getBusinessPlanPricing(): Promise<PublicPlanPricing | null> {
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/public/plans/pricing`, { cache: "no-store" });
+    if (!response.ok) return null;
+    const data = await response.json() as { pricing?: unknown };
+    return normalizePlanPricing(data.pricing);
+  } catch {
+    return null;
+  }
+}
 
 export async function getSiteData(locale?: Locale): Promise<SiteData> {
   const requestLocale = locale ?? await getRequestLocale();
@@ -396,6 +417,34 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
     isBoosted: Boolean(item.isBoosted),
     boostWeight: Number(item.boostWeight ?? 1)
   };
+}
+
+function normalizePlanPricing(value: unknown): PublicPlanPricing | null {
+  if (!value || typeof value !== "object") return null;
+  const source = value as Record<string, any>;
+  const semilla = normalizePeriodPricing(source.semilla);
+  const raiz = normalizePeriodPricing(source.raiz);
+  const cima = normalizePeriodPricing(source.cima);
+  const corporate = normalizePeriodPricing(source.cima?.corporate);
+  if (!semilla || !raiz || !cima || !corporate) return null;
+  return {
+    semilla,
+    raiz,
+    cima: {
+      ...cima,
+      corporate
+    }
+  };
+}
+
+function normalizePeriodPricing(value: unknown): PlanPeriodPricing | null {
+  if (!value || typeof value !== "object") return null;
+  const source = value as Record<string, any>;
+  const monthly = Number(source.monthly);
+  const semiannual = Number(source.semiannual);
+  const annual = Number(source.annual);
+  if (![monthly, semiannual, annual].every((amount) => Number.isFinite(amount) && amount >= 0)) return null;
+  return { monthly, semiannual, annual };
 }
 
 function normalizeExperience(item: ApiRecord): SiteExperience {
