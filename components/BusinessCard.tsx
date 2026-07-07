@@ -32,10 +32,10 @@ export function BusinessCard({
           sizes={imageSizes}
           loading="lazy"
         />
-        {business.isFeatured ? (
+        {business.canShowRecommendedBadge || business.isFeatured ? (
           <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-sand px-3 py-2 text-xs font-bold text-canopy shadow">
             <BadgeCheck className="size-4" aria-hidden="true" />
-            {t("card.featured")}
+            {business.canShowRecommendedBadge ? "Negocio recomendado" : t("card.featured")}
           </span>
         ) : null}
       </div>
