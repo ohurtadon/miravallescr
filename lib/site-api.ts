@@ -221,6 +221,7 @@ export type SiteSpecies = {
   category: string;
   summary: string;
   description: string;
+  images: string[];
   image?: string;
   habitat?: string;
   conservationStatus?: string;
@@ -704,6 +705,8 @@ function relatedCollectionLabel(value: unknown) {
 }
 
 function normalizeSpecies(item: ApiRecord): SiteSpecies {
+  const images = normalizeImages(item.images);
+
   return {
     id: item._id,
     slug: item.slug,
@@ -713,7 +716,8 @@ function normalizeSpecies(item: ApiRecord): SiteSpecies {
     category: item.category || (item.type === "flora" ? "Flora" : "Fauna"),
     summary: item.summary || item.description || "Contenido ampliable con fotografias y datos locales.",
     description: item.description || item.summary || "Contenido ampliable con fotografias y datos locales.",
-    image: normalizeImages(item.images)[0],
+    images,
+    image: images[0],
     habitat: item.habitat,
     conservationStatus: item.conservationStatus,
     isFeatured: Boolean(item.isFeatured)
@@ -740,6 +744,7 @@ function normalizeFallbackSpecies(): SiteSpecies[] {
       category: "Fauna",
       summary: "Contenido ampliable con fotografias y datos locales.",
       description: "Contenido ampliable con fotografias y datos locales.",
+      images: [],
       isFeatured: false
     })),
     ...fallbackWildlife.flora.map((name, index) => ({
@@ -750,6 +755,7 @@ function normalizeFallbackSpecies(): SiteSpecies[] {
       category: "Flora",
       summary: "Contenido ampliable con fotografias y datos locales.",
       description: "Contenido ampliable con fotografias y datos locales.",
+      images: [],
       isFeatured: false
     }))
   ];
