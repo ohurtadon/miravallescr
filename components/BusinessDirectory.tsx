@@ -39,7 +39,7 @@ export function BusinessDirectory({
     return businesses
       .filter((business) => (featuredOnly ? business.isFeatured : true))
       .filter((business) => selectedCategory === "Todos" || business.category === selectedCategory)
-      .sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured))
+      .sort((a, b) => (b.planPriority ?? 1) - (a.planPriority ?? 1) || Number(b.isFeatured) - Number(a.isFeatured))
       .slice(0, limit || businesses.length);
   }, [businesses, featuredOnly, limit, selectedCategory]);
 

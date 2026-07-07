@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BadgeCheck, Clock, ExternalLink, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { BadgeCheck, Clock, ExternalLink, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { ImageCarousel } from "@/components/ImageCarousel";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
@@ -99,15 +99,23 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
                   {business.phone}
                 </p>
               ) : null}
+              {business.email ? (
+                <p className="flex gap-3">
+                  <Mail className="size-5 shrink-0 text-river" aria-hidden="true" />
+                  {business.email}
+                </p>
+              ) : null}
             </div>
             <div className="mt-6 grid gap-2">
-              <Link
-                href={whatsappHref || "/contacto"}
-                className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
-              >
-                <MessageCircle className="size-4" aria-hidden="true" />
-                Contactar por WhatsApp
-              </Link>
+              {whatsappHref ? (
+                <Link
+                  href={whatsappHref}
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy"
+                >
+                  <MessageCircle className="size-4" aria-hidden="true" />
+                  Contactar por WhatsApp
+                </Link>
+              ) : null}
               {business.website ? (
                 <Link
                   href={business.website}
@@ -151,9 +159,10 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
   );
 }
 
-function getBusinessBadgeLabel(business: { isFeatured: boolean; isSponsor?: boolean; sponsorLevel?: string }) {
+function getBusinessBadgeLabel(business: { isFeatured: boolean; canShowRecommendedBadge?: boolean; isSponsor?: boolean; sponsorLevel?: string }) {
   const labels: string[] = [];
 
+  if (business.canShowRecommendedBadge) return "Negocio recomendado";
   if (business.isFeatured) labels.push("Socio destacado");
   if (business.isSponsor) labels.push(formatSponsorLevel(business.sponsorLevel));
 

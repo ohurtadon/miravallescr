@@ -41,9 +41,16 @@ export type SiteBusiness = {
   location: string;
   coordinates?: { lat: number; lng: number };
   phone?: string;
+  email?: string;
   whatsapp?: string;
   website?: string;
   socialLinks?: Record<string, string>;
+  plan?: "semilla" | "raiz" | "cima";
+  effectivePlan?: "semilla" | "raiz" | "cima";
+  planStatus?: "active" | "expired" | "paused";
+  planPriority?: number;
+  canShowRecommendedBadge?: boolean;
+  canPublishPromotions?: boolean;
   isFeatured: boolean;
   isSponsor?: boolean;
   sponsorLevel?: string;
@@ -65,6 +72,11 @@ export type SiteExperience = {
   difficulty: string;
   price: string;
   provider?: string;
+  providerBusinessId?: string;
+  providerPlan?: "semilla" | "raiz" | "cima";
+  providerPlanStatus?: "active" | "expired" | "paused";
+  providerPlanPriority?: number;
+  providerBoostWeight?: number;
   location: string;
   contactUrl: string;
   whatsapp?: string;
@@ -366,9 +378,16 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
     location: item.location?.text || item.location?.address || item.location?.area || "Región norte de Costa Rica",
     coordinates: item.location?.coordinates,
     phone: formatCostaRicaPhone(item.contact?.phone),
+    email: item.contact?.email,
     whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp),
     website: item.contact?.website,
     socialLinks: item.contact?.socialLinks ?? {},
+    plan: normalizePlan(item.plan),
+    effectivePlan: normalizePlan(item.effectivePlan || item.plan),
+    planStatus: normalizePlanStatus(item.planStatus),
+    planPriority: Number(item.planPriority ?? planPriority(item.effectivePlan || item.plan)),
+    canShowRecommendedBadge: Boolean(item.canShowRecommendedBadge),
+    canPublishPromotions: Boolean(item.canPublishPromotions),
     isFeatured: Boolean(item.isFeatured),
     isSponsor: Boolean(item.sponsorLevel),
     sponsorLevel: item.sponsorLevel,
@@ -381,6 +400,7 @@ function normalizeBusiness(item: ApiRecord): SiteBusiness {
 
 function normalizeExperience(item: ApiRecord): SiteExperience {
   const provider = typeof item.providerBusinessId === "object" ? item.providerBusinessId?.name : item.providerSnapshot?.name;
+  const providerBusiness = typeof item.providerBusinessId === "object" ? item.providerBusinessId : null;
   const images = normalizeImages(item.images);
 
   return {
@@ -395,6 +415,11 @@ function normalizeExperience(item: ApiRecord): SiteExperience {
     difficulty: item.difficulty || "Consultar",
     price: item.price || "Consultar",
     provider: provider || "Aliado local",
+    providerBusinessId: providerBusiness?._id,
+    providerPlan: normalizePlan(providerBusiness?.effectivePlan || providerBusiness?.plan),
+    providerPlanStatus: normalizePlanStatus(providerBusiness?.planStatus),
+    providerPlanPriority: Number(providerBusiness?.planPriority ?? planPriority(providerBusiness?.effectivePlan || providerBusiness?.plan)),
+    providerBoostWeight: Number(providerBusiness?.boostWeight ?? 1),
     location: item.location?.text || "Región norte de Costa Rica",
     contactUrl: "/contacto",
     whatsapp: normalizeWhatsAppUrl(item.contact?.whatsapp || item.providerSnapshot?.whatsapp),
@@ -579,9 +604,16 @@ function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): S
     location: item.location,
     coordinates: item.coordinates,
     phone: formatCostaRicaPhone(item.phone),
+    email: undefined,
     whatsapp: normalizeWhatsAppUrl(item.whatsapp),
     website: item.website,
     socialLinks: sanitizeSocialLinks(item.socialLinks),
+    plan: "semilla",
+    effectivePlan: "semilla",
+    planStatus: "active",
+    planPriority: 1,
+    canShowRecommendedBadge: false,
+    canPublishPromotions: false,
     isFeatured: item.isFeatured,
     isSponsor: item.isSponsor,
     sponsorLevel: item.sponsorLevel,
@@ -607,6 +639,10 @@ function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number],
     difficulty: item.difficulty,
     price: item.price,
     provider: item.provider,
+    providerPlan: "semilla",
+    providerPlanStatus: "active",
+    providerPlanPriority: 1,
+    providerBoostWeight: 1,
     location: item.location,
     contactUrl: item.contactUrl,
     whatsapp: normalizeWhatsAppUrl(item.whatsapp),
@@ -618,6 +654,20 @@ function normalizeFallbackExperience(item: (typeof fallbackExperiences)[number],
 function sanitizeSocialLinks(socialLinks: Record<string, string | undefined> | undefined) {
   if (!socialLinks) return {};
   return Object.fromEntries(Object.entries(socialLinks).filter((entry): entry is [string, string] => Boolean(entry[1])));
+}
+
+function normalizePlan(value: unknown): "semilla" | "raiz" | "cima" {
+  return value === "raiz" || value === "cima" ? value : "semilla";
+}
+
+function normalizePlanStatus(value: unknown): "active" | "expired" | "paused" {
+  return value === "expired" || value === "paused" ? value : "active";
+}
+
+function planPriority(value: unknown) {
+  if (value === "cima") return 3;
+  if (value === "raiz") return 2;
+  return 1;
 }
 
 function normalizeFallbackProperty(item: (typeof fallbackProperties)[number], index: number): SiteProperty {

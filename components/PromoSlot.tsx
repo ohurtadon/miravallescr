@@ -8,8 +8,8 @@ type PromoSlotProps = {
   properties?: SiteProperty[];
 };
 
-export async function PromoSlot({ placement, businesses = [], experiences = [], properties = [] }: PromoSlotProps) {
-  const promotion = (await getPromotion(placement)) ?? fallbackPromotion({ businesses, experiences, properties });
+export async function PromoSlot({ placement, businesses = [], experiences = [] }: PromoSlotProps) {
+  const promotion = (await getPromotion(placement)) ?? fallbackPromotion({ businesses, experiences });
   if (!promotion) return null;
 
   return (
@@ -21,11 +21,14 @@ export async function PromoSlot({ placement, businesses = [], experiences = [], 
   );
 }
 
-function fallbackPromotion({ businesses, experiences, properties }: { businesses: SiteBusiness[]; experiences: SiteExperience[]; properties: SiteProperty[] }) {
+function fallbackPromotion({ businesses, experiences }: { businesses: SiteBusiness[]; experiences: SiteExperience[] }) {
   const candidates = [
-    ...businesses.map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/negocios/${item.slug}`, eyebrow: recommendationLabel("business", item.category), title: item.name, description: item.description, cta: `Ver ${item.category.toLocaleLowerCase("es")}` })),
-    ...experiences.map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/experiencias/${item.slug}`, eyebrow: recommendationLabel("experience", item.category), title: item.title, description: item.description, cta: "Ver experiencia" })),
-    ...properties.map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/propiedades/${item.slug}`, eyebrow: recommendationLabel("property", item.type), title: item.title, description: item.description, cta: "Ver propiedad" }))
+    ...businesses
+      .filter((item) => item.canPublishPromotions || item.canShowRecommendedBadge)
+      .map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/negocios/${item.slug}`, eyebrow: recommendationLabel("business", item.category), title: item.name, description: item.description, cta: `Ver ${item.category.toLocaleLowerCase("es")}` })),
+    ...experiences
+      .filter((item) => item.providerPlan === "cima" && item.providerPlanStatus === "active")
+      .map((item) => ({ weight: Math.max(Number(item.providerBoostWeight ?? 5), 5), href: `/experiencias/${item.slug}`, eyebrow: recommendationLabel("experience", item.category), title: item.title, description: item.description, cta: "Ver experiencia" }))
   ];
   const selected = weightedRandom(candidates);
   return selected ? { href: selected.href, eyebrow: selected.eyebrow, title: selected.title, description: selected.description, cta: selected.cta } : null;
