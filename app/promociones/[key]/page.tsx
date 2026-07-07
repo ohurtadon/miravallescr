@@ -3,9 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, BadgePercent, Store } from "lucide-react";
+import { PromotionContent } from "@/components/PromotionContent";
 import { RecommendedSlot } from "@/components/RecommendedSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getPublicPromotion } from "@/lib/site-api";
+import type { SitePromoContent } from "@/lib/site-api";
 import { buildPageMetadata } from "@/lib/seo";
 
 type PromotionPageProps = {
@@ -21,7 +23,7 @@ export async function generateMetadata({ params }: PromotionPageProps): Promise<
 
   return buildPageMetadata({
     title: promotion.title,
-    description: plainText(promotion.description),
+    description: plainText(promotion.description || promotionContentText(promotion.content)),
     path: `/promociones/${promotion.key || key}`,
     image: promotion.image
   });
@@ -33,7 +35,7 @@ export default async function PromotionDetailPage({ params }: PromotionPageProps
   if (!promotion) notFound();
 
   return (
-    <SimplePage eyebrow={promotion.eyebrow} title={promotion.title} description={plainText(promotion.description)}>
+    <SimplePage eyebrow={promotion.eyebrow} title={promotion.title} description={plainText(promotion.description || promotionContentText(promotion.content))}>
       <Link href="/promociones" className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-forest transition hover:text-canopy">
         <ArrowLeft className="size-4" aria-hidden="true" />
         Volver a promociones
@@ -61,10 +63,7 @@ export default async function PromotionDetailPage({ params }: PromotionPageProps
             </span>
           </div>
           <div className="p-7">
-            <div
-              className="rich-content space-y-4 text-lg leading-8 text-volcanic"
-              dangerouslySetInnerHTML={{ __html: sanitizeRichText(promotion.description) }}
-            />
+            <PromotionContent content={promotion.content} fallback={promotion.description} />
           </div>
         </article>
 
@@ -113,12 +112,8 @@ function plainText(value: string) {
   return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
-function sanitizeRichText(value: string) {
-  return value
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?>[\s\S]*?<\/style>/gi, "")
-    .replace(/\son\w+=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-    .replace(/javascript:/gi, "")
-    .replace(/<(?!\/?(p|br|strong|b|em|i|u|ul|ol|li|h2|h3|h4|a)\b)[^>]*>/gi, "")
-    .replace(/<a\b(?![^>]*\btarget=)/gi, '<a target="_blank" rel="noopener noreferrer"');
+function promotionContentText(content: SitePromoContent | undefined) {
+  if (!content) return "";
+  if (content.mode === "html") return content.html;
+  return content.blocks.map((block) => block.text || block.label || block.items?.join(" ") || "").join(" ");
 }

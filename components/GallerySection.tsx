@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight, MapPin, X } from "lucide-react";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteGalleryItem } from "@/lib/site-api";
@@ -45,6 +45,7 @@ export function GallerySection({ gallery, showHeading = true, galleryCtaHref }: 
                 loading="lazy"
               />
               <span className="absolute inset-0 bg-canopy/0 transition group-hover:bg-canopy/20" />
+              <GalleryMeta item={item} />
             </button>
           ))}
         </div>
@@ -72,9 +73,37 @@ export function GallerySection({ gallery, showHeading = true, galleryCtaHref }: 
           </button>
           <div className="relative h-[78vh] w-full max-w-5xl overflow-hidden rounded-lg">
             <Image src={active.src} alt={active.alt} fill className="object-contain" sizes="100vw" />
+            <GalleryMeta item={active} large />
           </div>
         </div>
       ) : null}
     </section>
+  );
+}
+
+function GalleryMeta({ item, large = false }: { item: SiteGalleryItem; large?: boolean }) {
+  const hasMeta = Boolean(item.credit || item.relatedName || item.relatedLabel);
+  if (!hasMeta) return null;
+
+  return (
+    <span className={`pointer-events-none absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-2 bg-gradient-to-t from-canopy/75 via-canopy/35 to-transparent text-white ${large ? "p-5" : "p-3"}`}>
+      <span className="min-w-0">
+        {item.credit ? (
+          <span className={`${large ? "text-sm" : "text-xs"} block truncate font-medium text-white/88`}>
+            Foto: {item.credit}
+          </span>
+        ) : null}
+        {item.relatedName ? (
+          <span className={`${large ? "mt-1 text-sm" : "mt-0.5 text-[11px]"} flex min-w-0 items-center gap-1.5 font-bold text-white/90`}>
+            <MapPin className={`${large ? "size-4" : "size-3"} shrink-0`} aria-hidden="true" />
+            <span className="truncate">{item.relatedName}</span>
+          </span>
+        ) : item.relatedLabel ? (
+          <span className={`${large ? "mt-1 text-xs" : "mt-0.5 text-[10px]"} block font-bold uppercase tracking-[0.16em] text-white/72`}>
+            {item.relatedLabel}
+          </span>
+        ) : null}
+      </span>
+    </span>
   );
 }
