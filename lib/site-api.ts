@@ -273,17 +273,19 @@ export async function getBusinessPlanPricing(): Promise<PublicPlanPricing | null
 
 export async function getSiteData(locale?: Locale): Promise<SiteData> {
   const requestLocale = locale ?? await getRequestLocale();
-  const [businesses, experiences, properties, attractions, species, sponsors, gallery, settings] =
+  const [businesses, experiences, properties, attractions, floraSpecies, faunaSpecies, sponsors, gallery, settings] =
     await Promise.all([
       fetchCollection("businesses", requestLocale),
       fetchCollection("experiences", requestLocale),
       fetchCollection("properties", requestLocale),
       fetchCollection("attractions", requestLocale),
-      fetchCollection("species", requestLocale),
+      fetchCollection("species", requestLocale, { type: "flora" }),
+      fetchCollection("species", requestLocale, { type: "fauna" }),
       fetchCollection("sponsors", requestLocale),
       fetchCollection("gallery-assets", requestLocale),
       fetchCollection("site-settings", requestLocale)
     ]);
+  const species = [...floraSpecies, ...faunaSpecies];
 
   const normalizedBusinesses = published(businesses).map(normalizeBusiness);
   const normalizedExperiences = published(experiences).map(normalizeExperience);
@@ -395,7 +397,7 @@ export function withWhatsAppMessage(whatsappUrl: string | undefined, message: st
   return `${whatsappUrl}${separator}text=${encodeURIComponent(message)}`;
 }
 
-async function fetchCollection(collection: string, locale: Locale) {
+async function fetchCollection(collection: string, locale: Locale, filters: Record<string, string> = {}) {
   if (!apiBaseUrl) return [];
 
   try {
@@ -404,6 +406,7 @@ async function fetchCollection(collection: string, locale: Locale) {
       sort: "displayOrder,-updatedAt",
       lang: locale
     });
+    Object.entries(filters).forEach(([key, value]) => query.set(key, value));
     const response = await fetch(`${apiBaseUrl}/api/public/${collection}?${query.toString()}`, {
       cache: "no-store"
     });
@@ -706,14 +709,15 @@ function relatedCollectionLabel(value: unknown) {
 
 function normalizeSpecies(item: ApiRecord): SiteSpecies {
   const images = normalizeImages(item.images);
+  const type = normalizeSpeciesType(item.type);
 
   return {
     id: item._id,
     slug: item.slug,
     commonName: item.commonName,
     scientificName: item.scientificName,
-    type: item.type,
-    category: item.category || (item.type === "flora" ? "Flora" : "Fauna"),
+    type,
+    category: item.category || (type === "flora" ? "Flora" : "Fauna"),
     summary: item.summary || item.description || "Contenido ampliable con fotografias y datos locales.",
     description: item.description || item.summary || "Contenido ampliable con fotografias y datos locales.",
     images,
@@ -722,6 +726,10 @@ function normalizeSpecies(item: ApiRecord): SiteSpecies {
     conservationStatus: item.conservationStatus,
     isFeatured: Boolean(item.isFeatured)
   };
+}
+
+function normalizeSpeciesType(value: unknown): SiteSpecies["type"] {
+  return String(value ?? "").trim().toLowerCase() === "flora" ? "flora" : "fauna";
 }
 
 function normalizeWildlife(species: SiteSpecies[]) {
