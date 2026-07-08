@@ -25,13 +25,13 @@ function fallbackPromotion({ businesses, experiences }: { businesses: SiteBusine
   const candidates = [
     ...businesses
       .filter((item) => item.canPublishPromotions || item.canShowRecommendedBadge)
-      .map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/negocios/${item.slug}`, eyebrow: recommendationLabel("business", item.category), title: item.name, description: item.description, cta: `Ver ${item.category.toLocaleLowerCase("es")}` })),
+      .map((item) => ({ weight: item.isBoosted ? item.boostWeight ?? 5 : 1, href: `/negocios/${item.slug}`, eyebrow: recommendationLabel("business", item.category), title: item.name, description: item.description, cta: `Ver ${item.category.toLocaleLowerCase("es")}`, image: item.images[0], imageAlt: item.name })),
     ...experiences
       .filter((item) => item.providerPlan === "cima" && item.providerPlanStatus === "active")
-      .map((item) => ({ weight: Math.max(Number(item.providerBoostWeight ?? 5), 5), href: `/experiencias/${item.slug}`, eyebrow: recommendationLabel("experience", item.category), title: item.title, description: item.description, cta: "Ver experiencia" }))
+      .map((item) => ({ weight: Math.max(Number(item.providerBoostWeight ?? 5), 5), href: `/experiencias/${item.slug}`, eyebrow: recommendationLabel("experience", item.category), title: item.title, description: item.description, cta: "Ver experiencia", image: item.images[0] || item.image, imageAlt: item.title }))
   ];
   const selected = weightedRandom(candidates);
-  return selected ? { href: selected.href, eyebrow: selected.eyebrow, title: selected.title, description: selected.description, cta: selected.cta } : null;
+  return selected ? { href: selected.href, eyebrow: selected.eyebrow, title: selected.title, description: selected.description, cta: selected.cta, image: selected.image, imageAlt: selected.imageAlt } : null;
 }
 
 function recommendationLabel(type: "business" | "experience" | "property", category: string) {
