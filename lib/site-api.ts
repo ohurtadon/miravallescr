@@ -761,8 +761,8 @@ function normalizeFallbackSpecies(): SiteSpecies[] {
   ];
 }
 
-function normalizeImages(images: ImageAsset[] | undefined) {
-  return images?.map((image) => image.url).filter(Boolean) as string[] || [];
+function normalizeImages(images: Array<ImageAsset | string> | undefined) {
+  return images?.map((image) => typeof image === "string" ? image : image.url).filter(Boolean) as string[] || [];
 }
 
 function normalizeFallbackBusiness(item: (typeof fallbackBusinesses)[number]): SiteBusiness {

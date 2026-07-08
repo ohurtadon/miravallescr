@@ -18,7 +18,7 @@ export function Hero() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["0px", "48px"]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[92vh] overflow-hidden bg-canopy text-white">
+    <section ref={sectionRef} className="relative min-h-[102svh] overflow-hidden bg-canopy text-white">
       <motion.div className="absolute -inset-4 md:-inset-8" style={reduceMotion ? undefined : { y: imageY }}>
         <Image
           src="/images/volcan-miravalles-arcoiris-guanacaste.webp"
@@ -30,7 +30,7 @@ export function Hero() {
         />
       </motion.div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,28,20,0.94),rgba(18,52,39,0.74),rgba(18,52,39,0.38))]" />
-      <div className="relative mx-auto flex min-h-[92vh] max-w-7xl items-end px-5 pb-20 pt-32 md:px-8 md:pb-24">
+      <div className="relative mx-auto flex min-h-[102svh] max-w-7xl items-end px-5 pb-20 pt-32 md:px-8 md:pb-24">
         <div className="max-w-4xl">
           <div className="mb-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-white/14 px-4 py-2 text-sm font-semibold ring-1 ring-white/25 backdrop-blur">
             <MapPin className="size-4" aria-hidden="true" />

@@ -34,34 +34,36 @@ export default async function PromotionsPage() {
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {promotions.map((promotion, index) => (
             <ScrollReveal key={promotion.id || promotion.title} className="h-full" delay={(index % 3) * 0.04} y={14}>
-            <article className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10">
-              <div className="relative aspect-[4/3] bg-mist">
-                {promotion.image ? (
-                  <Image
-                    src={promotion.image}
-                    alt={promotion.imageAlt || promotion.title}
-                    fill
-                    className="rv-media-zoom object-cover"
-                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
-                  />
-                ) : (
-                  <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_30%,rgba(62,126,168,0.25),transparent_30%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-forest">
-                    <BadgePercent className="size-12" aria-hidden="true" />
+              <Link href={`/promociones/${promotion.key}`} className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-canopy/10">
+                <article className="flex h-full flex-col">
+                  <div className="relative aspect-[4/3] bg-mist">
+                    {promotion.image ? (
+                      <Image
+                        src={promotion.image}
+                        alt={promotion.imageAlt || promotion.title}
+                        fill
+                        className="rv-media-zoom object-cover"
+                        sizes="(min-width: 1280px) 400px, (min-width: 768px) 50vw, 100vw"
+                      />
+                    ) : (
+                      <div className="grid h-full place-items-center bg-[radial-gradient(circle_at_30%_30%,rgba(62,126,168,0.25),transparent_30%),linear-gradient(135deg,#f4f7f1,#dbe7d7)] text-forest">
+                        <BadgePercent className="size-12" aria-hidden="true" />
+                      </div>
+                    )}
+                    <span className="absolute left-4 top-4 rounded-md bg-sand px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-canopy shadow">
+                      {promotion.eyebrow}
+                    </span>
                   </div>
-                )}
-                <span className="absolute left-4 top-4 rounded-md bg-sand px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-canopy shadow">
-                  {promotion.eyebrow}
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <h2 className="line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={promotion.title}>{promotion.title}</h2>
-                <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={promotion.description}>{promotion.description}</p>
-                <Link href={`/promociones/${promotion.key}`} className="mt-auto inline-flex items-center justify-center gap-2 rounded-md bg-forest px-5 py-4 text-sm font-bold text-white transition hover:bg-canopy">
-                  Ver promoción
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-              </div>
-            </article>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h2 className="line-clamp-2 min-h-[4.5rem] font-display text-3xl font-bold leading-tight text-canopy" title={promotion.title}>{promotion.title}</h2>
+                    <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={promotion.description}>{promotion.description}</p>
+                    <span className="mt-auto inline-flex items-center gap-2 text-sm font-bold text-forest transition group-hover:text-canopy">
+                      Promoción activa
+                      <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                    </span>
+                  </div>
+                </article>
+              </Link>
             </ScrollReveal>
           ))}
         </div>
