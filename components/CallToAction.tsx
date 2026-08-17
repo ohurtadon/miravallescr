@@ -3,13 +3,15 @@
 import Link from "next/link";
 import { ArrowRight, Store } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { ScrollReveal } from "./ScrollReveal";
 
 export function CallToAction() {
   const { t } = useI18n();
 
   return (
-    <section className="bg-forest px-5 py-20 text-white md:px-8 md:py-24">
-      <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+    <section className="relative overflow-hidden bg-forest px-5 py-20 text-white md:px-8 md:py-24">
+      <div className="cta-ember-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+      <ScrollReveal className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 md:flex-row md:items-center">
         <div>
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-sand">{t("cta.eyebrow")}</p>
           <h2 className="font-display text-4xl font-bold leading-tight text-balance md:text-6xl">
@@ -35,7 +37,7 @@ export function CallToAction() {
             <Store className="size-4" aria-hidden="true" />
           </Link>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

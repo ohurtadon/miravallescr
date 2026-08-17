@@ -49,7 +49,7 @@ export function TrackedPromoLink(props: TrackedPromoLinkProps) {
             void sendAnalyticsEvent({ eventType: "promo_click", serveId: props.serveId });
           }
         }}
-        className={`rv-card-interactive grid gap-5 rounded-lg bg-white p-6 ring-1 ring-canopy/10 md:min-h-40 md:items-center md:p-8 ${props.image ? "md:grid-cols-[128px_0.7fr_1.3fr_auto]" : "md:grid-cols-[0.7fr_1.3fr_auto]"}`}
+        className={`rv-card-interactive group grid gap-5 rounded-lg bg-white p-6 ring-1 ring-canopy/10 md:min-h-40 md:items-center md:p-8 ${props.image ? "md:grid-cols-[128px_0.7fr_1.3fr_auto]" : "md:grid-cols-[0.7fr_1.3fr_auto]"}`}
       >
         {props.image ? (
           <span className="relative block aspect-[4/3] overflow-hidden rounded-lg bg-mist md:size-32 md:aspect-auto">
@@ -57,7 +57,7 @@ export function TrackedPromoLink(props: TrackedPromoLinkProps) {
               src={props.image}
               alt={props.imageAlt || tv(props.title)}
               fill
-              className="object-cover transition duration-500 group-hover:scale-[1.04]"
+              className="object-cover transition duration-500 group-hover:scale-[1.04] group-active:scale-[1.04]"
               sizes="(min-width: 768px) 128px, 100vw"
             />
           </span>
@@ -69,7 +69,7 @@ export function TrackedPromoLink(props: TrackedPromoLinkProps) {
         </div>
         <span className="inline-flex items-center gap-2 text-sm font-bold text-forest" title={tv(props.cta)}>
           {tv(props.cta)}
-          <ArrowRight className="size-4" aria-hidden="true" />
+          <ArrowRight className="size-4 transition group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
         </span>
       </a>
     </ScrollReveal>

@@ -39,11 +39,11 @@ export default async function Home() {
         <Stats stats={siteData.stats} />
         <DiscoverSection />
         <AttractionsGrid attractions={homeAttractions} carousel />
-        <ExperiencesSection experiences={homeExperiences} experienceCategories={siteData.experienceCategories} featuredOnly carousel />
+        <ExperiencesSection experiences={homeExperiences} experienceCategories={siteData.experienceCategories} featuredOnly carousel tone="mist" />
         <BusinessDirectory businesses={homeBusinesses} businessCategories={siteData.businessCategories} featuredOnly carousel />
         <PromoSlot placement="home" businesses={siteData.businesses} experiences={siteData.experiences} properties={siteData.properties} />
         <MapSection mapPoints={siteData.mapPoints} />
-        <WildlifeSection wildlife={siteData.wildlife} />
+        <WildlifeSection wildlife={siteData.wildlife} species={siteData.species} />
         <SponsorSection sponsors={siteData.sponsors} />
         <GallerySection gallery={siteData.gallery.slice(0, HOME_GALLERY_LIMIT)} galleryCtaHref="/galeria" />
         <CallToAction />

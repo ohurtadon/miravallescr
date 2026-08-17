@@ -54,6 +54,7 @@ export default async function ExperienceDetailPage({ params }: ExperiencePagePro
             aspectClass="aspect-[16/10]"
             sizes="(min-width: 1024px) 65vw, 100vw"
             priority
+            viewTransitionName={`experience-${experience.slug}`}
           />
           <h2 className="mt-8 font-display text-4xl font-bold text-canopy">Descripción</h2>
           <p className="mt-4 text-lg leading-8 text-volcanic">{experience.description}</p>

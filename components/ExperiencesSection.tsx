@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -17,6 +17,7 @@ type ExperiencesSectionProps = {
   showHeading?: boolean;
   showFilters?: boolean;
   carousel?: boolean;
+  tone?: "white" | "mist";
 };
 
 export function ExperiencesSection({
@@ -26,7 +27,8 @@ export function ExperiencesSection({
   limit,
   showHeading = true,
   showFilters = false,
-  carousel = false
+  carousel = false,
+  tone = "white"
 }: ExperiencesSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const { t, tv } = useI18n();
@@ -81,7 +83,7 @@ export function ExperiencesSection({
   }, []);
 
   return (
-    <section className={`bg-white px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
+    <section className={`${tone === "mist" ? "bg-mist" : "bg-white"} px-5 md:px-8 ${showHeading ? "py-20 md:py-28" : "py-12 md:py-14"}`}>
       <div className="mx-auto max-w-7xl">
         {showHeading ? (
           <SectionHeading
@@ -131,11 +133,12 @@ export function ExperiencesSection({
                 : "grid gap-5 md:grid-cols-3"
             }
           >
-            {items.map((experience) => (
+            {items.map((experience, index) => (
               <div key={experience.id} className={carousel ? "w-[82vw] shrink-0 snap-start sm:w-[22rem] lg:w-[24rem]" : ""}>
                 <ExperienceCard
                   experience={experience}
                   imageSizes={carousel ? "(max-width: 639px) 82vw, 24rem" : undefined}
+                  delay={carousel ? (index % 4) * 0.05 : (index % 3) * 0.04}
                 />
               </div>
             ))}
@@ -163,12 +166,12 @@ function ViewMoreCard({ href, label, progress }: { href: string; label: string; 
   return (
     <Link
       href={href}
-      className="group flex min-h-[35rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy transition hover:-translate-y-1"
-      style={{ transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
+      className="rv-view-more group flex min-h-[35rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy"
+      style={{ "--vm-x": `${Math.round((1 - progress) * 18)}px` } as CSSProperties}
     >
       <span className="flex items-center gap-3 rounded-full bg-forest px-4 py-3 text-sm font-bold text-white shadow-sm">
         {label}
-        <ArrowRight className="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
+        <ArrowRight className="size-5 transition group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
       </span>
     </Link>
   );

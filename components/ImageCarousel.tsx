@@ -2,8 +2,19 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useI18n } from "@/lib/i18n";
+import { ViewTransition } from "./ViewTransition";
+
+function MorphBoundary({ name, children }: { name?: string; children: ReactNode }) {
+  if (!name) return <>{children}</>;
+  return (
+    <ViewTransition name={name} share="morph" default="none">
+      {children}
+    </ViewTransition>
+  );
+}
 
 type ImageCarouselProps = {
   images: string[];
@@ -11,6 +22,7 @@ type ImageCarouselProps = {
   aspectClass?: string;
   sizes?: string;
   priority?: boolean;
+  viewTransitionName?: string;
 };
 
 export function ImageCarousel({
@@ -18,14 +30,19 @@ export function ImageCarousel({
   alt,
   aspectClass = "aspect-[16/10]",
   sizes = "100vw",
-  priority = false
+  priority = false,
+  viewTransitionName
 }: ImageCarouselProps) {
   const items = useMemo(() => images.filter(Boolean), [images]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { tv } = useI18n();
+  const reduceMotion = useReducedMotion();
 
   const goTo = (index: number) => {
     const nextIndex = (index + items.length) % items.length;
@@ -41,6 +58,11 @@ export function ImageCarousel({
     setActiveIndex(Math.min(Math.max(nextIndex, 0), items.length - 1));
   };
 
+  const closeLightbox = useCallback(() => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  }, []);
+
   useEffect(() => {
     thumbnailRefs.current[activeIndex]?.scrollIntoView({
       behavior: "smooth",
@@ -49,11 +71,50 @@ export function ImageCarousel({
     });
   }, [activeIndex]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    closeButtonRef.current?.focus();
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeLightbox();
+        return;
+      }
+      if (items.length > 1 && event.key === "ArrowLeft") {
+        setActiveIndex((current) => (current - 1 + items.length) % items.length);
+        return;
+      }
+      if (items.length > 1 && event.key === "ArrowRight") {
+        setActiveIndex((current) => (current + 1) % items.length);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button, a[href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, items.length, closeLightbox]);
+
   if (!items.length) return null;
 
   return (
     <>
       <div>
+        <MorphBoundary name={viewTransitionName}>
         <div className={`group relative overflow-hidden rounded-lg bg-mist ${aspectClass}`}>
           <div
             ref={scrollerRef}
@@ -65,7 +126,8 @@ export function ImageCarousel({
               <button
                 key={`${src}-${index}`}
                 type="button"
-                onClick={() => {
+                onClick={(event) => {
+                  triggerRef.current = event.currentTarget;
                   setActiveIndex(index);
                   setIsOpen(true);
                 }}
@@ -110,6 +172,7 @@ export function ImageCarousel({
             </>
           ) : null}
         </div>
+        </MorphBoundary>
 
         {items.length > 1 ? (
           <div
@@ -139,54 +202,75 @@ export function ImageCarousel({
         ) : null}
       </div>
 
-      {isOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-canopy/92 p-4 backdrop-blur-sm" role="dialog" aria-modal="true">
-          <button
-            type="button"
-            onClick={() => setIsOpen(false)}
-            className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white text-canopy shadow-sm"
-            aria-label={tv("Cerrar imagen")}
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-canopy/92 p-4 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.22 }}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) closeLightbox();
+            }}
           >
-            <X className="size-5" aria-hidden="true" />
-          </button>
-          {items.length > 1 ? (
             <button
+              ref={closeButtonRef}
               type="button"
-              onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
-              className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
-              aria-label={tv("Imagen anterior")}
+              onClick={closeLightbox}
+              className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white text-canopy shadow-sm"
+              aria-label={tv("Cerrar imagen")}
             >
-              <ChevronLeft className="size-6" aria-hidden="true" />
+              <X className="size-5" aria-hidden="true" />
             </button>
-          ) : null}
-          <div className="relative h-[78vh] w-full max-w-6xl overflow-hidden rounded-lg">
-            <Image src={items[activeIndex]} alt={`${alt} ampliada`} fill className="object-contain" sizes="100vw" />
-          </div>
-          {items.length > 1 ? (
-            <button
-              type="button"
-              onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
-              className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
-              aria-label={tv("Imagen siguiente")}
+            {items.length > 1 ? (
+              <button
+                type="button"
+                onClick={() => setActiveIndex((activeIndex - 1 + items.length) % items.length)}
+                className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
+                aria-label={tv("Imagen anterior")}
+              >
+                <ChevronLeft className="size-6" aria-hidden="true" />
+              </button>
+            ) : null}
+            <motion.div
+              className="relative h-[78vh] w-full max-w-6xl overflow-hidden rounded-lg"
+              initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.96 }}
+              transition={{ duration: reduceMotion ? 0 : 0.24, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ChevronRight className="size-6" aria-hidden="true" />
-            </button>
-          ) : null}
-          {items.length > 1 ? (
-            <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-white/12 px-4 py-3 backdrop-blur">
-              {items.map((src, index) => (
-                <button
-                  key={`${src}-modal-dot-${index}`}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  className={`size-2.5 rounded-full ${activeIndex === index ? "bg-white" : "bg-white/35"}`}
-                  aria-label={`${tv("Ver imagen")} ${index + 1}`}
-                />
-              ))}
-            </div>
-          ) : null}
-        </div>
-      ) : null}
+              <Image src={items[activeIndex]} alt={`${alt} ampliada`} fill className="object-contain" sizes="100vw" />
+            </motion.div>
+            {items.length > 1 ? (
+              <button
+                type="button"
+                onClick={() => setActiveIndex((activeIndex + 1) % items.length)}
+                className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-canopy shadow-[0_10px_32px_rgba(0,0,0,0.28)] ring-2 ring-canopy/10 transition hover:scale-105 md:size-14"
+                aria-label={tv("Imagen siguiente")}
+              >
+                <ChevronRight className="size-6" aria-hidden="true" />
+              </button>
+            ) : null}
+            {items.length > 1 ? (
+              <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-white/12 px-4 py-3 backdrop-blur">
+                {items.map((src, index) => (
+                  <button
+                    key={`${src}-modal-dot-${index}`}
+                    type="button"
+                    onClick={() => setActiveIndex(index)}
+                    className={`size-2.5 rounded-full ${activeIndex === index ? "bg-white" : "bg-white/35"}`}
+                    aria-label={`${tv("Ver imagen")} ${index + 1}`}
+                  />
+                ))}
+              </div>
+            ) : null}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

@@ -49,6 +49,7 @@ export default async function AttractionDetailPage({ params }: AttractionPagePro
           aspectClass="aspect-[16/10]"
           sizes="(min-width: 1024px) 70vw, 100vw"
           priority
+          viewTransitionName={`attraction-${attraction.slug}`}
         />
       </div>
       <div className="grid gap-8 rounded-lg bg-white p-7 shadow-sm ring-1 ring-canopy/10 md:grid-cols-[0.8fr_1.2fr] md:p-10">

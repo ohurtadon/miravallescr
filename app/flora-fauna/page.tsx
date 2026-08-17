@@ -13,7 +13,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default async function FloraFaunaPage() {
-  const { wildlife } = await getSiteData();
+  const { wildlife, species } = await getSiteData();
 
   return (
     <SimplePage
@@ -105,7 +105,7 @@ export default async function FloraFaunaPage() {
         ]}
       />
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
-        <WildlifeSection wildlife={wildlife} showHeading={false} />
+        <WildlifeSection wildlife={wildlife} species={species} showHeading={false} />
       </div>
       <div className="-mx-5 mt-12 md:-mx-8">
         <RecommendedSlot placement="wildlife" />
