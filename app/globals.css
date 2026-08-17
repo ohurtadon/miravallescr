@@ -315,3 +315,29 @@ img {
   box-shadow: 0 0 0 4px rgb(234 197 104 / 70%), 0 10px 24px rgb(18 52 39 / 38%);
   transform: rotate(-45deg) scale(1.12);
 }
+
+.rv-map-popup {
+  z-index: 3;
+}
+
+.rv-map-popup .mapboxgl-popup-tip {
+  display: none;
+}
+
+.rv-map-popup .mapboxgl-popup-content {
+  border-radius: 9999px;
+  background: #123427;
+  box-shadow: 0 10px 24px rgb(18 52 39 / 32%);
+  padding: 0.5rem 0.95rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-map-popup .mapboxgl-popup-close-button {
+  display: none;
+}

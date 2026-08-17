@@ -146,6 +146,7 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<Map<string, mapboxgl.Marker>>(new Map());
+  const popupRef = useRef<mapboxgl.Popup | null>(null);
   const [filter, setFilter] = useState<MapFilter>("all");
   const [categoryFilter, setCategoryFilter] = useState<MapCategoryFilter | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -198,6 +199,8 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
     return () => {
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current.clear();
+      popupRef.current?.remove();
+      popupRef.current = null;
       mapInstanceRef.current = null;
       map.remove();
     };
@@ -223,6 +226,31 @@ export function MapSection({ mapPoints, showHeading = true }: MapSectionProps) {
       markersRef.current.set(point.id, marker);
     });
   }, [filteredPoints, selectedPoint?.id]);
+
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!map) return;
+
+    popupRef.current?.remove();
+    popupRef.current = null;
+    if (!selectedPoint) return;
+
+    const popup = new mapboxgl.Popup({
+      offset: 22,
+      closeButton: false,
+      closeOnClick: false,
+      maxWidth: "220px",
+      className: "rv-map-popup"
+    })
+      .setLngLat([selectedPoint.lng, selectedPoint.lat])
+      .setText(selectedPoint.name)
+      .addTo(map);
+    popupRef.current = popup;
+
+    return () => {
+      popup.remove();
+    };
+  }, [selectedPoint]);
 
   useEffect(() => {
     const map = mapInstanceRef.current;
