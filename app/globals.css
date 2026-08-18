@@ -7,6 +7,21 @@
 :root {
   color-scheme: light;
   background: #f4f7f1;
+  --duration-move: 400ms;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: var(--duration-move);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: rv-morph-blur;
+}
+
+@keyframes rv-morph-blur {
+  30% {
+    filter: blur(3px);
+  }
 }
 
 * {
@@ -47,6 +62,45 @@ img {
 
 .rv-media-zoom {
   transition: transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.rv-card-interactive:active {
+  box-shadow:
+    0 6px 14px rgb(18 52 39 / 12%),
+    0 10px 22px -14px rgb(18 52 39 / 26%);
+}
+
+.group:active .rv-media-zoom {
+  transform: scale(1.045);
+}
+
+.rv-view-more {
+  transform: translateX(var(--vm-x, 0px));
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+}
+
+.rv-view-more:active {
+  transform: translateX(var(--vm-x, 0px)) translateY(-1px) scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rv-view-more:hover {
+    transform: translateX(var(--vm-x, 0px)) translateY(-0.25rem);
+  }
+}
+
+.rv-ken-burns {
+  animation: rv-ken-burns-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes rv-ken-burns-drift {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -103,20 +157,64 @@ img {
   }
 }
 
+.cta-ember-glow {
+  background-image:
+    radial-gradient(38rem 22rem at 12% 18%, rgb(217 199 162 / 22%), transparent 65%),
+    radial-gradient(30rem 20rem at 88% 82%, rgb(217 199 162 / 16%), transparent 65%);
+  background-repeat: no-repeat;
+  animation: cta-ember-drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes cta-ember-drift {
+  from {
+    background-position: 0% 0%, 100% 100%;
+  }
+
+  to {
+    background-position: 6% 8%, 94% 92%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cherenga-walk-sprite {
     animation: none;
   }
 
+  .cta-ember-glow {
+    animation: none;
+  }
+
+  .rv-ken-burns {
+    animation: none;
+  }
+
+  .map-marker {
+    animation: none;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+
   .rv-card-interactive,
-  .rv-media-zoom {
+  .rv-media-zoom,
+  .rv-view-more {
     transition: none;
   }
 
   .rv-card-interactive:hover,
   .rv-card-interactive:active,
-  .group:hover .rv-media-zoom {
+  .group:hover .rv-media-zoom,
+  .group:active .rv-media-zoom {
     transform: none;
+  }
+
+  .rv-view-more:hover,
+  .rv-view-more:active {
+    transform: translateX(var(--vm-x, 0px));
   }
 }
 
@@ -141,6 +239,17 @@ img {
   cursor: pointer;
   transform: rotate(-45deg);
   transition: transform 160ms ease, box-shadow 160ms ease;
+  animation: map-marker-pop 320ms ease-out both;
+}
+
+@keyframes map-marker-pop {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .map-marker svg {
@@ -205,4 +314,30 @@ img {
   outline: none;
   box-shadow: 0 0 0 4px rgb(234 197 104 / 70%), 0 10px 24px rgb(18 52 39 / 38%);
   transform: rotate(-45deg) scale(1.12);
+}
+
+.rv-map-popup {
+  z-index: 3;
+}
+
+.rv-map-popup .mapboxgl-popup-tip {
+  display: none;
+}
+
+.rv-map-popup .mapboxgl-popup-content {
+  border-radius: 9999px;
+  background: #123427;
+  box-shadow: 0 10px 24px rgb(18 52 39 / 32%);
+  padding: 0.5rem 0.95rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rv-map-popup .mapboxgl-popup-close-button {
+  display: none;
 }

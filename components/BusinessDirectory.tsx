@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useI18n } from "@/lib/i18n";
 import type { SiteBusiness } from "@/lib/site-api";
 import { BusinessCard } from "./BusinessCard";
@@ -131,11 +131,12 @@ export function BusinessDirectory({
                 : "grid gap-5 md:grid-cols-2 lg:grid-cols-3"
             }
           >
-            {items.map((business) => (
+            {items.map((business, index) => (
               <div key={business.id} className={carousel ? "w-[82vw] shrink-0 snap-start sm:w-[22rem] lg:w-[24rem]" : ""}>
                 <BusinessCard
                   business={business}
                   imageSizes={carousel ? "(max-width: 639px) 82vw, 24rem" : undefined}
+                  delay={carousel ? (index % 4) * 0.05 : (index % 3) * 0.04}
                 />
               </div>
             ))}
@@ -174,12 +175,12 @@ function CarouselMoreCard({ href, label, progress }: { href: string; label: stri
   return (
     <Link
       href={href}
-      className="group flex min-h-[32rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy transition hover:-translate-y-1"
-      style={{ transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
+      className="rv-view-more group flex min-h-[32rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy"
+      style={{ "--vm-x": `${Math.round((1 - progress) * 18)}px` } as CSSProperties}
     >
       <span className="flex items-center gap-3 rounded-full bg-canopy px-4 py-3 text-sm font-bold text-white shadow-sm">
         {label}
-        <ArrowRight className="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
+        <ArrowRight className="size-5 transition group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
       </span>
     </Link>
   );

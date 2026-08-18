@@ -3,28 +3,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { translatedNavItems, useI18n } from "@/lib/i18n";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { locale, setLocale, t } = useI18n();
 
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 64);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="absolute left-0 right-0 top-0 z-30">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 text-white md:px-8">
-        <Link href="/" className="flex items-center gap-4 font-semibold">
-          <span className="relative flex size-16 items-center justify-center overflow-hidden rounded-full bg-[#e8e4d4] ring-1 ring-white/35 backdrop-blur">
+    <header
+      className={`fixed left-0 right-0 top-0 z-30 transition-colors duration-300 ${
+        scrolled || open ? "bg-canopy/95 shadow-soft backdrop-blur" : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 text-white md:px-8">
+        <Link href="/" className="flex items-center gap-3 font-semibold">
+          <span className="relative flex size-11 items-center justify-center overflow-hidden rounded-full bg-[#e8e4d4] ring-1 ring-white/35 backdrop-blur">
             <Image
               src="/images/raiz-volcanica-logo.webp?v=20260706"
               alt="Raíz Volcánica"
               fill
-              sizes="64px"
+              sizes="44px"
               className="object-contain p-0.5"
               priority
             />
           </span>
-          <span className="text-lg tracking-wide">Raíz Volcánica</span>
+          <span className="text-base tracking-wide">Raíz Volcánica</span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm font-medium md:flex">
           {translatedNavItems.map((item) => (

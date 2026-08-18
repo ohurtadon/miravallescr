@@ -39,7 +39,7 @@ function PromotionContentBlock({ block, fallbackTheme }: { block: SitePromoConte
   if (block.type === "divider") return <hr className="border-canopy/15" />;
   if (block.type === "heading") return <h2 className={`font-display text-3xl font-bold leading-tight text-canopy md:text-4xl ${align}`}>{block.text}</h2>;
   if (block.type === "highlight") return <p className={`rounded-lg px-5 py-4 text-xl font-bold leading-8 ${themeBadge(theme)} ${align}`}>{block.text}</p>;
-  if (block.type === "note") return <p className={`border-l-4 border-sand bg-mist px-5 py-4 text-base leading-8 text-volcanic ${align}`}>{block.text}</p>;
+  if (block.type === "note") return <p className={`rounded-lg bg-mist px-5 py-4 text-base leading-8 text-volcanic ring-1 ring-canopy/10 ${align}`}>{block.text}</p>;
   if (block.type === "list") {
     return (
       <ul className={`grid gap-3 text-lg leading-8 text-volcanic ${align}`}>

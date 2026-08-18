@@ -57,6 +57,7 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
             aspectClass="aspect-[16/10]"
             sizes="(min-width: 1024px) 62vw, 100vw"
             priority
+            viewTransitionName={`business-${business.slug}`}
           />
           <article className="rounded-lg bg-white p-7 ring-1 ring-canopy/10">
             <div className="flex flex-wrap gap-2">

@@ -59,7 +59,7 @@ export function SponsorSection({ sponsors, compact = false, showHeading = true }
                   <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={sponsor.description}>{sponsor.description}</p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-bold text-forest">
                     {t("sponsors.cta")}
-                    <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                    <ArrowRight className="size-4 transition group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
                   </span>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Binoculars, Flame, Leaf, MapPin, Mountain, Sparkles, Waves } from "lucide-react";
@@ -9,6 +9,7 @@ import type { SiteAttraction } from "@/lib/site-api";
 import { CherengaWalk } from "./CherengaWalk";
 import { ScrollReveal } from "./ScrollReveal";
 import { SectionHeading } from "./SectionHeading";
+import { ViewTransition } from "./ViewTransition";
 
 const icons = {
   Binoculars,
@@ -99,29 +100,31 @@ export function AttractionsGrid({ attractions, showHeading = true, carousel = fa
                 <ScrollReveal
                   key={item.slug}
                   className={carousel ? itemClassName : "h-full"}
-                  delay={carousel ? 0 : (index % 3) * 0.04}
+                  delay={carousel ? (index % 4) * 0.05 : (index % 3) * 0.04}
                   y={14}
                 >
                   <Link
                     href={`/atractivos/${item.slug}`}
                     className="rv-card-interactive group flex h-full flex-col overflow-hidden rounded-lg bg-mist shadow-sm ring-1 ring-canopy/10"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="rv-media-zoom object-cover"
-                        sizes={imageSizes}
-                        loading="lazy"
-                      />
-                    </div>
+                    <ViewTransition name={`attraction-${item.slug}`} share="morph" default="none">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="rv-media-zoom object-cover"
+                          sizes={imageSizes}
+                          loading="lazy"
+                        />
+                      </div>
+                    </ViewTransition>
                     <div className="flex flex-1 flex-col p-6">
                       <div className="mb-5 flex items-center justify-between">
                         <span className="flex size-10 items-center justify-center rounded-full bg-forest text-white">
                           <Icon className="size-5" aria-hidden="true" />
                         </span>
-                        <ArrowUpRight className="size-5 text-canopy transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <ArrowUpRight className="size-5 text-canopy transition group-hover:translate-x-1 group-hover:-translate-y-1 group-active:translate-x-1 group-active:-translate-y-1" />
                       </div>
                       <h3 className="line-clamp-2 min-h-[4rem] font-display text-2xl font-bold leading-tight text-canopy" title={item.title}>{item.title}</h3>
                       <p className="mt-3 line-clamp-3 min-h-[5.25rem] text-sm leading-7 text-volcanic" title={item.summary}>{item.summary}</p>
@@ -154,12 +157,12 @@ function ViewMoreCard({ href, label, progress }: { href: string; label: string; 
   return (
     <Link
       href={href}
-      className="rv-card-interactive group flex min-h-[30rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy"
-      style={{ transform: `translateX(${Math.round((1 - progress) * 18)}px)` }}
+      className="rv-view-more group flex min-h-[30rem] w-36 shrink-0 snap-end items-center justify-center px-4 text-canopy"
+      style={{ "--vm-x": `${Math.round((1 - progress) * 18)}px` } as CSSProperties}
     >
       <span className="flex items-center gap-3 rounded-full bg-canopy px-4 py-3 text-sm font-bold text-white shadow-sm">
         {label}
-        <ArrowRight className="size-5 transition group-hover:translate-x-1" aria-hidden="true" />
+        <ArrowRight className="size-5 transition group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true" />
       </span>
     </Link>
   );
