@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import { cookies, headers } from "next/headers";
 import { I18nProvider } from "@/lib/i18n";
+import { AdSenseLoader } from "@/components/AdSenseLoader";
+import { CookieConsent } from "@/components/CookieConsent";
 import { absoluteSiteUrl, buildLanguageAlternates, getPublicSiteUrl, siteName } from "@/lib/seo";
 import "./globals.css";
 
@@ -142,7 +144,11 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <I18nProvider initialLocale={locale}>{children}</I18nProvider>
+        <I18nProvider initialLocale={locale}>
+          <AdSenseLoader />
+          {children}
+          <CookieConsent />
+        </I18nProvider>
       </body>
     </html>
   );

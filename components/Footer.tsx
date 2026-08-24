@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Instagram } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
+import { openCookieSettings } from "@/components/CookieConsent";
 
 const groups = [
   {
@@ -70,6 +71,11 @@ export function Footer() {
                   {t(link.labelKey)}
                 </Link>
               ))}
+              {group.titleKey === "footer.info" ? (
+                <button type="button" onClick={openCookieSettings} className="w-fit text-left hover:text-white">
+                  {t("footer.cookiePreferences")}
+                </button>
+              ) : null}
             </nav>
           </div>
         ))}
