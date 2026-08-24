@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BusinessDirectory } from "@/components/BusinessDirectory";
 import { NarrativeBlock } from "@/components/NarrativeBlock";
+import { GoogleAd } from "@/components/GoogleAd";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { SponsorSection } from "@/components/SponsorSection";
@@ -73,6 +74,7 @@ export default async function BusinessesPage() {
       <div className="-mx-5 -mb-16 mt-10 md:-mx-8 md:-mb-20">
         <BusinessDirectory businesses={siteData.businesses} businessCategories={siteData.businessCategories} showHeading={false} showFilters />
         <PromoSlot placement="business-directory" businesses={siteData.businesses} experiences={siteData.experiences} properties={siteData.properties} />
+        <GoogleAd slot={process.env.NEXT_PUBLIC_ADSENSE_BUSINESS_DIRECTORY_SLOT ?? ""} />
         <SponsorSection sponsors={siteData.sponsors} compact />
       </div>
     </SimplePage>

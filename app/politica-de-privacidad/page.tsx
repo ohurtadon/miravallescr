@@ -35,8 +35,16 @@ const sections = [
   {
     title: "Cookies y preferencias",
     items: [
-      "El sitio puede guardar preferencias básicas, como idioma, para mejorar la experiencia de navegación.",
-      "También puede usarse medición agregada para entender qué secciones del sitio funcionan mejor."
+      "El sitio guarda una cookie esencial para recordar la preferencia de idioma. Esta cookie no se usa para publicidad.",
+      "La preferencia sobre cookies publicitarias se guarda durante un año para recordar su decisión. Puede cambiarla en cualquier momento desde el enlace “Preferencias de cookies” al pie del sitio.",
+      "Si acepta las cookies publicitarias y Google AdSense está habilitado, Google puede usar cookies y tecnologías similares para mostrar anuncios y medir su rendimiento. Si las rechaza, el sitio no carga el código de AdSense."
+    ]
+  },
+  {
+    title: "Publicidad de Google",
+    items: [
+      "Los anuncios se identifican como “Publicidad” y se muestran separados del contenido editorial, de las promociones locales y de los patrocinadores de Raíz Volcánica.",
+      "Google y sus socios pueden tratar información técnica de navegación conforme a sus propias políticas. Para usuarios del Espacio Económico Europeo, Reino Unido y Suiza, antes de activar publicidad personalizada debe configurarse una plataforma de gestión de consentimiento certificada por Google."
     ]
   },
   {

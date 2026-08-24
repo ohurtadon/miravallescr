@@ -105,6 +105,7 @@ type TranslationKey =
   | "footer.weather"
   | "footer.partnerships"
   | "footer.privacy"
+  | "footer.cookiePreferences"
   | "footer.promoteExperience"
   | "footer.publishProperty";
 
@@ -210,6 +211,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "footer.weather": "Clima",
     "footer.partnerships": "Alianzas",
     "footer.privacy": "Política de privacidad",
+    "footer.cookiePreferences": "Preferencias de cookies",
     "footer.promoteExperience": "Promocionar experiencia",
     "footer.publishProperty": "Publicar propiedad"
   },
@@ -314,6 +316,7 @@ const translations: Record<Locale, Record<TranslationKey, string>> = {
     "footer.weather": "Weather",
     "footer.partnerships": "Partnerships",
     "footer.privacy": "Privacy policy",
+    "footer.cookiePreferences": "Cookie preferences",
     "footer.promoteExperience": "Promote experience",
     "footer.publishProperty": "Publish property"
   }

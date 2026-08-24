@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BadgeCheck, Clock, ExternalLink, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import { ImageCarousel } from "@/components/ImageCarousel";
+import { GoogleAd } from "@/components/GoogleAd";
 import { PromoSlot } from "@/components/PromoSlot";
 import { SimplePage } from "@/components/SimplePage";
 import { getGoogleMapsDirectionsUrl } from "@/lib/google-maps";
@@ -152,6 +153,7 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
           </div>
         </aside>
       </div>
+      <GoogleAd slot={process.env.NEXT_PUBLIC_ADSENSE_BUSINESS_DETAIL_SLOT ?? ""} />
       <div className="-mx-5 mt-12 md:-mx-8">
         <PromoSlot placement="business-detail" businesses={siteData.businesses.filter((item) => item.id !== business.id)} experiences={siteData.experiences} properties={siteData.properties} />
       </div>
