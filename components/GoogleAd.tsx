@@ -21,12 +21,24 @@ const isDevelopment = process.env.NODE_ENV === "development";
 export function GoogleAd({ slot, className = "" }: GoogleAdProps) {
   const [hasConsent, setHasConsent] = useState(false);
   const requested = useRef(false);
+  const adElement = useRef<HTMLModElement>(null);
 
   useEffect(() => {
     const requestAd = () => {
-      if (requested.current || getAdvertisingConsent() !== "accepted" || !window.adsbygoogle) return;
-      window.adsbygoogle.push({});
+      const element = adElement.current;
+      const wasProcessedByAdSense = element?.hasAttribute("data-adsbygoogle-status") || element?.hasAttribute("data-ad-status");
+
+      if (requested.current || wasProcessedByAdSense || getAdvertisingConsent() !== "accepted" || !window.adsbygoogle) return;
+
+      // Mark synchronously so a repeated ready/consent event cannot initialize the same element twice.
       requested.current = true;
+      element?.setAttribute("data-rv-adsense-requested", "true");
+
+      try {
+        window.adsbygoogle.push({});
+      } catch {
+        // AdSense can reject a duplicate request while navigating. The element stays marked to avoid retry loops.
+      }
     };
     const syncConsent = () => {
       const accepted = getAdvertisingConsent() === "accepted";
@@ -63,6 +75,7 @@ export function GoogleAd({ slot, className = "" }: GoogleAdProps) {
     <section aria-label="Publicidad" className={`my-10 ${className}`}>
       <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-moss">Publicidad</p>
       <ins
+        ref={adElement}
         className="adsbygoogle block min-h-[120px] overflow-hidden rounded-lg bg-mist"
         data-ad-client={clientId}
         data-ad-slot={slot}
